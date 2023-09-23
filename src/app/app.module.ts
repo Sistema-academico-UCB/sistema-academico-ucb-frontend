@@ -7,6 +7,7 @@ import { AddStudentComponent } from './components/add-student/add-student.compon
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import { AddTeacherComponent } from './components/add-teacher/add-teacher.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
     AddStudentComponent,
     ProfileComponent,
     ProfileInfoComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    AddTeacherComponent
   ],
   imports: [
     BrowserModule,

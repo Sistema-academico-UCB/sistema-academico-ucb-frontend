@@ -1,70 +1,52 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-add-student',
-  templateUrl: './add-student.component.html',
-  styleUrls: ['./add-student.component.css']
+  selector: 'app-add-teacher',
+  templateUrl: './add-teacher.component.html',
+  styleUrls: ['./add-teacher.component.css']
 })
-export class AddStudentComponent {
-
+export class AddTeacherComponent {
   // Variables
-  fechaActual: Date = new Date();
+  fechaActual: number = Date.now();
   lugarResidencia = "Bolivia";
   departamento = "La Paz";
 
   // Lista de colegios
-  colegios = [
+  tipoDocentes = [ "Docente", "Auxiliar", "Investigador" ];
+
+  // Lista de profesiones
+  profesiones = [
     {
-      colegioId: 1,
-      nombreColegio: "San Calixto",
-    },
-    {
-      colegioId: 2,
-      nombreColegio: "Don Bosco",
-    },
-    {
-      colegioId: 3,
-      nombreColegio: "San Ignacio",
-    },
-    {
-      colegioId: 4,
-      nombreColegio: "San Agustin",
-    },
-    {
-      colegioId: 5,
-      nombreColegio: "San Antonio",
-    },
+      profesionId: 1,
+      nombreProfesion: "Ingeniería de Sistemas"
+    }, {
+      profesionId: 2,
+      nombreProfesion: "Ingeniería Civil"
+    }, {
+      profesionId: 3,
+      nombreProfesion: "Ingeniería Electrónica"
+    }, {
+      profesionId: 4,
+      nombreProfesion: "Ingeniería Industrial"
+    }
   ];
 
-  // Lista de carreras
-  carreras = [
+  // Lista de departamentos
+  departamentos = [
     {
-      carreraId: 1,
-      sigla: "Ing. Sistemas",
-      nombre: "Ingenieria de Sistemas",
-    },
-    {
-      carreraId: 2,
-      sigla: "Ing. Civil",
-      nombre: "Ingenieria Civil",
-    },
-    {
-      carreraId: 3,
-      sigla: "Ing. Industrial",
-      nombre: "Ingenieria Industrial",
-    },
-    {
-      carreraId: 4,
-      sigla: "Ing. Mecanica",
-      nombre: "Ingenieria Mecanica",
-    },
-    {
-      carreraId: 5,
-      sigla: "Ing. Electrica",
-      nombre: "Ingenieria Electrica",
-    },
+      departamentoCarreraId: 1,
+      nombre: 'Educación'
+    }, {
+      departamentoCarrera: 2,
+      nombre: 'Ingeniería'
+    }, {
+      departamentoCarreraId: 3,
+      nombre: 'Ciencias Sociales'
+    }, {
+      departamentoCarreraId: 4,
+      nombre: 'Ciencias Exactas'
+    }
   ];
-
   /*Declaramos los atributos del estudiante*/
   @ViewChild('errorMessage') errorMessage!: ElementRef;
   /*Primera sección*/
@@ -80,14 +62,14 @@ export class AddStudentComponent {
   @ViewChild('direccionInput') direccionInput!: ElementRef;
   /*Tercera sección*/
   @ViewChild('estadoCivilSelect') estadoCivilSelect!: ElementRef;
-  @ViewChild('colegioSelect') colegioSelect!: ElementRef;
-  @ViewChild('semestreInput') semestreInput!: ElementRef;
-  /*Cuarta sección*/
   @ViewChild('usuarioInput') usuarioInput!: ElementRef;
   @ViewChild('contrasenaInput') contrasenaInput!: ElementRef;
   @ViewChild('contrasenaConfirmacionInput') contrasenaConfirmacionInput!: ElementRef;
-  /*Quinta sección*/
-  @ViewChild('carreraSelect') carreraSelect!: ElementRef;
+  /*Cuarta sección*/
+  @ViewChild('tipoDocenteSelect') tipoDocenteSelect!: ElementRef;
+  @ViewChild('profesionSelect') profesionSelect!: ElementRef;
+  @ViewChild('deptoSelect') deptoSelect!: ElementRef;
+  @ViewChild('checkDirector') checkDirector!: ElementRef;
 
   // Popup de confirmación
   confirmationPopup = false;
@@ -98,33 +80,31 @@ export class AddStudentComponent {
       if(this.validacion2()){
         if(this.validacion3()){
           if(this.validacion4()){
-            if(this.validacion5()){
-              this.confirmationPopup = true;
-              //Armar el json
-              let estudiante = {
-                nombre: this.nombreInput.nativeElement.value,
-                apellido_paterno: this.apellidoPaternoInput.nativeElement.value,
-                apellido_materno: this.apellidoMaternoInput.nativeElement.value,
-                carnet_identidad: this.ciInput.nativeElement.value,
-                fecha_nacimiento: this.fechaNacimientoInput.nativeElement.value,
-                correo: this.correoInput.nativeElement.value,
-                genero: this.generoSelect.nativeElement.value,
-                celular: this.celularInput.nativeElement.value,
-                decripcion: "",
-                uuid_foto: "./assets/icons/usuario.png",
-                uuid_portada: "./assets/icons/portada-arboles.jpg",
-                direccion: this.direccionInput.nativeElement.value,
-                fecha_registro: this.fechaActual,
-                estado_civil: this.estadoCivilSelect.nativeElement.value,
-                username: this.usuarioInput.nativeElement.value,
-                secret: this.contrasenaInput.nativeElement.value,
-                rol: "Estudiante",
-                semestre: this.semestreInput.nativeElement.value,
-                colegio_id: this.colegioSelect.nativeElement.value,
-                carrera_id: this.carreraSelect.nativeElement.value
-              }
-              console.log(estudiante);
-            }
+            this.confirmationPopup = true;
+            let teacher = {
+              nombre: this.nombreInput.nativeElement.value,
+              apellido_paterno: this.apellidoPaternoInput.nativeElement.value,
+              apellido_materno: this.apellidoMaternoInput.nativeElement.value,
+              carnet_identidad: this.ciInput.nativeElement.value,
+              fecha_nacimiento: this.fechaNacimientoInput.nativeElement.value,
+              correo: this.correoInput.nativeElement.value,
+              genero: this.generoSelect.nativeElement.value,
+              celular: this.celularInput.nativeElement.value,
+              descripcion: "",
+              uuid_foto: "./assets/icons/usuario.png",
+              uuid_portada: "./assets/icons/portada-arboles.jpg",
+              direccion: this.direccionInput.nativeElement.value,
+              fecha_registro: this.fechaActual,
+              estado_civil: this.estadoCivilSelect.nativeElement.value,
+              username: this.usuarioInput.nativeElement.value,
+              secret: this.contrasenaInput.nativeElement.value,
+              rol: "Docente",
+              tipo: this.tipoDocenteSelect.nativeElement.value,
+              profesion_id: this.profesionSelect.nativeElement.value,
+              departamento_carrera_id: this.deptoSelect.nativeElement.value,
+              director_carrera_id: this.checkDirector.nativeElement.checked
+            };
+            console.log(teacher);
           }
         }
       }
@@ -144,12 +124,11 @@ export class AddStudentComponent {
       this.correoInput,
       this.celularInput,
       this.direccionInput,
-      this.colegioSelect,
-      this.semestreInput,
       this.usuarioInput,
       this.contrasenaInput,
       this.contrasenaConfirmacionInput,
-      this.carreraSelect
+      this.profesionSelect,
+      this.deptoSelect
     ];
     this.errorMessage.nativeElement.classList.add('warning-active');
     atributos[atributo].nativeElement.classList.add('input-empty');
@@ -191,27 +170,15 @@ export class AddStudentComponent {
     return flag;
   }
   /*Validar tercera sección*/
+  @ViewChild('passwordError') passwordError!: ElementRef;
   validacion3(){
     let flag = false;
-    if(this.colegioSelect.nativeElement.value == "0"){
-      this.mensajeError(8);
-    } else if(this.semestreInput.nativeElement.value < 1){
-      this.mensajeError(9);
-    } else {
-      flag = true;
-    }
-    return flag;
-  }
-  /*Validar cuarta sección*/
-  @ViewChild('passwordError') passwordError!: ElementRef;
-  validacion4(){
-    let flag = false;
     if(!this.usuarioInput.nativeElement.value){
-      this.mensajeError(10);
+      this.mensajeError(8);
     } else if(!this.contrasenaInput.nativeElement.value){
-      this.mensajeError(11);
+      this.mensajeError(9);
     } else if(!this.contrasenaConfirmacionInput.nativeElement.value){
-      this.mensajeError(12);
+      this.mensajeError(10);
     } else if(this.contrasenaInput.nativeElement.value != this.contrasenaConfirmacionInput.nativeElement.value){
       this.passwordError.nativeElement.classList.add('password-active');
       this.contrasenaInput.nativeElement.classList.add('input-empty');
@@ -226,11 +193,13 @@ export class AddStudentComponent {
     }
     return flag;
   }
-  /*Validar quinta sección*/
-  validacion5(){
+  /*Validar cuarta sección*/
+  validacion4(){
     let flag = false;
-    if(this.carreraSelect.nativeElement.value == "0"){
-      this.mensajeError(13);
+    if (this.profesionSelect.nativeElement.value == "0") {
+      this.mensajeError(11);
+    } else if (this.deptoSelect.nativeElement.value == "0") {
+      this.mensajeError(12);
     } else {
       flag = true;
     }

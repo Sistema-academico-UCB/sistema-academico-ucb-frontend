@@ -38,9 +38,9 @@
   border-radius: 50%;
   background: #FFBDE5;
 }
-.icon-header img {
-  width: 35px;
-  height: 35px;
+.icon-header i {
+  font-size: 30px;
+  margin-left: 6px;
 }
 .title-header {
   display: flex;

@@ -1,36 +1,36 @@
-<div class="add-student">
+<div class="add-teacher">
     <div class="container">
         <!-- Cabezera de la página -->
         <div class="header">
             <div class="icon-header center">
-                <i class="fa-solid fa-user-plus" style="color: #9E3775;"></i>
+                <i class="fa-solid fa-user-plus" style="color: #ffa17a;"></i>
             </div>
             <div class="title-header">
                 <div>
-                    <h1>Inscripción de Estudiante</h1>
-                    <h3>Acceda y gestione las inscripciones de estudiantes en nuestro sistema académico con privilegios de administrador.</h3>
+                    <h1>Registro de Docente</h1>
+                    <h3>Acceda y gestione las inscripciones de docentes en nuestro sistema académico con privilegios de administrador.</h3>
                 </div>
             </div>
         </div>
         <hr class="line"/>
-        <!-- Datos estudiante -->
+        <!-- Datos docente -->
         <h2>Datos personales</h2>
         <div class="personal-information">
             <div>
                 <h4>Nombres(s)</h4>
-                <input #nombreInput type="text" placeholder="Ingresa el/los nombre(s) del estudiante" maxlength="150">
+                <input #nombreInput type="text" placeholder="Ingresar el/los nombre(s) del docente" maxlength="150">
             </div>
             <div>
                 <h4>Apellido paterno</h4>
-                <input #apellidoPaternoInput type="text" placeholder="Ingresa el apellido paterno del estudiante" maxlength="100">
+                <input #apellidoPaternoInput type="text" placeholder="Ingresar apellido paterno del docente" maxlength="100">
             </div>
             <div>
                 <h4>Apellido materno</h4>
-                <input #apellidoMaternoInput type="text" placeholder="Ingresa el apellido materno del estudiante" maxlength="100">
+                <input #apellidoMaternoInput type="text" placeholder="Ingresar apellido materno del docente" maxlength="100">
             </div>
             <div>
                 <h4>Carnet de identidad</h4>
-                <input #ciInput type="text" placeholder="Ingresa el CI del estudiante" maxlength="50">
+                <input #ciInput type="text" placeholder="Ingresa el CI del docente" maxlength="50">
             </div>
             <div>
                 <h4>Fecha de nacimiento</h4>
@@ -46,22 +46,22 @@
                 </select>
             </div>
         </div>
-        <!-- Estudiante contacto -->
+        <!-- Contacto docente -->
         <h2>Contacto</h2>
         <div class="contact-information">
             <div>
                 <h4>Correo electrónico</h4>
-                <input #correoInput type="email" placeholder="Ingresa el correo electrónico del estudiante" maxlength="150">
+                <input #correoInput type="email" placeholder="Ingresar el correo electrónico" maxlength="150">
             </div>
             <div>
                 <h4>Celular</h4>
-                <input #celularInput type="text" placeholder="Ingresa el número de celular del estudiante" maxlength="50" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                <input #celularInput type="text" placeholder="Ingresar el número de celular" maxlength="50" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
             </div>
         </div>
-        <!-- estudiante-direccion -->
+        <!-- Docente - direccion -->
         <div class="direction">
             <h4>Dirección</h4>
-            <input #direccionInput type="text" placeholder="Ingresa la dirección del estudiante" maxlength="150">
+            <input #direccionInput type="text" placeholder="Ingresar dirección completa" maxlength="150">
         </div>
         <!-- Detalle-registro -->
         <h2>Detalles del Registro</h2>
@@ -88,25 +88,11 @@
                     <option value="Otro">Otro</option>
                 </select>
             </div>
-            <div>
-                <h4>Colegio del que se graduo</h4>
-                <select #colegioSelect name="school">
-                    <option value="0" selected hidden>Seleccione un colegio</option>
-                    <!--Opciones del vector colegios-->
-                    <option *ngFor="let colegio of colegios" [value]="colegio.colegioId">{{colegio.nombreColegio}}</option>
-                </select>
-            </div>
-            <div>
-                <h4>Semestre</h4>
-                <input #semestreInput type="number" placeholder="Ingrese el semestre actual del estudiante" min="1">
-            </div>
-        </div>
-        <!-- Informacion de cuenta -->
-        <h2>Información de cuenta</h2>
-        <div class="personal-information">
+            <div></div>
+            <div></div>
             <div>
                 <h4>Username</h4>
-                <input #usuarioInput type="text" placeholder="Ingresa el nombre de usuario del estudiante" maxlength="50">
+                <input #usuarioInput type="text" placeholder="Ingresa el nombre de usuario del docente" maxlength="50">
             </div>
             <div>
                 <h4>Contraseña</h4>
@@ -120,16 +106,33 @@
                 </div>
             </div>
         </div>
-        <!-- Informacion de carrera -->
-        <h2>Elección de carrera</h2>
+        <!-- Informacion de Personal -->
+        <h2>Información de Personal</h2>
         <div class="personal-information">
             <div>
-                <h4>Carrera escogida</h4>
-                <select #carreraSelect name="carrer">
-                    <option value="0" selected hidden>Seleccione la carrera elegida</option>
-                    <!--Opciones del vector carreras-->
-                    <option *ngFor="let carrera of carreras" [value]="carrera.carreraId">{{carrera.sigla}}</option>
+                <h4>Tipo de docente</h4>
+                <select #tipoDocenteSelect name="typeTeacher">
+                    <option *ngFor="let tipo of tipoDocentes" [value]="tipo">{{tipo}}</option>
                 </select>
+            </div>
+            <div>
+                <h4>Profesión</h4>
+                <select #profesionSelect name="profession">
+                    <option value="0" selected hidden>Seleccionar su profesión</option>
+                    <option *ngFor="let profesion of profesiones" [value]="profesion.profesionId">{{profesion.nombreProfesion}}</option>
+                </select>
+            </div>
+            <div></div>
+            <div>
+                <h4>Departamento</h4>
+                <select #deptoSelect name="depto">
+                    <option value="0" selected hidden>Seleccionar su departamento</option>
+                    <option *ngFor="let depto of departamentos" [value]="depto.departamentoCarreraId">{{depto.nombre}}</option>
+                </select>
+            </div>
+            <div class="checkbox-content">
+                <input #checkDirector type="checkbox" id="directorCarrera" name="directorCarrera" value="false">
+                <label for="directorCarrera">Director de Carrera</label>
             </div>
         </div>
         <!-- Mensaje de advertencia -->
@@ -143,12 +146,12 @@
             <div><hr class="line"/></div>
         </div>
     </div>
-    <!--Mensaje de que todo salio bien y el estudiante fue registrado correctamente-->
+    <!--Mensaje de que todo salio bien y el docente fue registrado correctamente-->
     <div class="popup center" *ngIf="confirmationPopup">
         <div class="success center">
             <div>
                 <div class="confirmation-content"><i class="fa-solid fa-circle-check" style="color: #30ff24;"></i></div>
-                <div class="confirmation-content"><p>El estudiante fue registrado correctamente</p></div>
+                <div class="confirmation-content"><p>El docente fue registrado correctamente</p></div>
                 <div class="confirmation-content"><button (click)="confirmationPopup = false">Aceptar</button></div>
             </div>
         </div>
