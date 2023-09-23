@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { AddStudentComponent } from './components/add-student/add-student.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddStudentComponent,
     ProfileComponent,
-    ProfileInfoComponent
+    ProfileInfoComponent,
+    ProfileEditComponent
   ],
   imports: [
     BrowserModule,
