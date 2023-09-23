@@ -77,12 +77,30 @@ export class AddStudentComponent {
   @ViewChild('correoInput') correoInput!: ElementRef;
   @ViewChild('celularInput') celularInput!: ElementRef;
   @ViewChild('direccionInput') direccionInput!: ElementRef;
+  /*Tercera sección*/
+  @ViewChild('estadoCivilSelect') estadoCivilSelect!: ElementRef;
+  @ViewChild('colegioSelect') colegioSelect!: ElementRef;
+  @ViewChild('semestreInput') semestreInput!: ElementRef;
+  /*Cuarta sección*/
+  @ViewChild('usuarioInput') usuarioInput!: ElementRef;
+  @ViewChild('contrasenaInput') contrasenaInput!: ElementRef;
+  @ViewChild('contrasenaConfirmacionInput') contrasenaConfirmacionInput!: ElementRef;
+  /*Quinta sección*/
+  @ViewChild('carreraSelect') carreraSelect!: ElementRef;
 
+  confirmationPopup = false;
 
   guardarDatos() {
-    if(this.validación1()){
-      if(this.validación2()){
-        console.log("Datos guardados");
+    if(this.validacion4()){
+      if(this.validacion2()){
+        if(this.validacion3()){
+          if(this.validacion4()){
+            if(this.validacion5()){
+              this.confirmationPopup = true;
+              console.log("Datos guardados");
+            }
+          }
+        }
       }
     } else {
       console.log("Datos no guardados");
@@ -100,6 +118,12 @@ export class AddStudentComponent {
       this.correoInput,
       this.celularInput,
       this.direccionInput,
+      this.colegioSelect,
+      this.semestreInput,
+      this.usuarioInput,
+      this.contrasenaInput,
+      this.contrasenaConfirmacionInput,
+      this.carreraSelect
     ];
     this.errorMessage.nativeElement.classList.add('warning-active');
     atributos[atributo].nativeElement.classList.add('input-empty');
@@ -109,7 +133,7 @@ export class AddStudentComponent {
     }, 3000);
   }
   /*Validar primer sección*/
-  validación1() {
+  validacion1() {
     let flag = false;
     if (!this.nombreInput.nativeElement.value) {
       this.mensajeError(0);
@@ -127,7 +151,7 @@ export class AddStudentComponent {
     return flag;
   }
   /*Validar segunda sección*/
-  validación2() {
+  validacion2() {
     let flag = false;
     if (!this.correoInput.nativeElement.value) {
       this.mensajeError(5);
@@ -135,6 +159,52 @@ export class AddStudentComponent {
       this.mensajeError(6);
     } else if (!this.direccionInput.nativeElement.value) {
       this.mensajeError(7);
+    } else {
+      flag = true;
+    }
+    return flag;
+  }
+  /*Validar tercera sección*/
+  validacion3(){
+    let flag = false;
+    if(this.colegioSelect.nativeElement.value == "0"){
+      this.mensajeError(8);
+    } else if(this.semestreInput.nativeElement.value < 1){
+      this.mensajeError(9);
+    } else {
+      flag = true;
+    }
+    return flag;
+  }
+  /*Validar cuarta sección*/
+  @ViewChild('passwordError') passwordError!: ElementRef;
+  validacion4(){
+    let flag = false;
+    if(!this.usuarioInput.nativeElement.value){
+      this.mensajeError(10);
+    } else if(!this.contrasenaInput.nativeElement.value){
+      this.mensajeError(11);
+    } else if(!this.contrasenaConfirmacionInput.nativeElement.value){
+      this.mensajeError(12);
+    } else if(this.contrasenaInput.nativeElement.value != this.contrasenaConfirmacionInput.nativeElement.value){
+      this.passwordError.nativeElement.classList.add('password-active');
+      this.contrasenaInput.nativeElement.classList.add('input-empty');
+      this.contrasenaConfirmacionInput.nativeElement.classList.add('input-empty');
+      setTimeout(() => {
+        this.passwordError.nativeElement.classList.remove('password-active');
+        this.contrasenaInput.nativeElement.classList.remove('input-empty');
+        this.contrasenaConfirmacionInput.nativeElement.classList.remove('input-empty');
+      }, 3000);
+    } else {
+      flag = true;
+    }
+    return flag;
+  }
+  /*Validar quinta sección*/
+  validacion5(){
+    let flag = false;
+    if(this.carreraSelect.nativeElement.value == "0"){
+      this.mensajeError(13);
     } else {
       flag = true;
     }

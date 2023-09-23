@@ -18,19 +18,19 @@
         <div class="personal-information">
             <div>
                 <h4>Nombres(s)</h4>
-                <input #nombreInput type="text" placeholder="Ingresa el/los nombre(s) del estudiante">
+                <input #nombreInput type="text" placeholder="Ingresa el/los nombre(s) del estudiante" maxlength="150">
             </div>
             <div>
                 <h4>Apellido paterno</h4>
-                <input #apellidoPaternoInput type="text" placeholder="Ingresa el apellido paterno del estudiante">
+                <input #apellidoPaternoInput type="text" placeholder="Ingresa el apellido paterno del estudiante" maxlength="100">
             </div>
             <div>
                 <h4>Apellido materno</h4>
-                <input #apellidoMaternoInput type="text" placeholder="Ingresa el apellido materno del estudiante">
+                <input #apellidoMaternoInput type="text" placeholder="Ingresa el apellido materno del estudiante" maxlength="100">
             </div>
             <div>
                 <h4>Carnet de identidad</h4>
-                <input #ciInput type="text" placeholder="Ingresa el CI del estudiante">
+                <input #ciInput type="text" placeholder="Ingresa el CI del estudiante" maxlength="50">
             </div>
             <div>
                 <h4>Fecha de nacimiento</h4>
@@ -51,17 +51,17 @@
         <div class="contact-information">
             <div>
                 <h4>Correo electrónico</h4>
-                <input #correoInput type="email" placeholder="Ingresa el correo electrónico del estudiante">
+                <input #correoInput type="email" placeholder="Ingresa el correo electrónico del estudiante" maxlength="150">
             </div>
             <div>
                 <h4>Celular</h4>
-                <input #celularInput type="text" placeholder="Ingresa el numero de celular del estudiante">
+                <input #celularInput type="text" placeholder="Ingresa el numero de celular del estudiante" maxlength="50" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
             </div>
         </div>
         <!-- estudiante-direccion -->
         <div class="direction">
             <h4>Dirección</h4>
-            <input #direccionInput type="text" placeholder="Ingresa la dirección del estudiante">
+            <input #direccionInput type="text" placeholder="Ingresa la dirección del estudiante" maxlength="150">
         </div>
         <!-- Detalle-registro -->
         <h2>Detalle registro</h2>
@@ -98,7 +98,7 @@
             </div>
             <div>
                 <h4>Semestre</h4>
-                <input #semestreInput type="number" placeholder="Ingrese el semestre actual del estudiante">
+                <input #semestreInput type="number" placeholder="Ingrese el semestre actual del estudiante" min="1">
             </div>
         </div>
         <!-- Informacion de cuenta -->
@@ -106,15 +106,18 @@
         <div class="personal-information">
             <div>
                 <h4>Username</h4>
-                <input type="text" placeholder="Ingresa el nombre de usuario del estudiante">
+                <input #usuarioInput type="text" placeholder="Ingresa el nombre de usuario del estudiante" maxlength="50">
             </div>
             <div>
                 <h4>Contraseña</h4>
-                <input type="text" placeholder="Ingresa contraseña segura">
+                <input #contrasenaInput type="text" placeholder="Ingresa contraseña segura" maxlength="150">
             </div>
             <div>
                 <h4>Confirma contraseña</h4>
-                <input type="text" placeholder="Confirma contrañase segura">
+                <input #contrasenaConfirmacionInput type="text" placeholder="Confirma contrañase segura" maxlength="150">
+                <div #passwordError class="password">
+                    <h4>Las contraseñas no coinciden.</h4>
+                </div>
             </div>
         </div>
         <!-- Informacion de carrera -->
@@ -122,7 +125,7 @@
         <div class="personal-information">
             <div>
                 <h4>Carrera escogida</h4>
-                <select name="carrer">
+                <select #carreraSelect name="carrer">
                     <option value="0" selected hidden>Seleccione la carrera elegida</option>
                     <!--Opciones del vector carreras-->
                     <option *ngFor="let carrera of carreras" [value]="carrera.carreraId">{{carrera.sigla}}</option>
@@ -138,6 +141,16 @@
             <div><hr class="line"/></div>
             <div class="center"><button (click)="guardarDatos()">Guardar</button></div>
             <div><hr class="line"/></div>
+        </div>
+    </div>
+    <!--Mensaje de que todo salio bien y el estudiante fue registrado correctamente-->
+    <div class="popup center" *ngIf="confirmationPopup">
+        <div class="success center">
+            <div>
+                <div class="confirmation-content"><i class="fa-solid fa-circle-check" style="color: #30ff24;"></i></div>
+                <div class="confirmation-content"><p>El estudiante fue registrado correctamente</p></div>
+                <div class="confirmation-content"><button (click)="confirmationPopup = false">Aceptar</button></div>
+            </div>
         </div>
     </div>
 </div>
