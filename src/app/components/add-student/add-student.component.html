@@ -2,153 +2,142 @@
     <div class="container">
         <!-- Cabezera de la página -->
         <div class="header">
-            <div class="wrapper">
-                <div class="imagen">
-                    <div class="circulo">
-                        <img src="./assets/icons/anadir-amigo.png">
-                    </div>
-                </div>
-                <div class="div-titulo">
+            <div class="icon-header center">
+                <img src="./assets/icons/anadir-amigo.png">
+            </div>
+            <div class="title-header">
+                <div>
                     <h1>Administración de Inscripciones Estudiantiles</h1>
                     <h3>Acceda y gestione las inscripciones de estudiantes en nuestro sistema académico con privilegios de administrador.</h3>
                 </div>
             </div>
         </div>
-        <hr>
+        <hr class="line"/>
         <!-- Datos estudiante -->
         <h2>Datos personales</h2>
-        <div class="div-datos">
+        <div class="personal-information">
             <div>
-                <div>
-                    <h4>Nombres(s)</h4>
-                    <input type="text" placeholder="Ingresa el/los nombre(s) del estudiante">
-                </div>
-                <div>
-                    <h4>Carnet de identidad</h4>
-                    <input type="text" placeholder="Ingresa el número de carnet de identidad del estudiante">
-                </div>
+                <h4>Nombres(s)</h4>
+                <input #nombreInput type="text" placeholder="Ingresa el/los nombre(s) del estudiante">
             </div>
             <div>
-                <div>
-                    <h4>Apellido paterno</h4>
-                    <input type="text" placeholder="Ingresa el apellido paterno del estudiante">
-                </div>
-                <div>
-                    <h4>Fecha de nacimiento</h4>
-                    <input type="text" placeholder="dd/mm/aaaa">
-                </div>
+                <h4>Apellido paterno</h4>
+                <input #apellidoPaternoInput type="text" placeholder="Ingresa el apellido paterno del estudiante">
             </div>
             <div>
-                <div>
-                    <h4>Apellido materno</h4>
-                    <input type="text" placeholder="Ingresa el apellido materno del estudiante">
-                </div>
-                <div>
-                    <h4>Género</h4>
-                    <input type="text" placeholder="Género">
-                </div>
+                <h4>Apellido materno</h4>
+                <input #apellidoMaternoInput type="text" placeholder="Ingresa el apellido materno del estudiante">
+            </div>
+            <div>
+                <h4>Carnet de identidad</h4>
+                <input #ciInput type="text" placeholder="Ingresa el CI del estudiante">
+            </div>
+            <div>
+                <h4>Fecha de nacimiento</h4>
+                <input #fechaNacimientoInput type="date" placeholder="dd/mm/aaaa">
+            </div>
+            <div>
+                <h4>Género</h4>
+                <select #generoSelect name="gender">
+                    <option value="1" selected>Hombre</option>
+                    <option value="2">Mujer</option>
+                    <option value="3">No binario</option>
+                    <option value="4">Prefiero no decirlo</option>
+                </select>
             </div>
         </div>
-        <!-- estudiante-contacto -->
+        <!-- Estudiante contacto -->
         <h2>Contacto</h2>
-        <div class="div-contacto">
+        <div class="contact-information">
             <div>
                 <h4>Correo electrónico</h4>
-                <input type="text" placeholder="Ingresa el correo electrónico del estudiante">
+                <input #correoInput type="email" placeholder="Ingresa el correo electrónico del estudiante">
             </div>
             <div>
                 <h4>Celular</h4>
-                <input type="text" placeholder="Ingresa el numero de celular del estudiante">
+                <input #celularInput type="text" placeholder="Ingresa el numero de celular del estudiante">
             </div>
         </div>
         <!-- estudiante-direccion -->
-        <div class="div-direccion">
+        <div class="direction">
             <h4>Dirección</h4>
-            <input type="text" placeholder="Ingresa la dirección del estudiante">
+            <input #direccionInput type="text" placeholder="Ingresa la dirección del estudiante">
         </div>
         <!-- Detalle-registro -->
         <h2>Detalle registro</h2>
-        <div class="div-datos">
+        <div class="personal-information">
             <div>
-                <div>
-                    <h4>Fecha de registro</h4>
-                    <input type="text" placeholder="Ingresa el/los nombre(s) del estudiante">
-                </div>
-                <div>
-                    <h4>Estado civil</h4>
-                    <input type="text" placeholder="Ingresa el número de carnet de identidad del estudiante">
-                </div>
+                <h4>Fecha de registro</h4>
+                <p>{{fechaActual | date: 'dd/MM/yyyy'}}</p>
             </div>
             <div>
-                <div>
-                    <h4>Lugar de residencia</h4>
-                    <input type="text" placeholder="Ingresa el apellido paterno del estudiante">
-                </div>
-                <div>
-                    <h4>Colegio del que se graduo</h4>
-                    <input type="text" placeholder="dd/mm/aaaa">
-                </div>
+                <h4>Lugar de residencia</h4>
+                <p>{{lugarResidencia}}</p>
             </div>
             <div>
-                <div>
-                    <h4>Departamento</h4>
-                    <input type="text" placeholder="Ingresa el apellido materno del estudiante">
-                </div>
-                <div>
-                    <h4>Semestre</h4>
-                    <input type="text" placeholder="Ingrese el semestre actual del estudiante">
-                </div>
+                <h4>Departamento</h4>
+                <p>{{departamento}}</p>
+            </div>
+            <div>
+                <h4>Estado civil</h4>
+                <select #estadoCivilSelect name="gender">
+                    <option value="1" selected>Soltero/a</option>
+                    <option value="2">Casado/a</option>
+                    <option value="3">Divorciado/a</option>
+                    <option value="4">Viudo/a</option>
+                    <option value="5">Otro</option>
+                </select>
+            </div>
+            <div>
+                <h4>Colegio del que se graduo</h4>
+                <select #colegioSelect name="school">
+                    <option value="0" selected hidden>Seleccione un colegio</option>
+                    <!--Opciones del vector colegios-->
+                    <option *ngFor="let colegio of colegios" [value]="colegio.colegioId">{{colegio.nombreColegio}}</option>
+                </select>
+            </div>
+            <div>
+                <h4>Semestre</h4>
+                <input #semestreInput type="number" placeholder="Ingrese el semestre actual del estudiante">
             </div>
         </div>
         <!-- Informacion de cuenta -->
         <h2>Información de cuenta</h2>
-        <div class="div-datos">
+        <div class="personal-information">
             <div>
-                <div>
-                    <h4>Username</h4>
-                    <input type="text" placeholder="Ingresa el nombre de usuario del estudiante">
-                </div>
+                <h4>Username</h4>
+                <input type="text" placeholder="Ingresa el nombre de usuario del estudiante">
             </div>
             <div>
-                <div>
-                    <h4>Contraseña</h4>
-                    <input type="text" placeholder="Ingresa contraseña segura">
-                </div>
+                <h4>Contraseña</h4>
+                <input type="text" placeholder="Ingresa contraseña segura">
             </div>
             <div>
-                <div>
-                    <h4>Confirma contraseña</h4>
-                    <input type="text" placeholder="Confirma contrañase segura">
-                </div>
+                <h4>Confirma contraseña</h4>
+                <input type="text" placeholder="Confirma contrañase segura">
             </div>
         </div>
         <!-- Informacion de carrera -->
         <h2>Elección de carrera</h2>
-        <div class="div-datos">
+        <div class="personal-information">
             <div>
-                <div>
-                    <h4>Carrera escogida</h4>
-                    <input type="text" placeholder="Ingresa el nombre de usuario del estudiante">
-                </div>
+                <h4>Carrera escogida</h4>
+                <select name="carrer">
+                    <option value="0" selected hidden>Seleccione la carrera elegida</option>
+                    <!--Opciones del vector carreras-->
+                    <option *ngFor="let carrera of carreras" [value]="carrera.carreraId">{{carrera.sigla}}</option>
+                </select>
             </div>
         </div>
+        <!-- Mensaje de advertencia -->
+        <div #errorMessage class="warning">
+            <p>Por favor, debe llenar todos los campos correspondientes</p>
+        </div>
         <!-- Guardar -->
-        <div class="div-guardar">
-            <div>
-                <div>
-                    <hr>
-                </div>
-            </div>
-            <div>
-                <div>  
-                    <button> Guardar </button>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <hr>
-                </div>
-            </div>
+        <div class="save-button">
+            <div><hr class="line"/></div>
+            <div class="center"><button (click)="guardarDatos()">Guardar</button></div>
+            <div><hr class="line"/></div>
         </div>
     </div>
 </div>
