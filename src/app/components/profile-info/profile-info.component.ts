@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UserService } from 'src/app/service/user.service';
+
 
 @Component({
   selector: 'app-profile-info',
@@ -6,5 +8,41 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile-info.component.css']
 })
 export class ProfileInfoComponent {
+  constructor(private userService: UserService) {
+  }
 
+  user = {
+    name: '',
+    username: '',
+    email: '',
+    register: '',
+    urlPfp: '../../../assets/icons/usuario.png',
+    urlHeader: '../../../assets/icons/portada-arboles.jpg',
+    description: '',
+    genero:'',
+    carrea:'',
+    correo:'',
+    celular:'',
+    fechaNacimiento:''
+  };
+  ngOnInit(){
+    console.log("Obteniendo información del usuario");
+    this.userService.getUserInfo(2)
+    .subscribe({
+      next:data => {
+        this.user.description=data.data.descripcion
+        this.user.urlPfp=data.data.uuidFoto
+
+        this.user.urlHeader=data.data.uuidPortada
+        this.user.fechaNacimiento=data.data.fechaNacimiento
+        this.user.genero=data.data.genero
+        //carrera-agregar logica
+        this.user.correo=data.data.correo
+        this.user.celular=data.data.celular
+
+        console.log(data.data)
+    },
+    error: (error) => console.log(error),
+  })
+  }
 }

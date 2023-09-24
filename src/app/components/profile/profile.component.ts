@@ -27,10 +27,13 @@ export class ProfileComponent {
     .subscribe({
       next:data => {
         this.user.description=data.data.descripcion
+        this.user.urlPfp=data.data.uuidFoto
+
+        this.user.urlHeader=data.data.uuidPortada
         console.log(data.data)
     },
     error: (error) => console.log(error),
   })
   }
-  
+ 
 }
