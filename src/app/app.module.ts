@@ -8,6 +8,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { AddTeacherComponent } from './components/add-teacher/add-teacher.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { AddTeacherComponent } from './components/add-teacher/add-teacher.compon
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

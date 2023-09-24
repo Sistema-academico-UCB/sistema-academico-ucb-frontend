@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UserService } from 'src/app/service/user.service';
+
 
 @Component({
   selector: 'app-profile',
@@ -7,4 +9,28 @@ import { Component } from '@angular/core';
 })
 export class ProfileComponent {
 
+  constructor(private userService: UserService) {
+  }
+
+  user = {
+    name: '',
+    username: '',
+    email: '',
+    register: '',
+    urlPfp: '../../../assets/icons/usuario.png',
+    urlHeader: '../../../assets/icons/portada-arboles.jpg',
+    description: ''
+  };
+  ngOnInit(){
+    console.log("Obteniendo información del usuario");
+    this.userService.getUserInfo(2)
+    .subscribe({
+      next:data => {
+        this.user.description=data.data.descripcion
+        console.log(data.data)
+    },
+    error: (error) => console.log(error),
+  })
+  }
+  
 }
