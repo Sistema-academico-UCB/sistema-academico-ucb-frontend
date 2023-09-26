@@ -35,7 +35,6 @@ export class AddStudentComponent {
     // Obtener la lista de carreras
     this.StudentService.getCarrers().subscribe(
       (data: any) => {
-        console.log(data);
         this.carreras = data.data;
       },
       (error) => {
@@ -79,30 +78,32 @@ export class AddStudentComponent {
           if(this.validacion4()){
             if(this.validacion5()){
               this.confirmationPopup = true;
-              //Armar el json
-              let estudiante = {
-                nombre: this.nombreInput.nativeElement.value,
-                apellido_paterno: this.apellidoPaternoInput.nativeElement.value,
-                apellido_materno: this.apellidoMaternoInput.nativeElement.value,
-                carnet_identidad: this.ciInput.nativeElement.value,
-                fecha_nacimiento: this.fechaNacimientoInput.nativeElement.value,
-                correo: this.correoInput.nativeElement.value,
-                genero: this.generoSelect.nativeElement.value,
-                celular: this.celularInput.nativeElement.value,
-                decripcion: "",
-                uuid_foto: "./assets/icons/usuario.png",
-                uuid_portada: "./assets/icons/portada-arboles.jpg",
-                direccion: this.direccionInput.nativeElement.value,
-                fecha_registro: this.fechaActual,
-                estado_civil: this.estadoCivilSelect.nativeElement.value,
-                username: this.usuarioInput.nativeElement.value,
-                secret: this.contrasenaInput.nativeElement.value,
-                rol: "Estudiante",
-                semestre: this.semestreInput.nativeElement.value,
-                colegio_id: this.colegioSelect.nativeElement.value,
-                carrera_id: this.carreraSelect.nativeElement.value
-              }
-              console.log(estudiante);
+              this.StudentService.createStudent(
+                this.nombreInput.nativeElement.value,
+                this.apellidoPaternoInput.nativeElement.value,
+                this.apellidoMaternoInput.nativeElement.value,
+                this.ciInput.nativeElement.value,
+                this.fechaNacimientoInput.nativeElement.value,
+                this.correoInput.nativeElement.value,
+                this.generoSelect.nativeElement.value,
+                this.celularInput.nativeElement.value,
+                this.direccionInput.nativeElement.value,
+                this.fechaActual,
+                this.estadoCivilSelect.nativeElement.value,
+                this.usuarioInput.nativeElement.value,
+                this.contrasenaInput.nativeElement.value,
+                this.semestreInput.nativeElement.value,
+                this.colegioSelect.nativeElement.value,
+                this.carreraSelect.nativeElement.value
+              ).subscribe(
+                (data: any) => {
+                  console.log(data);
+                  this.limpiarCampos();
+                },
+                (error) => {
+                  console.log(error);
+                }
+              );
             }
           }
         }
@@ -110,6 +111,26 @@ export class AddStudentComponent {
     } else {
       console.log("Datos no guardados");
     }
+  }
+
+  /*Limpiar campos*/
+  limpiarCampos() {
+    this.nombreInput.nativeElement.value = "";
+    this.apellidoPaternoInput.nativeElement.value = "";
+    this.apellidoMaternoInput.nativeElement.value = "";
+    this.ciInput.nativeElement.value = "";
+    this.fechaNacimientoInput.nativeElement.value = "";
+    this.correoInput.nativeElement.value = "";
+    this.celularInput.nativeElement.value = "";
+    this.direccionInput.nativeElement.value = "";
+    this.semestreInput.nativeElement.value = "";
+    this.usuarioInput.nativeElement.value = "";
+    this.contrasenaInput.nativeElement.value = "";
+    this.contrasenaConfirmacionInput.nativeElement.value = "";
+    this.colegioSelect.nativeElement.value = "0";
+    this.carreraSelect.nativeElement.value = "0";
+    this.estadoCivilSelect.nativeElement.value = "Soltero/a";
+    this.generoSelect.nativeElement.value = "Hombre";
   }
 
   /*Mensaje error*/

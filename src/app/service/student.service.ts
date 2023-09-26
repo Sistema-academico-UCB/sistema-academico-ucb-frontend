@@ -23,8 +23,8 @@ export class StudentService {
 
   //Función para crear un estudiante
   createStudent(nombre: string, apellidoPaterno: string, apellidoMaterno: string, carnetIdentidad: string, 
-    fechaNacimiento: string, correo: string, genero: string, celular: string, direccion: string, 
-    fechaRegistro: string, estadoCivil: string, username: string, secret: string, semestre: number, 
+    fechaNacimiento: Date, correo: string, genero: string, celular: string, direccion: string, 
+    fechaRegistro: Date, estadoCivil: string, username: string, secret: string, semestre: number, 
     colegioId: number, carreraId: number) {
     const header = {
       'Content-Type': 'application/json',
