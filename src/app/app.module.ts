@@ -10,6 +10,9 @@ import { ProfileInfoComponent } from './components/profile-info/profile-info.com
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { AddTeacherComponent } from './components/add-teacher/add-teacher.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileTeacherInfoComponent } from './components/profile-teacher-info/profile-teacher-info.component';
+import { ProfileTeacherEditComponent } from './components/profile-teacher-edit/profile-teacher-edit.component';
+import { ProfileTeacherComponent } from './components/profile-teacher/profile-teacher.component';
 
 
 @NgModule({
@@ -19,7 +22,10 @@ import { HttpClientModule } from '@angular/common/http';
     ProfileComponent,
     ProfileInfoComponent,
     ProfileEditComponent,
-    AddTeacherComponent
+    AddTeacherComponent,
+    ProfileTeacherInfoComponent,
+    ProfileTeacherEditComponent,
+    ProfileTeacherComponent
 
   ],
   imports: [

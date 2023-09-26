@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,11 @@ export class TeacherService {
   getDepartments() {
     return this.http.get(`${environment.BACKEND_URL}/api/v1/departments`);
   }
-
+  //Funcion para obtener informacion de un profesor
+  public getTeacherInfo(userId: number): Observable<any>{
+    //return this.http.get<any>(`${environment.USER_URL}/api/v1/user/`);
+    return this.http.get<any>(`http://localhost:8080/api/v1/teacher/${userId}`);
+  }
   //Función para crear un profesor
   createTeacher(
     nombre: string, apellidoPaterno: string, apellidoMaterno: string, carnetIdentidad: string,
@@ -58,6 +64,45 @@ export class TeacherService {
       'estado': true
     };
     return this.http.post(this.teacherUrl, body, { headers: header });
+  }
+  updateTeacher(descripcion:string){
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      //'Authorization': 'Bearer $token',
+    };
+    const body = {
+      "nombre": "Kevin",
+      "apellidoPaterno": "Perez",
+      "apellidoMaterno": "Lopez",
+      "carnetIdentidad": "1234567",
+      "fechaNacimiento": "1999-01-01",
+      "correo": "juan.perez@ucb.edu.bo",
+      "genero": "Hombre",
+      "celular": "1234567",
+      "descripcion": descripcion,
+      "uuidFoto": "./assets/icons/usuario.png",
+      "uuidPortada": "./assets/icons/portada-arboles.jpg",
+      "direccion": "Calle 1",
+      "fechaRegistro": "2021-01-01",
+      "estadoCivil": "Soltero/a",
+      "username": "juan.perez",
+      "secret": "123456",
+      "rol": "estudiante",
+      "semestre": 1,
+      "colegioId": 1,
+      "carreraId": 1,
+      "estado": true
+      
+      // 'descripcion': descripcion,
+      // //'uuidFoto': '',
+      // //'uuidPortada': '',
+      // 'rol': 'Estudiante',
+      
+      // 'estado': true
+    }
+    return this.http.put(`${environment.BACKEND_URL}/api/v1/teacher/1`, body, { headers: header });
+
   }
 
 }

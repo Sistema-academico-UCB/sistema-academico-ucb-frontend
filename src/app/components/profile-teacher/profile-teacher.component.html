@@ -1,0 +1,47 @@
+<div class="profile">
+    <div class="portada">
+        <img src={{user.urlHeader}} alt="Imagen de portada">
+        <div class="perfil">
+            <div class="imagen">
+                
+                <img src={{user.urlPfp}} alt="Foto de perfil">
+             
+            </div>
+            
+        </div>
+        <a routerLink="/profile-teacher-edit"><button class="boton">Editar perfil</button></a>
+    </div>
+    <div class="container">
+        <div class="header">
+            <div></div>
+            <div class="margen">
+                <a routerLink="/profile-teacher"><h1>Mi perfil</h1></a>
+            </div>
+            <div>
+                <a routerLink="/profile-teacher-info"><h2>Información</h2></a>
+            </div>
+
+        </div>
+        <div class="informacion">
+            <div class="data">
+                <h3>Acerca de</h3>
+                <br>
+                <h4>{{user.description}}</h4>
+            </div>
+            <div>
+                <div class="data">
+                    <h3>Cuenta</h3>
+                    <br>
+                    <h4>Se unio el 4 de agosto de 2023</h4>
+                </div>
+                <br>
+                <div class="data" style="height: 300px; display: flex;">
+                    <h3>Amigos</h3>
+                    <div class="amigo">
+                        2
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

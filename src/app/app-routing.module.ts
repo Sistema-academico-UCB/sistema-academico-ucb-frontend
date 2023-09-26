@@ -5,6 +5,10 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { AddTeacherComponent } from './components/add-teacher/add-teacher.component';
+import { ProfileTeacherInfoComponent } from './components/profile-teacher-info/profile-teacher-info.component';
+import { ProfileTeacherEditComponent } from './components/profile-teacher-edit/profile-teacher-edit.component';
+import { ProfileTeacherComponent } from './components/profile-teacher/profile-teacher.component';
+
 
 
 
@@ -15,6 +19,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'profile-info', component: ProfileInfoComponent },
   { path: 'profile-edit', component: ProfileEditComponent },
+  { path: 'profile-teacher', component: ProfileTeacherComponent },
+  { path: 'profile-teacher-info', component: ProfileTeacherInfoComponent },
+  { path: 'profile-teacher-edit', component: ProfileTeacherEditComponent },
 ];
 
 @NgModule({
