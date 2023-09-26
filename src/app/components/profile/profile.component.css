@@ -1,32 +1,31 @@
 /*Quitar los estilos generales*/
 * {
-    padding: 0;
-    margin: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-  /*Background*/
-  .profile {
-    background-color: #ffffff;
-    min-height: 100%;
-    box-sizing: border-box;
-
-  }
-  /*Contenedor*/
-  .container {
-    background-color: #ffffff;
-    box-sizing: border-box;
-    margin-top: 20px;
-    margin-left: 4%;
-    margin-right: 4%;
-  }
-  /* Establece estilos para el contenedor de la portada */
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/*Background*/
+.profile {
+  background-color: #ffffff;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+/*Contenedor*/
+.container {
+  background-color: #ffffff;
+  box-sizing: border-box;
+  margin-top: 20px;
+  margin-left: 4%;
+  margin-right: 4%;
+}
+/*Establece estilos para el contenedor de la portada */
 .portada {
-    position: relative;
-    width: 100%;
-    height: 35vh; /* Una cuarta parte de la altura de la pantalla */
-  }
+  position: relative;
+  width: 100%;
+  height: 35vh; /* Una cuarta parte de la altura de la pantalla */
+}
   
   /* Establece estilos para la imagen de portada */
   .portada img {

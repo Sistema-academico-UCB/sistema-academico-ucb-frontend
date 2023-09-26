@@ -11,58 +11,84 @@ import { StudentService } from 'src/app/service/student.service';
 
 export class ProfileEditComponent {
   
-  constructor(private userService: UserService, private StudentService: StudentService) {
-  }
-  /*Declaramos los atributos del estudiante*/
+  // Constructor
+  constructor(private userService: UserService, private StudentService: StudentService) {}
+
+  // Controlador para el mensaje de error
   @ViewChild('errorMessage') errorMessage!: ElementRef;
-  /*Primera sección*/
+  // Controladores para la descripcion
   @ViewChild('Description') Description!: ElementRef;
 
-  user = {
-    name: '',
-    username: '',
-    email: '',
-    register: '',
-    urlPfp: '',
-    urlHeader: '',
-    description: ''
-  };
+  // Datos del usuario
+  user = { name: '', username: '', email: '', register: '', urlPfp: '', urlHeader: '', description: ''};
+
+  // Variables
+  txtDescription: string = this.user.description; // Descripción del usuario
+  confirmationPopup = false; // Popup de confirmación
+  errorPopup = false; // Popup de error
+
+  // Obtiene la información del usuario al cargar la página
   ngOnInit(){
     console.log("Obteniendo información del usuario");
     this.userService.getUserInfo(2)
     .subscribe({
       next:data => {
-        this.user.description=data.data.descripcion
-        this.user.urlPfp=data.data.uuidFoto
-
-        this.user.urlHeader=data.data.uuidPortada
-        console.log(data.data)
+        if (this.user.urlPfp == ''){
+          this.user.urlPfp = '../../../assets/icons/usuario.png';
+        } else {
+          this.user.urlPfp = data.data.uuidFoto;
+        }
+        if (this.user.urlHeader == ''){
+          this.user.urlHeader = '../../../assets/icons/portada-arboles.jpg';
+        } else {
+          this.user.urlHeader = data.data.uuidPortada;
+        }
+        this.user.description = data.data.descripcion;
         this.txtDescription = this.user.description;
-        
     },
     error: (error) => console.log(error),
   })
   }
-  txtDescription: string = this.user.description;
-  // Popup de confirmación
-  confirmationPopup = false;
-  // Popup de error
-  errorPopup = false;
 
+  // Campos para las fotos
+  selectedPfp: File;
+  selectedHeader: File;
+  onFileSelectedPfp(event: any) {
+    this.selectedPfp = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.result != null){
+        this.user.urlPfp = reader.result?.toString();
+        console.log(this.user.urlPfp);
+      }
+    };
+    reader.readAsDataURL(this.selectedPfp);
+  }
+  onFileSelectedHeader(event: any) {
+    this.selectedHeader = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.result != null){
+        this.user.urlHeader = reader.result?.toString();
+        console.log(this.user.urlHeader);
+      }
+    };
+    reader.readAsDataURL(this.selectedHeader);
+  }
 
+  // Función para guardar los datos
   guardarDatos(){
-    if(this.validacion()){
+    if(this.validacion()) {
       console.log("Guardando datos");
-      this.confirmationPopup = true;
       this.StudentService.updateStudent(this.txtDescription)
-      
       .subscribe({
         next:data => {
-          console.log(data)
+          console.log(data);
+          this.confirmationPopup = true;
       },
       error: (error) => console.log(error),
       })
-    }else{
+    } else {
       console.log("Datos no guardados");
     }
   }
@@ -70,7 +96,6 @@ export class ProfileEditComponent {
   mensajeError(atributo: number) {
     let atributos = [
       this.Description,
-      
     ];
     this.errorMessage.nativeElement.classList.add('warning-active');
     atributos[atributo].nativeElement.classList.add('input-empty');
@@ -79,6 +104,7 @@ export class ProfileEditComponent {
       atributos[atributo].nativeElement.classList.remove('input-empty');
     }, 3000);
   }
+  /*Validacion*/
   validacion() {
     let flag = false;
     if (this.txtDescription == "") {
@@ -88,6 +114,4 @@ export class ProfileEditComponent {
     }
     return flag;
   }
-
-
 }
