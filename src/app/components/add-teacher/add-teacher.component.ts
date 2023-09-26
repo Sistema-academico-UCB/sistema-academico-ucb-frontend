@@ -1,4 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { DepartmentDto } from 'src/app/dto/department.dto';
+import { ProfessionDto } from 'src/app/dto/profession.dto';
+import { TeacherService } from 'src/app/service/teacher.service';
 
 @Component({
   selector: 'app-add-teacher',
@@ -7,46 +10,40 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 })
 export class AddTeacherComponent {
   // Variables
-  fechaActual: number = Date.now();
+  fechaActual: Date = new Date();
   lugarResidencia = "Bolivia";
   departamento = "La Paz";
 
+  constructor(private TeacherService: TeacherService) { }
+
   // Lista de colegios
-  tipoDocentes = [ "Docente", "Auxiliar", "Investigador" ];
-
+  tipoDocentes = [ "Docente", "Auxiliar", "Investigador", "Medio Tiempo", "Tiempo Completo" ];
   // Lista de profesiones
-  profesiones = [
-    {
-      profesionId: 1,
-      nombreProfesion: "Ingeniería de Sistemas"
-    }, {
-      profesionId: 2,
-      nombreProfesion: "Ingeniería Civil"
-    }, {
-      profesionId: 3,
-      nombreProfesion: "Ingeniería Electrónica"
-    }, {
-      profesionId: 4,
-      nombreProfesion: "Ingeniería Industrial"
-    }
-  ];
-
+  profesiones: ProfessionDto[] = [];
   // Lista de departamentos
-  departamentos = [
-    {
-      departamentoCarreraId: 1,
-      nombre: 'Educación'
-    }, {
-      departamentoCarrera: 2,
-      nombre: 'Ingeniería'
-    }, {
-      departamentoCarreraId: 3,
-      nombre: 'Ciencias Sociales'
-    }, {
-      departamentoCarreraId: 4,
-      nombre: 'Ciencias Exactas'
-    }
-  ];
+  departamentos: DepartmentDto[] = [];
+
+  ngOnInit() {
+    // Obtener la lista de profesiones
+    this.TeacherService.getProfessions().subscribe(
+      (data: any) => {
+        this.profesiones = data.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    // Obtener la lista de departamentos
+    this.TeacherService.getDepartments().subscribe(
+      (data: any) => {
+        this.departamentos = data.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   /*Declaramos los atributos del estudiante*/
   @ViewChild('errorMessage') errorMessage!: ElementRef;
   /*Primera sección*/
@@ -81,36 +78,65 @@ export class AddTeacherComponent {
         if(this.validacion3()){
           if(this.validacion4()){
             this.confirmationPopup = true;
-            let teacher = {
-              nombre: this.nombreInput.nativeElement.value,
-              apellido_paterno: this.apellidoPaternoInput.nativeElement.value,
-              apellido_materno: this.apellidoMaternoInput.nativeElement.value,
-              carnet_identidad: this.ciInput.nativeElement.value,
-              fecha_nacimiento: this.fechaNacimientoInput.nativeElement.value,
-              correo: this.correoInput.nativeElement.value,
-              genero: this.generoSelect.nativeElement.value,
-              celular: this.celularInput.nativeElement.value,
-              descripcion: "",
-              uuid_foto: "./assets/icons/usuario.png",
-              uuid_portada: "./assets/icons/portada-arboles.jpg",
-              direccion: this.direccionInput.nativeElement.value,
-              fecha_registro: this.fechaActual,
-              estado_civil: this.estadoCivilSelect.nativeElement.value,
-              username: this.usuarioInput.nativeElement.value,
-              secret: this.contrasenaInput.nativeElement.value,
-              rol: "Docente",
-              tipo: this.tipoDocenteSelect.nativeElement.value,
-              profesion_id: this.profesionSelect.nativeElement.value,
-              departamento_carrera_id: this.deptoSelect.nativeElement.value,
-              director_carrera_id: this.checkDirector.nativeElement.checked
-            };
-            console.log(teacher);
+            this.TeacherService.createTeacher(
+              this.nombreInput.nativeElement.value,
+              this.apellidoPaternoInput.nativeElement.value,
+              this.apellidoMaternoInput.nativeElement.value,
+              this.ciInput.nativeElement.value,
+              this.fechaNacimientoInput.nativeElement.value,
+              this.correoInput.nativeElement.value,
+              this.generoSelect.nativeElement.value,
+              this.celularInput.nativeElement.value,
+              this.direccionInput.nativeElement.value,
+              this.fechaActual,
+              this.estadoCivilSelect.nativeElement.value,
+              this.usuarioInput.nativeElement.value,
+              this.contrasenaInput.nativeElement.value,
+              this.tipoDocenteSelect.nativeElement.value,
+              this.profesionSelect.nativeElement.value,
+              this.deptoSelect.nativeElement.value,
+              this.checkDirector.nativeElement.checked
+            ).subscribe(
+              (data: any) => {
+                console.log(data);
+                this.limpiarCampos();
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
           }
         }
       }
     } else {
       console.log("Datos no guardados");
     }
+  }
+
+  /*Limpiar campos*/
+  limpiarCampos() {
+    let atributos = [
+      this.nombreInput,
+      this.apellidoPaternoInput,
+      this.apellidoMaternoInput,
+      this.ciInput,
+      this.fechaNacimientoInput,
+      this.correoInput,
+      this.celularInput,
+      this.direccionInput,
+      this.usuarioInput,
+      this.contrasenaInput,
+      this.contrasenaConfirmacionInput,
+      this.profesionSelect,
+      this.deptoSelect
+    ];
+    atributos.forEach(atributo => {
+      atributo.nativeElement.value = "";
+    });
+    this.generoSelect.nativeElement.value = "Hombre";
+    this.estadoCivilSelect.nativeElement.value = "Soltero/a";
+    this.tipoDocenteSelect.nativeElement.value = "Docente";
+    this.checkDirector.nativeElement.checked = false;
   }
 
   /*Mensaje error*/

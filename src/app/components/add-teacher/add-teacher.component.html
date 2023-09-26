@@ -127,7 +127,7 @@
                 <h4>Departamento</h4>
                 <select #deptoSelect name="depto">
                     <option value="0" selected hidden>Seleccionar su departamento</option>
-                    <option *ngFor="let depto of departamentos" [value]="depto.departamentoCarreraId">{{depto.nombre}}</option>
+                    <option *ngFor="let depto of departamentos" [value]="depto.carreraId">{{depto.nombre}}</option>
                 </select>
             </div>
             <div class="checkbox-content">
