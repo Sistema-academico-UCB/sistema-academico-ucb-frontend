@@ -22,7 +22,10 @@ export class ProfileTeacherInfoComponent {
     carrea:'',
     correo:'',
     celular:'',
-    fechaNacimiento:''
+    fechaNacimiento:'',
+    profesion:'',
+    carreraDep:'',
+    id:0
   };
   dia:string=''
   mes:string=''
@@ -32,7 +35,7 @@ export class ProfileTeacherInfoComponent {
   registroYear:string=''
   ngOnInit(){
     console.log("Obteniendo información del usuario");
-    this.TeacherService.getTeacherInfo(2)
+    this.TeacherService.getTeacherInfo(1)
     .subscribe({
       next:data => {
         this.user.description=data.data.descripcion
@@ -53,6 +56,23 @@ export class ProfileTeacherInfoComponent {
         //carrera-agregar logica
         this.user.correo=data.data.correo
         this.user.celular=data.data.celular
+        this.user.id=data.data.docenteId
+        this.TeacherService.getProfessionsById(data.data.profesionId)
+        .subscribe({
+          next:data => {
+            this.user.profesion=data.data.nombreProfesion
+          },
+          error: (error) => console.log(error),
+        })
+        this.TeacherService.getDepartmentsById(data.data.departamentoCarreraId)
+        .subscribe({
+          next:data => {
+            this.user.carreraDep=data.data.nombre
+          },
+          error: (error) => console.log(error),
+        })
+
+
 
         console.log(data.data)
     },

@@ -17,10 +17,18 @@ export class TeacherService {
   getProfessions() {
     return this.http.get(`${environment.BACKEND_URL}/api/v1/professions`);
   }
+  //Funcion para obtener profesion por medio de Id
+  getProfessionsById(id: number) {
+    return this.http.get<any>(`${environment.BACKEND_URL}/api/v1/professions/${id}`);
+  }
 
   //Funcion para obtener la lista de departamentos
   getDepartments() {
     return this.http.get(`${environment.BACKEND_URL}/api/v1/departments`);
+  }
+  //Funcion para obtener departamento por medio de Id
+  getDepartmentsById(id: number) {
+    return this.http.get<any>(`${environment.BACKEND_URL}/api/v1/departments/${id}`);
   }
   //Funcion para obtener informacion de un profesor
   public getTeacherInfo(userId: number): Observable<any>{
@@ -72,26 +80,27 @@ export class TeacherService {
       //'Authorization': 'Bearer $token',
     };
     const body = {
-      "nombre": "Kevin",
-      "apellidoPaterno": "Perez",
-      "apellidoMaterno": "Lopez",
-      "carnetIdentidad": "1234567",
-      "fechaNacimiento": "1999-01-01",
-      "correo": "juan.perez@ucb.edu.bo",
-      "genero": "Hombre",
-      "celular": "1234567",
+      "nombre": "Roberta",
+      "apellidoPaterno": "Gonzalez",
+      "apellidoMaterno": "Perez",
+      "carnetIdentidad": "12345678",
+      "fechaNacimiento": "1990-01-01",
+      "correo": "roberta.gonzalezaaa@gmail.com",
+      "genero": "Mujer :D",
+      "celular": "12345678",
       "descripcion": descripcion,
       "uuidFoto": "./assets/icons/usuario.png",
       "uuidPortada": "./assets/icons/portada-arboles.jpg",
-      "direccion": "Calle 1",
-      "fechaRegistro": "2021-01-01",
+      "direccion": "Av. America #1234",
+      "fechaRegistro": "2023-01-01",
       "estadoCivil": "Soltero/a",
-      "username": "juan.perez",
-      "secret": "123456",
-      "rol": "estudiante",
-      "semestre": 1,
-      "colegioId": 1,
-      "carreraId": 1,
+      "username": "roberta.gonzalez",
+      "secret": "1234567899",
+      "rol": "Docente",
+      "tipo": "Tiempo completo",
+      "profesionId": 1,
+      "departamentoCarreraId": 1,
+      "directorCarrera": true,
       "estado": true
       
       // 'descripcion': descripcion,

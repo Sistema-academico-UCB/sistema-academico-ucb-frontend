@@ -20,6 +20,10 @@ export class StudentService {
   getCarrers() {
     return this.http.get(`${environment.BACKEND_URL}/api/v1/careers`);
   }
+  //Funcion para obtener carrera por medio de Id
+  getCarrerById(id: number) {
+    return this.http.get<any>(`${environment.BACKEND_URL}/api/v1/careers/${id}`);
+  }
 
   //Función para crear un estudiante
   createStudent(nombre: string, apellidoPaterno: string, apellidoMaterno: string, carnetIdentidad: string, 

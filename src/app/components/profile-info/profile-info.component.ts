@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
+import { StudentService } from 'src/app/service/student.service';
 
 
 @Component({
@@ -8,7 +9,7 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./profile-info.component.css']
 })
 export class ProfileInfoComponent {
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private StudentService: StudentService) {
   }
 
   user = {
@@ -20,10 +21,11 @@ export class ProfileInfoComponent {
     urlHeader: '../../../assets/icons/portada-arboles.jpg',
     description: '',
     genero:'',
-    carrea:'',
+    carrera:'',
     correo:'',
     celular:'',
-    fechaNacimiento:''
+    fechaNacimiento:'',
+    id:0
   };
   dia:string=''
   mes:string=''
@@ -54,9 +56,15 @@ export class ProfileInfoComponent {
         this.registroMes=data.data.fechaRegistro.substring(5,7);
         this.registroYear=data.data.fechaRegistro.substring(0,4);
         this.user.genero=data.data.genero;
-        //carrera-agregar logica
         this.user.correo=data.data.correo;
         this.user.celular=data.data.celular;
+        this.user.id=data.data.estudianteId;
+        this.StudentService.getCarrerById(data.data.carreraId)
+        .subscribe({
+          next:data => {
+            this.user.carrera = data.data.nombre;
+          }
+        })
         console.log(data.data);
     },
     error: (error) => console.log(error),

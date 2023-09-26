@@ -19,8 +19,11 @@ export class ProfileComponent {
     register: '',
     urlPfp: '../../../assets/icons/usuario.png',
     urlHeader: '../../../assets/icons/portada-arboles.jpg',
-    description: ''
+    description: '',
   };
+  registroDia:string=''
+  registroMes:string=''
+  registroYear:string=''
   ngOnInit(){
     console.log("Obteniendo información del usuario");
     this.userService.getUserInfo(2)
@@ -36,6 +39,10 @@ export class ProfileComponent {
         this.user.username = data.data.username;
         this.user.email = data.data.email;
         this.user.register = data.data.fechaRegistro;
+        this.user.description=data.data.descripcion;
+        this.registroDia=data.data.fechaRegistro.substring(8,10);
+        this.registroMes=data.data.fechaRegistro.substring(5,7);
+        this.registroYear=data.data.fechaRegistro.substring(0,4);
         console.log(data.data)
     },
     error: (error) => console.log(error),
