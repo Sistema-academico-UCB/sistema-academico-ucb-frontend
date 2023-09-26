@@ -21,6 +21,11 @@
     margin-left: 4%;
     margin-right: 4%;
   }
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   /* Establece estilos para el contenedor de la portada */
 .portada {
     position: relative;
@@ -172,8 +177,30 @@
     display: flex;
     justify-content: space-between;
   }
+  /*Advertencia*/
+  .warning {
+    display: none;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #ff7171;
+  }
+  .warning p {
+    color: white !important;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .warning-active {
+    display: flex;
+    align-items: center;
+  }
 
   /*tipografia*/
+  p {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 15px;
+    font-weight: 600;
+    color: #757575;
+  }
   h1{
     font-family: 'Roboto', sans-serif;
     font-size: 22px;
@@ -201,4 +228,60 @@
   a{
     text-decoration: none;
 
+  }
+  /*-----------------------------------------------------------------------------------------------------*/
+/*Mensaje de confirmacion*/
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.199);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+  }
+  .success {
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+  }
+  .confirmation-content {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .confirmation-content i {
+    font-size: 60px;
+    margin-top: 10px;
+  }
+  .confirmation-content p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #003531;
+  }
+  .confirmation-content button {
+    width: 100px;
+    margin-top: 10px;
+  }
+  .button-p{
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    padding: 6px 0px;
+    background-color: #6edad2;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif !important;
+
+  }
+  .button-p:focus {
+    border: none;
+  }
+  .button-p:hover {
+    background-color: #3EB7AE;
+    color: #ffffff;
   }

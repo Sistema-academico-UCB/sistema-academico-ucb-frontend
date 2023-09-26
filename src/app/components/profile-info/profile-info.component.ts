@@ -25,6 +25,12 @@ export class ProfileInfoComponent {
     celular:'',
     fechaNacimiento:''
   };
+  dia:string=''
+  mes:string=''
+  year:string=''
+  registroDia:string=''
+  registroMes:string=''
+  registroYear:string=''
   ngOnInit(){
     console.log("Obteniendo información del usuario");
     this.userService.getUserInfo(2)
@@ -35,6 +41,15 @@ export class ProfileInfoComponent {
 
         this.user.urlHeader=data.data.uuidPortada
         this.user.fechaNacimiento=data.data.fechaNacimiento
+        this.dia=this.user.fechaNacimiento.substring(8,10)
+        this.mes=this.user.fechaNacimiento.substring(5,7)
+        this.year=this.user.fechaNacimiento.substring(0,4)
+        console.log(this.dia)
+        console.log(this.mes)
+        console.log(this.year)
+        this.registroDia=data.data.fechaRegistro.substring(8,10)
+        this.registroMes=data.data.fechaRegistro.substring(5,7)
+        this.registroYear=data.data.fechaRegistro.substring(0,4)
         this.user.genero=data.data.genero
         //carrera-agregar logica
         this.user.correo=data.data.correo

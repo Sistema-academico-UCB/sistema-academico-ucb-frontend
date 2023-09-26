@@ -56,4 +56,44 @@ export class StudentService {
     }
     return this.http.post(this.studentUrl, body, { headers: header });
   }
+  updateStudent(descripcion:string){
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      //'Authorization': 'Bearer $token',
+    };
+    const body = {
+      "nombre": "Kevin",
+      "apellidoPaterno": "Perez",
+      "apellidoMaterno": "Lopez",
+      "carnetIdentidad": "1234567",
+      "fechaNacimiento": "1999-01-01",
+      "correo": "juan.perez@ucb.edu.bo",
+      "genero": "Hombre",
+      "celular": "1234567",
+      "descripcion": descripcion,
+      "uuidFoto": "./assets/icons/usuario.png",
+      "uuidPortada": "./assets/icons/portada-arboles.jpg",
+      "direccion": "Calle 1",
+      "fechaRegistro": "2021-01-01",
+      "estadoCivil": "Soltero/a",
+      "username": "juan.perez",
+      "secret": "123456",
+      "rol": "estudiante",
+      "semestre": 1,
+      "colegioId": 1,
+      "carreraId": 1,
+      "estado": true
+      
+      // 'descripcion': descripcion,
+      // //'uuidFoto': '',
+      // //'uuidPortada': '',
+      // 'rol': 'Estudiante',
+      
+      // 'estado': true
+    }
+    return this.http.put(`${environment.BACKEND_URL}/api/v1/student/2`, body, { headers: header });
+
+  }
+  
 }
