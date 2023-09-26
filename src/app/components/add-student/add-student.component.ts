@@ -1,4 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { CarrerDto } from 'src/app/dto/carrer.dto';
+import { CollegeDto } from 'src/app/dto/college.dto';
+import { StudentService } from 'src/app/service/student.service';
 
 @Component({
   selector: 'app-add-student',
@@ -12,58 +15,34 @@ export class AddStudentComponent {
   lugarResidencia = "Bolivia";
   departamento = "La Paz";
 
-  // Lista de colegios
-  colegios = [
-    {
-      colegioId: 1,
-      nombreColegio: "San Calixto",
-    },
-    {
-      colegioId: 2,
-      nombreColegio: "Don Bosco",
-    },
-    {
-      colegioId: 3,
-      nombreColegio: "San Ignacio",
-    },
-    {
-      colegioId: 4,
-      nombreColegio: "San Agustin",
-    },
-    {
-      colegioId: 5,
-      nombreColegio: "San Antonio",
-    },
-  ];
+  constructor(private StudentService: StudentService) { }
 
+  // Lista de colegios
+  colegios: CollegeDto[] = [];
   // Lista de carreras
-  carreras = [
-    {
-      carreraId: 1,
-      sigla: "Ing. Sistemas",
-      nombre: "Ingenieria de Sistemas",
-    },
-    {
-      carreraId: 2,
-      sigla: "Ing. Civil",
-      nombre: "Ingenieria Civil",
-    },
-    {
-      carreraId: 3,
-      sigla: "Ing. Industrial",
-      nombre: "Ingenieria Industrial",
-    },
-    {
-      carreraId: 4,
-      sigla: "Ing. Mecanica",
-      nombre: "Ingenieria Mecanica",
-    },
-    {
-      carreraId: 5,
-      sigla: "Ing. Electrica",
-      nombre: "Ingenieria Electrica",
-    },
-  ];
+  carreras: CarrerDto[] = [];
+
+  ngOnInit(){
+    // Obtener la lista de colegios
+    this.StudentService.getColleges().subscribe(
+      (data: any) => {
+        this.colegios = data.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    // Obtener la lista de carreras
+    this.StudentService.getCarrers().subscribe(
+      (data: any) => {
+        console.log(data);
+        this.carreras = data.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
   /*Declaramos los atributos del estudiante*/
   @ViewChild('errorMessage') errorMessage!: ElementRef;

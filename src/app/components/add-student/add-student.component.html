@@ -128,7 +128,7 @@
                 <select #carreraSelect name="carrer">
                     <option value="0" selected hidden>Seleccione la carrera elegida</option>
                     <!--Opciones del vector carreras-->
-                    <option *ngFor="let carrera of carreras" [value]="carrera.carreraId">{{carrera.sigla}}</option>
+                    <option *ngFor="let carrera of carreras" [value]="carrera.carreraId">{{carrera.sigla}} - {{carrera.nombre}}</option>
                 </select>
             </div>
         </div>
