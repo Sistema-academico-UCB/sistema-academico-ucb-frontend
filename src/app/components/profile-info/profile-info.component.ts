@@ -36,26 +36,28 @@ export class ProfileInfoComponent {
     this.userService.getUserInfo(2)
     .subscribe({
       next:data => {
-        this.user.description=data.data.descripcion
-        this.user.urlPfp=data.data.uuidFoto
-
-        this.user.urlHeader=data.data.uuidPortada
-        this.user.fechaNacimiento=data.data.fechaNacimiento
-        this.dia=this.user.fechaNacimiento.substring(8,10)
-        this.mes=this.user.fechaNacimiento.substring(5,7)
-        this.year=this.user.fechaNacimiento.substring(0,4)
-        console.log(this.dia)
-        console.log(this.mes)
-        console.log(this.year)
-        this.registroDia=data.data.fechaRegistro.substring(8,10)
-        this.registroMes=data.data.fechaRegistro.substring(5,7)
-        this.registroYear=data.data.fechaRegistro.substring(0,4)
-        this.user.genero=data.data.genero
+        if (data.data.uuidFoto != ''){
+          this.user.urlPfp = data.data.uuidFoto;
+        }
+        if (data.data.uuidPortada != ''){
+          this.user.urlHeader = data.data.uuidPortada;
+        }
+        this.user.description=data.data.descripcion;
+        this.user.fechaNacimiento=data.data.fechaNacimiento;
+        this.dia=this.user.fechaNacimiento.substring(8,10);
+        this.mes=this.user.fechaNacimiento.substring(5,7);
+        this.year=this.user.fechaNacimiento.substring(0,4);
+        console.log(this.dia);
+        console.log(this.mes);
+        console.log(this.year);
+        this.registroDia=data.data.fechaRegistro.substring(8,10);
+        this.registroMes=data.data.fechaRegistro.substring(5,7);
+        this.registroYear=data.data.fechaRegistro.substring(0,4);
+        this.user.genero=data.data.genero;
         //carrera-agregar logica
-        this.user.correo=data.data.correo
-        this.user.celular=data.data.celular
-
-        console.log(data.data)
+        this.user.correo=data.data.correo;
+        this.user.celular=data.data.celular;
+        console.log(data.data);
     },
     error: (error) => console.log(error),
   })
