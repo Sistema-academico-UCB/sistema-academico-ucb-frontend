@@ -156,4 +156,14 @@
             </div>
         </div>
     </div>
+    <!--Mensaje de que algo salio mal al momento de registrar al docente-->
+    <div class="popup center" *ngIf="errorPopup">
+        <div class="success center">
+            <div>
+                <div class="confirmation-content"><i class="fa-solid fa-circle-xmark" style="color: #ff4d4d;"></i></div>
+                <div class="confirmation-content"><p>Ocurrió un error, el docente no pudo<br>ser registrado</p></div>
+                <div class="confirmation-content"><button (click)="errorPopup = false">Aceptar</button></div>
+            </div>
+        </div>
+    </div>
 </div>

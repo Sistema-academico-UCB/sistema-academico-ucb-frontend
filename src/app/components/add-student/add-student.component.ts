@@ -69,6 +69,8 @@ export class AddStudentComponent {
 
   // Popup de confirmación
   confirmationPopup = false;
+  // Popup de error
+  errorPopup = false;
 
   // Funcion para guardar los datos
   guardarDatos() {
@@ -102,6 +104,7 @@ export class AddStudentComponent {
                 },
                 (error) => {
                   console.log(error);
+                  this.errorPopup = true;
                 }
               );
             }
