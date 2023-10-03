@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileTeacherInfoComponent } from './components/profile-teacher-info/profile-teacher-info.component';
 import { ProfileTeacherEditComponent } from './components/profile-teacher-edit/profile-teacher-edit.component';
 import { ProfileTeacherComponent } from './components/profile-teacher/profile-teacher.component';
+import { ListOfFriendsComponent } from './components/list-of-friends/list-of-friends.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ProfileTeacherComponent } from './components/profile-teacher/profile-te
     AddTeacherComponent,
     ProfileTeacherInfoComponent,
     ProfileTeacherEditComponent,
-    ProfileTeacherComponent
+    ProfileTeacherComponent,
+    ListOfFriendsComponent
 
   ],
   imports: [
