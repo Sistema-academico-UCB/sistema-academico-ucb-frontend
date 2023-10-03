@@ -18,34 +18,34 @@
             <!-- Buscador amigos -->
             <input placeholder="Buscar amigos">
             <!-- Listado de amigos -->
-            <div class="usuario">
+            <div class="usuario" *ngFor="let friend of friends">
                 <div class="imagen">
                     <img src="../../../assets/icons/usuario.png" alt="Foto de perfil">
                 </div>
                 <div class="informacion">
                     <div>
-                        <h2>Nombre de estudiante</h2>
-                        <h4>Departamento/carrera</h4>
+                        <h2>{{friend.Nombre}} {{friend.Apellido}}</h2>
+                        <h4>{{friend.Carrera}}</h4>
                     </div>
                 </div>
                 <div class="botones">
-                    <button class="button-red" >Eliminar</button>
-                </div>
-            </div>
-            <div class="usuario">
-                <div class="imagen center">
-                    <img src="../../../assets/icons/usuario.png" alt="Foto de perfil">
-                </div>
-                <div class="title-header">
-                    <div>
-                        <h2>Nombre de estudiante</h2>
-                        <h4>Departamento/carrera</h4>
-                    </div>
-                </div>
-                <div class="botones">
-                    <button class="button-red" >Eliminar</button>
+                    <button class="button-red" (click)="openConfirmationDialog()"> <img src="../../../assets/icons/trash.svg" alt="eliminar" class="trash"></button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Popup -->
+<div class="overlay" *ngIf="isDialogVisible"></div> <!-- Fondo oscuro -->
+<div class="custom-confirm-dialog" *ngIf="isDialogVisible">
+  <div class="dialog-content">
+    <div class="div-trash"> <img src="../../../assets/icons/trash.svg" alt="eliminar" class="trash-1"></div>
+    <h5>Confirmación de Eliminación de Amigo</h5>
+    <p>¿Estás seguro de que deseas eliminar a este usuario de tu lista de amigos? Esta acción no se puede deshacer. Por favor, confirma tu elección.</p>
+  </div>
+  <div class="dialog-actions">
+    <button (click)="confirmDelete()" class="Aceptar">Confirmar</button>
+    <button (click)="cancelDelete()" class="Cancelar">Cancelar</button>
+  </div>
 </div>
