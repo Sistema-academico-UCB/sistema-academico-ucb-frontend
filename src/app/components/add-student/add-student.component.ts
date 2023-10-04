@@ -63,7 +63,6 @@ export class AddStudentComponent {
   /*Cuarta sección*/
   @ViewChild('usuarioInput') usuarioInput!: ElementRef;
   @ViewChild('contrasenaInput') contrasenaInput!: ElementRef;
-  @ViewChild('contrasenaConfirmacionInput') contrasenaConfirmacionInput!: ElementRef;
   /*Quinta sección*/
   @ViewChild('carreraSelect') carreraSelect!: ElementRef;
 
@@ -129,7 +128,6 @@ export class AddStudentComponent {
     this.semestreInput.nativeElement.value = "";
     this.usuarioInput.nativeElement.value = "";
     this.contrasenaInput.nativeElement.value = "";
-    this.contrasenaConfirmacionInput.nativeElement.value = "";
     this.colegioSelect.nativeElement.value = "0";
     this.carreraSelect.nativeElement.value = "0";
     this.estadoCivilSelect.nativeElement.value = "Soltero/a";
@@ -151,7 +149,6 @@ export class AddStudentComponent {
       this.semestreInput,
       this.usuarioInput,
       this.contrasenaInput,
-      this.contrasenaConfirmacionInput,
       this.carreraSelect
     ];
     this.errorMessage.nativeElement.classList.add('warning-active');
@@ -206,24 +203,12 @@ export class AddStudentComponent {
     return flag;
   }
   /*Validar cuarta sección*/
-  @ViewChild('passwordError') passwordError!: ElementRef;
   validacion4(){
     let flag = false;
     if(!this.usuarioInput.nativeElement.value){
       this.mensajeError(10);
     } else if(!this.contrasenaInput.nativeElement.value){
       this.mensajeError(11);
-    } else if(!this.contrasenaConfirmacionInput.nativeElement.value){
-      this.mensajeError(12);
-    } else if(this.contrasenaInput.nativeElement.value != this.contrasenaConfirmacionInput.nativeElement.value){
-      this.passwordError.nativeElement.classList.add('password-active');
-      this.contrasenaInput.nativeElement.classList.add('input-empty');
-      this.contrasenaConfirmacionInput.nativeElement.classList.add('input-empty');
-      setTimeout(() => {
-        this.passwordError.nativeElement.classList.remove('password-active');
-        this.contrasenaInput.nativeElement.classList.remove('input-empty');
-        this.contrasenaConfirmacionInput.nativeElement.classList.remove('input-empty');
-      }, 3000);
     } else {
       flag = true;
     }
@@ -233,10 +218,15 @@ export class AddStudentComponent {
   validacion5(){
     let flag = false;
     if(this.carreraSelect.nativeElement.value == "0"){
-      this.mensajeError(13);
+      this.mensajeError(12);
     } else {
       flag = true;
     }
     return flag;
+  }
+
+  /*Funcion para actualizar el pawssword*/
+  updatePassword(){
+    this.contrasenaInput.nativeElement.value = this.ciInput.nativeElement.value;
   }
 }

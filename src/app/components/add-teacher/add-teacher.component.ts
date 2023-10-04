@@ -61,7 +61,6 @@ export class AddTeacherComponent {
   @ViewChild('estadoCivilSelect') estadoCivilSelect!: ElementRef;
   @ViewChild('usuarioInput') usuarioInput!: ElementRef;
   @ViewChild('contrasenaInput') contrasenaInput!: ElementRef;
-  @ViewChild('contrasenaConfirmacionInput') contrasenaConfirmacionInput!: ElementRef;
   /*Cuarta sección*/
   @ViewChild('tipoDocenteSelect') tipoDocenteSelect!: ElementRef;
   @ViewChild('profesionSelect') profesionSelect!: ElementRef;
@@ -129,7 +128,6 @@ export class AddTeacherComponent {
       this.direccionInput,
       this.usuarioInput,
       this.contrasenaInput,
-      this.contrasenaConfirmacionInput,
       this.profesionSelect,
       this.deptoSelect
     ];
@@ -155,7 +153,6 @@ export class AddTeacherComponent {
       this.direccionInput,
       this.usuarioInput,
       this.contrasenaInput,
-      this.contrasenaConfirmacionInput,
       this.profesionSelect,
       this.deptoSelect
     ];
@@ -199,24 +196,12 @@ export class AddTeacherComponent {
     return flag;
   }
   /*Validar tercera sección*/
-  @ViewChild('passwordError') passwordError!: ElementRef;
   validacion3(){
     let flag = false;
     if(!this.usuarioInput.nativeElement.value){
       this.mensajeError(8);
     } else if(!this.contrasenaInput.nativeElement.value){
       this.mensajeError(9);
-    } else if(!this.contrasenaConfirmacionInput.nativeElement.value){
-      this.mensajeError(10);
-    } else if(this.contrasenaInput.nativeElement.value != this.contrasenaConfirmacionInput.nativeElement.value){
-      this.passwordError.nativeElement.classList.add('password-active');
-      this.contrasenaInput.nativeElement.classList.add('input-empty');
-      this.contrasenaConfirmacionInput.nativeElement.classList.add('input-empty');
-      setTimeout(() => {
-        this.passwordError.nativeElement.classList.remove('password-active');
-        this.contrasenaInput.nativeElement.classList.remove('input-empty');
-        this.contrasenaConfirmacionInput.nativeElement.classList.remove('input-empty');
-      }, 3000);
     } else {
       flag = true;
     }
@@ -226,12 +211,17 @@ export class AddTeacherComponent {
   validacion4(){
     let flag = false;
     if (this.profesionSelect.nativeElement.value == "0") {
-      this.mensajeError(11);
+      this.mensajeError(10);
     } else if (this.deptoSelect.nativeElement.value == "0") {
-      this.mensajeError(12);
+      this.mensajeError(11);
     } else {
       flag = true;
     }
     return flag;
+  }
+
+  /*Funcion para actualizar el pawssword*/
+  updatePassword(){
+    this.contrasenaInput.nativeElement.value = this.ciInput.nativeElement.value;
   }
 }

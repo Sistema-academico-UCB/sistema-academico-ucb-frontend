@@ -30,7 +30,7 @@
             </div>
             <div>
                 <h4>Carnet de identidad</h4>
-                <input #ciInput type="text" placeholder="Ingresa el CI del estudiante" maxlength="50">
+                <input #ciInput type="text" placeholder="Ingresa el CI del estudiante" maxlength="50" (input)="updatePassword()">
             </div>
             <div>
                 <h4>Fecha de nacimiento</h4>
@@ -110,14 +110,7 @@
             </div>
             <div>
                 <h4>Contraseña</h4>
-                <input #contrasenaInput type="text" placeholder="Ingresa contraseña segura" maxlength="150">
-            </div>
-            <div>
-                <h4>Confirma contraseña</h4>
-                <input #contrasenaConfirmacionInput type="text" placeholder="Confirma contraseña segura" maxlength="150">
-                <div #passwordError class="password">
-                    <h4>Las contraseñas no coinciden.</h4>
-                </div>
+                <input #contrasenaInput type="text" disabled>
             </div>
         </div>
         <!-- Informacion de carrera -->
