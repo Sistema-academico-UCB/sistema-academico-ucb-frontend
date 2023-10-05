@@ -1,0 +1,87 @@
+/*Navbar*/
+.navbar {
+    display: flex;
+    background-color: #3EB7AE;
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px 4%;
+}
+/*Logo*/
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+/*Opciones izquierda*/
+a {
+    padding: 10px 65px 10px 20px;
+    margin: 0;
+    margin-left: 20px;
+    color:#fff;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+}
+a:hover {
+    background-color: #27A399;
+    border-radius: 3px;
+}
+
+/*----------------------------------------------------------------------------------------------------*/
+.navbar-user {
+    display: flex;
+    justify-content: space-between;
+}
+/*Boton de opciones del perfil*/
+.btn-user {
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    gap: 8px;
+    color: #fff;
+}
+/* Estilos para el menú desplegable */
+.dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 4%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    z-index: 1000;
+    width: 160px;
+    border-radius: 3px;
+    height: auto;
+    margin-top: 5px;
+}
+hr {
+    margin: 5px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+    width: 100%;
+}
+/* Estilos para los elementos dentro del menú desplegable */
+.dropdown-item {
+    color: #757575 !important;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 0;
+    width: 100%;
+}
+.dropdown-item:hover {
+    background-color: #d0e9e7 !important;
+    color: #3EB7AE !important;
+}
+.dropdown-item:active {
+    background-color: #d0e9e7 !important;
+    color: #3EB7AE !important;
+}
