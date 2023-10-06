@@ -17,9 +17,7 @@
 .container {
   background-color: #ffffff;
   box-sizing: border-box;
-  margin-top: 20px;
-  margin-left: 4%;
-  margin-right: 4%;
+  margin: 20px 8% 20px 8%;
 }
 /* Establece estilos para el contenedor de la portada */
 .portada {
@@ -55,9 +53,36 @@
   justify-content: center;
   align-items: center;
 }
+.datos{
+  display: grid;
+  grid-template-columns: 79% 20%;
+  gap: 1%;
+}
+.right{
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-end;
+}
+.carrera{
+  background-color: #D9D9D9;
+  border-radius: 10px;
+  padding: 7px;
+}
+.pfpfriend{
+  width: 10%;
+  height: 10%;
+}
+.data-amigo{
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 3%;
+  margin-top: 7px;
+}
 /* Establece estilos para el botón en la esquina inferior derecha */
 .header{
-  margin-top: 11vh;
+  margin-top: 3vh;
   display: grid;
   grid-template-columns: 20% 17% 17% 46%;
   gap: 1%;
@@ -119,6 +144,12 @@ h4{
   font-size: 16px;
   font-weight: 500;
   color: #6B6B6B
+}
+h5{
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: black;
 }
 a{
   text-decoration: none;

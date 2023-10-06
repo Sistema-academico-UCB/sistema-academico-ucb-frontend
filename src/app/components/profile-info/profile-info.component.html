@@ -12,6 +12,20 @@
         
     </div>
     <div class="container">
+        <div class="datos">
+            <div>
+                <h5>Nombre del estudiante docente</h5>
+            </div>
+            <div class="right">
+                <div>
+                    <h4>Estudiante/Docente</h4>
+                </div>
+                <br>
+                <div class="carrera">
+                    <h4>Carrera/Departemento</h4>
+                </div>
+            </div>  
+        </div>
         <div class="header">
             <div></div>
             <div >
@@ -44,11 +58,15 @@
                     <br>
                     <h4>Se unio el {{registroDia}} de septiembre de {{registroYear}}</h4>
                 </div>
-                <div class="data" style="height: 300px; display: flex;">
-                    <h3>Amigos</h3>
-                    <div class="amigo">
-                        2
+                <div class="data" style="height: 300px; ">
+                    <div style="display: flex;">
+                        <h3>Amigos</h3>
+                        <div class="amigo">2</div>
                     </div>
+                    <div class="data-amigo">
+                        <img src={{user.urlPfp}} alt="Foto de perfil" class="pfpfriend">
+                        <h4>Micaela</h4>
+                    </div>                 
                 </div>
             </div>
         </div>

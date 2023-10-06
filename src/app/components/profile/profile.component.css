@@ -90,6 +90,7 @@
   justify-content: flex-start;
   align-items: center;
   gap: 3%;
+  margin-top: 7px;
 }
 .header{
   margin-top: 3vh;
