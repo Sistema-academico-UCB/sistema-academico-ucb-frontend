@@ -1,0 +1,126 @@
+/*Background*/
+.background {
+    background: linear-gradient(to top right, #3EB7AE, #00A7C2, #0092CC, #5379C4, #8559A6, #9E3775);
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Montserrat', sans-serif;
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*Dos columnas*/
+.row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 0.2fr;
+    height: 100vh;
+}
+/*Lado izquierdo*/
+.logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 15%;
+}
+.logo h1 {
+    font-size: 30px;
+    color: #fff;
+    font-weight: 600;
+    margin: 10px 0 8px 0;
+}
+.logo h2 {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 400;
+}
+/*Lado derecho*/
+.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    margin: 100px 0;
+    border-radius: 48% 0 0 48%;
+    padding: 0 10% 0 25%;
+}
+.text-align {
+    text-align: center;
+}
+.user-info h1 {
+    font-size: 34px;
+    color: #383838;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+}
+.user-info h2 {
+    font-size: 14px;
+    color: #383838;
+    font-weight: 400;
+    margin: 0 0 15px 0;
+}
+h3 {
+    font-size: 16px;
+    color: #383838;
+    font-weight: 600;
+    margin: 15px 0 5px 0;
+}
+input {
+    width: 100%;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    color: #757575;
+    font-weight: 500;
+    outline: none;
+}
+input:focus {
+    border: 1px solid #9E3775;
+}
+
+.password {
+    position: relative;
+}
+.password i {
+    position: absolute;
+    transform: translateY(-50%);
+    color: #757575;
+    cursor: pointer;
+    margin-top: 16px;
+    right: 12px;
+}
+
+.btn-login {
+    border: none;
+    border-radius: 5px;
+    padding: 8px 50px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+    background-color: #00A7C2;
+    cursor: pointer;
+    outline: none;
+    margin-top: 40px;
+}
+.btn-login:hover {
+    background-color: #0092CC;
+}
+
+.circle {
+    background-color: #fff;
+    margin: 100px 0;
+}
+
+.error-message {
+    color: #ff0000;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px 0 0 0;
+    display: none;
+}
+.error-message.show {
+    display: block;
+}

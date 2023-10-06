@@ -15,6 +15,7 @@ import { ProfileTeacherEditComponent } from './components/profile-teacher-edit/p
 import { ProfileTeacherComponent } from './components/profile-teacher/profile-teacher.component';
 import { ListOfFriendsComponent } from './components/list-of-friends/list-of-friends.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     ProfileTeacherEditComponent,
     ProfileTeacherComponent,
     ListOfFriendsComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent
 
   ],
   imports: [

@@ -1,0 +1,29 @@
+<div class="background">
+    <div class="row-2">
+        <div class="logo">
+            <img src="../../../assets/logo.png">
+            <h1>¡Bienvenid@!</h1>
+            <h2>al Sistema Académico Universitario! Donde la comunidad educativa se une para aprender, enseñar y administrar juntos. ¡Comencemos!</h2>
+        </div>
+        <div class="user-info">
+            <div class="text-align">
+                <h1>Iniciar Sesión</h1>
+                <h2>¡Listo para explorar tu camino educativo? Ingresa tus credenciales y comencemos.</h2>
+            </div>
+            <div>
+                <h3>Correo electrónico</h3>
+                <input type="text" placeholder="Ingrese su correo electrónico" [(ngModel)]="email"/>
+            </div>
+            <div class="password">
+                <h3>Contraseña</h3>
+                <input [type]="showPassword ? 'text' : 'password'" placeholder="Ingrese su contraseña" [(ngModel)]="password" />
+                <i style="color: #757575;" [ngClass]="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'" (click)="toggleShowPassword()"></i>
+            </div>   
+            <div #errorMessage class="error-message">Lo siento, credenciales no válidas.</div>                    
+            <div class="center" style="width: 100%;">
+                <button class="btn-login" (click)="login()">INGRESAR</button>
+            </div>
+        </div>
+        <div class="circle"></div>
+    </div>
+</div>
