@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'; // Importar FormsModule
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importar FormsModule
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { ExternalProfileComponent } from './components/external-profile/external-profile.component';
 import { ExternalProfileInfoComponent } from './components/external-profile-info/external-profile-info.component';
+import { ViewStudentsComponent } from './components/view-students/view-students.component';
+import { ViewTeachersComponent } from './components/view-teachers/view-teachers.component';
 
 
 @NgModule({
@@ -35,14 +37,17 @@ import { ExternalProfileInfoComponent } from './components/external-profile-info
     NavbarComponent,
     LoginComponent,
     ExternalProfileComponent,
-    ExternalProfileInfoComponent
+    ExternalProfileInfoComponent,
+    ViewStudentsComponent,
+    ViewTeachersComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule 
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

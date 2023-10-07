@@ -12,11 +12,17 @@ import { ListOfFriendsComponent } from './components/list-of-friends/list-of-fri
 import { LoginComponent } from './components/login/login.component';
 import { ExternalProfileComponent } from './components/external-profile/external-profile.component';
 import { ExternalProfileInfoComponent } from './components/external-profile-info/external-profile-info.component';
+import { ViewTeachersComponent } from './components/view-teachers/view-teachers.component';
+import { ViewStudentsComponent } from './components/view-students/view-students.component';
 
 
 
 const routes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'view-students', component: ViewStudentsComponent },
   { path: 'add-student', component: AddStudentComponent },
+  { path: 'view-teachers', component: ViewTeachersComponent },
   { path: 'add-teacher', component: AddTeacherComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'profile-info', component: ProfileInfoComponent },
@@ -25,7 +31,6 @@ const routes: Routes = [
   { path: 'profile-teacher-info', component: ProfileTeacherInfoComponent },
   { path: 'profile-teacher-edit', component: ProfileTeacherEditComponent },
   { path: 'list-of-friends', component: ListOfFriendsComponent },
-  { path: 'login', component: LoginComponent },
   { path: ':user/profile', component: ExternalProfileComponent },
   { path: ':user/profile-info', component: ExternalProfileInfoComponent },
  

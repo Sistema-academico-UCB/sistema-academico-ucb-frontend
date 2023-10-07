@@ -1,0 +1,43 @@
+<app-navbar [admin]="true"></app-navbar>
+<div class="view-students">
+    <div class="header">
+        <div class="circle">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div>
+            <h1>Lista de Estudiantes</h1>
+            <p>Explora la lista completa de estudiantes inscritos y su información relevante. Aquí puedes encontrar lo que necesitas para brindar el mejor apoyo académico.</p>
+        </div>
+    </div>
+    <div class="button">
+        <button (click)="addStudent()">
+            <span>AGREGAR NUEVO</span>
+        </button>
+    </div>
+    <div class="options-list">
+        <div class="options">
+            <div class="search">
+                <i class="fa-solid fa-search"></i>
+                <input [formControl]="searchStudent" type="text" placeholder="Ingresa el carnet del estudiante">
+            </div>
+            <select (change)="changeSelectCarrer()" [(ngModel)]="selectedCarrerValue">
+                <option disabled selected hidden value="-1">Seleccione la carrera</option>
+                <option value="0">Todas las carreras</option>
+                <option *ngFor="let carrer of carrers" [value]="carrer.carreraId">{{carrer.nombre}}</option>
+            </select>              
+        </div>
+        <div class="list">
+            <div class="student">
+                <img src="../../../assets/icons/usuario.png" alt="student">
+                <div class="student-info">
+                    <h2>Nombre del estudiante</h2>
+                    <h3>Correo electrónico</h3>
+                </div>
+                <i (click)="editStudent(1)" class="fa-duotone fa-square-pen" style="--fa-primary-color: #83ea7b; --fa-secondary-color: #83ea7b;"></i>
+                <button (click)="deleteStudent(1)">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
