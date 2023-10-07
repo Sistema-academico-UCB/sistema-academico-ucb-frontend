@@ -1,0 +1,157 @@
+/*Quitar los estilos generales*/
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+  /*Background*/
+  .profile {
+    background-color: #ffffff;
+    min-height: 100%;
+    box-sizing: border-box;
+  }
+  /*Contenedor*/
+  .container {
+    background-color: #ffffff;
+    box-sizing: border-box;
+    margin: 20px 8% 20px 8%;
+  }
+  /* Establece estilos para el contenedor de la portada */
+  .portada {
+    position: relative;
+    width: 100%;
+    height: 45vh; /* Una cuarta parte de la altura de la pantalla */
+  }
+  
+  /* Establece estilos para la imagen de portada */
+  .portada img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen para cubrir todo el contenedor */
+  }
+  /* Establece estilos para el contenedor de la foto de perfil */
+  .perfil {
+    position: absolute;
+    top: 200px;
+    display: center;
+    width: 30%; /* La mitad de la foto de perfil está dentro de la portada */
+    height: 30%; /* Altura igual a la de la portada */
+  }
+  
+  /* Establece estilos para la foto de perfil */
+  .perfil img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover; /* Ajusta la imagen de perfil para cubrir todo el contenedor */
+    border-radius: 50%;
+  }
+  .imagen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .datos{
+    display: grid;
+    grid-template-columns: 79% 20%;
+    gap: 1%;
+  }
+  .right{
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end;
+  }
+  .carrera{
+    background-color: #D9D9D9;
+    border-radius: 10px;
+    padding: 7px;
+  }
+  .pfpfriend{
+    width: 10%;
+    height: 10%;
+  }
+  .data-amigo{
+  
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3%;
+    margin-top: 7px;
+  }
+  /* Establece estilos para el botón en la esquina inferior derecha */
+  .header{
+    margin-top: 3vh;
+    display: grid;
+    grid-template-columns: 20% 17% 17% 46%;
+    gap: 1%;
+    display: center;
+    justify-content: center;
+    border-bottom: 1px solid #CBCBCB;
+  }
+  .informacion{
+    margin-top: 2vh;
+    display: grid;
+    grid-template-columns: 69% 30%;
+    gap: 1%;
+    display: center;
+    justify-content: center;
+    height: 400px;
+  }
+  .data{
+    border: #CBCBCB 1px solid;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  .margen{
+    border-bottom: 3px solid #3EB7AE;;
+  }
+  .amigo{
+    border-radius: 50%;
+    background-color: #FFBDE5;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15px;
+    color: #9E3775;
+  }
+  
+  /*tipografia*/
+  h1{
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #003531;
+  }
+  h2{
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #757575;;
+  }
+  h3{
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #003531;
+  }
+  h4{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #6B6B6B
+  }
+  h5{
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: black;
+  }
+  a{
+    text-decoration: none;
+  
+  }

@@ -15,7 +15,8 @@ export class UserService {
 
   public getUserInfo(userId: number): Observable<any>{
     //return this.http.get<any>(`${environment.USER_URL}/api/v1/user/`);
-    return this.http.get<any>(`${this.userUrl}/student/${userId}`);
+    return this.http.get<any>(`${this.userUrl}/user/${userId}`);
+    
   }
 
   public postLogin(email: string, password: string){

@@ -16,6 +16,8 @@ import { ProfileTeacherComponent } from './components/profile-teacher/profile-te
 import { ListOfFriendsComponent } from './components/list-of-friends/list-of-friends.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
+import { ExternalProfileComponent } from './components/external-profile/external-profile.component';
+import { ExternalProfileInfoComponent } from './components/external-profile-info/external-profile-info.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { LoginComponent } from './components/login/login.component';
     ProfileTeacherComponent,
     ListOfFriendsComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    ExternalProfileComponent,
+    ExternalProfileInfoComponent
 
   ],
   imports: [
