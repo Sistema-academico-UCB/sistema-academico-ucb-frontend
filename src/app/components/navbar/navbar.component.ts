@@ -16,6 +16,9 @@ export class NavbarComponent {
   showOptions: boolean = false;
   
   logout(){
+    const token = localStorage.getItem('token');
+    console.log(token);
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 }

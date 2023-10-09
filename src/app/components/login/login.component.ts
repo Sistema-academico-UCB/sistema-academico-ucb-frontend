@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
+import * as jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -21,12 +22,19 @@ export class LoginComponent {
   }
 
   login() {
-    console.log('Email: ' + this.email);
-    console.log('Password: ' + this.password);
     this.userService.postLogin(this.email, this.password).subscribe(
       (response: any) => {
-        if(response.success){
-          this.router.navigate(['/profile']);
+        console.log(response);
+        if(response.success) {
+          const token = response.data.token;
+          const rol = this.getRol(token).toUpperCase();
+          if(rol != "ADMIN"){
+            localStorage.setItem('token', token);
+            this.router.navigate(['/profile']);
+          } else {
+            localStorage.setItem('token', token);
+            this.router.navigate(['/view-students']);
+          }
         } else {
           this.errorMessage.nativeElement.classList.add('show');
           setTimeout(() => {
@@ -35,6 +43,20 @@ export class LoginComponent {
         }
       }
     );
+  }
+
+  getRol(token: string) {
+    try {
+      const payload: any = jwt_decode.default(token);
+      if (payload && payload.rol) {
+        return payload.rol;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Error al decodificar el token JWT', error);
+      return null;
+    }
   }
 
 }

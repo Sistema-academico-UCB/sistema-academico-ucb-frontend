@@ -1,10 +1,15 @@
 <nav *ngIf="admin" class="navbar">
     <div class="center">
         <img class="logo" src="../../../favicon.ico"/>
-        <h2>&nbsp;&nbsp;Sistema academico</h2>
+        <h2>&nbsp;&nbsp;Sistema académico</h2>
     </div>
-    <a class="nav-link option" routerLink="/view-students">Estudiantes</a>
-    <a class="nav-link option" routerLink="/view-teachers">Docentes</a>
+    <div class="nav-links">
+        <a class="nav-link option" routerLink="/view-students">Estudiantes</a>
+        <a class="nav-link option" routerLink="/view-teachers">Docentes</a>
+    </div>
+    <div class="logout">
+        <a class="nav-link option" (click)="logout()">Cerrar sesión</a>
+    </div>
 </nav>
 <nav *ngIf="user" class="navbar navbar-user">
     <div class="center">
