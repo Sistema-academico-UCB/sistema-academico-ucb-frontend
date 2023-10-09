@@ -28,3 +28,19 @@
         </div>
     </div>    
 </nav>
+
+<!--Modal de cerrar sesión-->
+<div class="popup center" *ngIf="logoutPopup">
+    <div class="success center">
+        <div>
+            <div class="confirmation-content">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <div class="confirmation-content"><p>¿Está seguro que desea cerrar sesión?</p></div>
+            <div class="confirmation-content buttons">
+                <button class="green" (click)="confirm()">ACEPTAR</button>
+                <button class="red" (click)="cancel()">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>

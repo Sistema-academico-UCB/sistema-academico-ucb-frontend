@@ -14,11 +14,21 @@ export class NavbarComponent {
   constructor(private router: Router) { }
 
   showOptions: boolean = false;
+  logoutPopup: boolean = false;
   
   logout(){
+    this.logoutPopup = true;
+    this.showOptions = false;
+  }
+
+  confirm() {
     const token = localStorage.getItem('token');
     console.log(token);
     localStorage.clear();
     this.router.navigate(['/login']);
+  }
+
+  cancel() {
+    this.logoutPopup = false;
   }
 }
