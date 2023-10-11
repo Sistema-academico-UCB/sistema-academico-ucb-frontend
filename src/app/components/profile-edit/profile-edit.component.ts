@@ -30,7 +30,7 @@ export class ProfileEditComponent {
   // Obtiene la información del usuario al cargar la página
   ngOnInit(){
     console.log("Obteniendo información del usuario");
-    this.userService.getUserInfo(2)
+    this.userService.getUserInfo()
     .subscribe({
       next:data => {
         if (this.user.urlPfp == ''){

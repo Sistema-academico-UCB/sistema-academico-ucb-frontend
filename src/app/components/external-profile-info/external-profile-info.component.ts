@@ -40,7 +40,7 @@ export class ExternalProfileInfoComponent {
     this.id = this.route.snapshot.paramMap.get('user');
     console.log("Obteniendo información del usuario", this.id);
     this.Id = Number(this.id);
-    this.userService.getUserInfo(this.Id)
+    this.userService.getOtherUserInfo(this.Id.toString())
     .subscribe({
       next:data => {
         if (data.data.uuidFoto != ''){

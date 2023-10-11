@@ -24,6 +24,8 @@
         <div class="dropdown-menu" *ngIf="showOptions">
           <a class="dropdown-item" routerLink="/profile">Mi perfil</a>
           <hr>
+          <a class="dropdown-item" (click)="showNotifications()">Notificaciones</a>
+          <hr>
           <a class="dropdown-item" (click)="logout()">Cerrar sesión</a>
         </div>
     </div>    
@@ -40,6 +42,31 @@
             <div class="confirmation-content buttons">
                 <button class="green" (click)="confirm()">ACEPTAR</button>
                 <button class="red" (click)="cancel()">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal de notificaciones-->
+<div class="popup center" *ngIf="showNotification">
+    <div class="modal-notification center">
+        <div class="notification">
+            <div class="title">
+                <h2>Notificaciones</h2>
+                <div class="x-button" (click)="showNotifications()"><i class="fa-solid fa-xmark"></i></div>
+            </div>
+            <hr>
+            <div *ngFor="let notification of notifications" class="notification-info">
+                <h3>{{notification.mensaje}}</h3>
+                <div class="friend-buttons">
+                    <button class="green" (click)="responseFriend(notification.emisorId, true)">ACEPTAR</button>
+                    <button class="red" (click)="responseFriend(notification.emisorId, false)">RECHAZAR</button>
+                </div>
+                <hr>
+            </div>
+            <div *ngIf="notifications.length == 0">
+                <h3>Sin notificaciones nuevas</h3>
+                <hr>
             </div>
         </div>
     </div>

@@ -165,3 +165,65 @@ hr {
 .red:hover {
     background-color: #ff0000;
 }
+
+/*--------------------------------------------------------------------------------------------------*/
+/* Notificaciones */
+.modal-notification {
+    background-color: white;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    padding: 20px 0;
+    margin: 0 25%;
+}
+.notification {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 25px;
+}
+.title {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+.x-button {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+.notification i {
+    color: #757575;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.notification i:hover {
+    color:#003531;
+}
+.notification h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #383838;
+}
+.notification h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #757575;
+}
+.friend-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 10px 0;
+}
+.friend-buttons button {
+    padding: 5px 20px;
+    border: none;
+    outline: none;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+}

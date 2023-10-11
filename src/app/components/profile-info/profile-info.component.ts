@@ -35,7 +35,7 @@ export class ProfileInfoComponent {
   registroYear:string=''
   ngOnInit(){
     console.log("Obteniendo información del usuario");
-    this.userService.getUserInfo(2)
+    this.userService.getOtherUserInfo("2")
     .subscribe({
       next:data => {
         if (data.data.uuidFoto != ''){
