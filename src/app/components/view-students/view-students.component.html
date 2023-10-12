@@ -18,7 +18,7 @@
         <div class="options">
             <div class="search">
                 <i class="fa-solid fa-search"></i>
-                <input [formControl]="searchStudent" type="text" placeholder="Ingresa el carnet del estudiante">
+                <input [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el carnet del estudiante">
             </div>
             <select (change)="changeSelectCarrer()" [(ngModel)]="selectedCarrerValue">
                 <option disabled selected hidden value="-1">Seleccione la carrera</option>
@@ -31,7 +31,7 @@
             <input type="number" id="miInput" name="miInput" min="1" [(ngModel)]="inputValue2" (input)="onInputChange()">
         </div>
         <div class="list">
-            <div class="student" *ngFor="let student of students">
+            <div class="student" *ngFor="let student of filteredStudents">
                 <img src="../../../assets/icons/usuario.png" alt="student">
                 <div class="student-info">
                     <h2>{{student.nombre}}</h2>

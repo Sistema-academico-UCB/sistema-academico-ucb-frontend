@@ -19,6 +19,9 @@ export class ViewStudentsComponent {
   page = new FormControl();
   pageSize = new FormControl();
 
+  searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
+  filteredStudents: any[] = []; // Arreglo filtrado de estudiantes
+
   constructor(private router: Router, private studentService: StudentService) { 
     this.studentService.getCarrers().subscribe(
       (data: any) => {
@@ -29,17 +32,22 @@ export class ViewStudentsComponent {
 
   ngOnInit(): void {
     this.changeSearchStudent();
-    this.changePage(0,5);
+    this.changePage(0,5,'');
   }
 
   // Función para controlar los cambios del page y pageSize
-  changePage(page: number , pageSize: number) {
-    // console.log(this.page.value);
-    // console.log(this.pageSize.value);
-    this.studentService.getStudents(page , pageSize).subscribe(
+  changePage(page: number, pageSize: number, searchText?: string) {
+    this.studentService.getStudents(page, pageSize).subscribe(
       (data: any) => {
         this.students = data.data;
-        console.log(data);
+  
+        // Filtrar la lista de estudiantes basándose en el parámetro 'searchText'
+        this.filteredStudents = this.students.filter(student => {
+          const studentName = student.nombre ? student.nombre.toLowerCase() : ''; // Asegúrate de que el nombre no sea null o undefined
+          const searchTextLowerCase = searchText ? searchText.toLowerCase() : ''; // Asegúrate de que la cadena de búsqueda no sea null o undefined
+          
+          return studentName.includes(searchTextLowerCase);
+        });
       }
     );
   }
@@ -70,6 +78,10 @@ export class ViewStudentsComponent {
     this.searchStudent.valueChanges.pipe(debounceTime(500)).subscribe(
       (data: any) => {
         console.log(data);
+        // Aplicar el filtrado solo si la cadena de búsqueda no está vacía
+        this.filteredStudents = this.searchText
+          ? this.students.filter(student => student.name.toLowerCase().includes(this.searchText.toLowerCase()))
+          : this.students;
         // Llamar al servicio para buscar estudiantes
         //this.changePage();
       }
@@ -81,7 +93,8 @@ export class ViewStudentsComponent {
   onInputChange() {
     console.log('Numero de la pagina', this.inputValue1);
     console.log('Tamaño de los datos', this.inputValue2);
-    this.changePage(this.inputValue1 -1, this.inputValue2);
+    console.log('Carnet de identidad', this.searchText);
+    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText);
 
   }
 
