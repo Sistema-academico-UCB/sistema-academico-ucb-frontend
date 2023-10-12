@@ -22,7 +22,7 @@
                     <h4>{{user.correo}}</h4>
                 </div>
                 <div>
-                    <button *ngIf="typeFriend == 2" class="agregar">Agregar como amigo</button>
+                    <button *ngIf="typeFriend == 2" (click)="addFriend()" class="agregar">Agregar como amigo</button>
                     <div *ngIf="typeFriend == 3" class="pendiente">Solicitud pendiente</div>
                     <div *ngIf="typeFriend == 1" class="amigos">Amigo</div>
                 </div>
@@ -31,10 +31,10 @@
         <div class="header">
             <div></div>
             <div class="margen">
-                <a [routerLink]="[id,'/profile']"><h1>Mi perfil</h1></a>
+                <a><h1>Mi perfil</h1></a>
             </div>
             <div>
-                <a [routerLink]="[id,'/profile-info']"><h2>Información</h2></a>
+                <a href="/{{id}}/profile-info"><h2>Información</h2></a>
             </div>
         </div>
         <div class="informacion">
@@ -52,11 +52,11 @@
                 <div class="data" style="height: 300px; ">
                     <div style="display: flex;">
                         <h3>Amigos</h3>
-                        <div class="amigo">2</div>
+                        <div class="amigo">{{countFriends}}</div>
                     </div>
-                    <div class="data-amigo">
+                    <div *ngFor="let friend of friendsList" class="data-amigo">
                         <img src="../../../assets/icons/usuario.png" alt="Foto de perfil" class="pfpfriend">
-                        <h4>Micaela</h4>
+                        <a href="{{friend.userId}}/profile"><h4>{{friend.nombre}} {{friend.apellidoPaterno}} {{friend.apellidoMaterno}}</h4></a>
                     </div>
                 </div>
             </div>

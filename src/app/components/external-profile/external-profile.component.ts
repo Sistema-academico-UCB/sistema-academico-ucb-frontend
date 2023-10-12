@@ -38,6 +38,7 @@ export class ExternalProfileComponent {
           } else {
             this.user.uuidPortada = '../../../assets/icons/portada-arboles.jpg';
           }
+          this.user.userId = data.data.userId;
           this.user.username = data.data.username;
           this.user.nombre = data.data.nombre;
           this.user.apellidoPaterno = data.data.apellidoPaterno;
@@ -46,6 +47,13 @@ export class ExternalProfileComponent {
           this.user.correo = data.data.correo;
           this.user.descripcion = data.data.descripcion;
           this.user.fechaRegistro = this.formattedDate(data.data.fechaRegistro);
+          this.userService.getFriends(this.user.userId).subscribe(
+            (data: any) => {
+              this.friendsList = data.data;
+              this.countFriends = this.friendsList.length;
+              console.log(data);
+            }
+          );
         }
       );
       this.userService.getFriendStatus(this.id).subscribe(
@@ -66,4 +74,14 @@ export class ExternalProfileComponent {
     return date.toLocaleDateString('es-ES', options);
   }
 
+  public addFriend() {
+    if(this.id != null){
+      this.userService.addFriend(this.id).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.typeFriend = 3;
+        }
+      );
+    }
+  }
 }

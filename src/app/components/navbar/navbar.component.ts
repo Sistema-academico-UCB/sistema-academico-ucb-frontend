@@ -54,6 +54,6 @@ export class NavbarComponent {
         console.log(data);
       }
     );
-
+    this.showNotification = false;
   }
 }

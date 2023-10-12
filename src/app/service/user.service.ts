@@ -40,13 +40,8 @@ export class UserService {
   }
   
   // Funcion para obtener lista de amigos
-  public getFriends() {
-    const header = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${this.token}`
-    };
-    return this.http.get(`${this.userUrl}/user/friend`, { headers: header });
+  public getFriends(userId: number) {
+    return this.http.get(`${this.userUrl}/user/${userId}/friend`);
   }
 
   // Función para obtener notificaciones
@@ -67,7 +62,7 @@ export class UserService {
       'Authorization': `Bearer ${this.token}`
     };
     console.log(this.token);
-    return this.http.put(`${this.userUrl}/user/friend/${friendId}/${response}`, '', { headers: header });
+    return this.http.put(`${this.userUrl}/user/friend/${friendId}/${response}`, null, { headers: header });
   }
 
   //Funcion para saber si son amigos o no
@@ -78,5 +73,15 @@ export class UserService {
       'Authorization': `Bearer ${this.token}`
     };
     return this.http.get(`${this.userUrl}/user/friend/${friendId}`, { headers: header });
+  }
+
+  // Función para agregar a un amigo
+  public addFriend(friendId: string){
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    };
+    return this.http.post(`${this.userUrl}/user/friend/${friendId}`, null, { headers: header });
   }
 }

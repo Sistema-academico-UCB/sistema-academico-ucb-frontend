@@ -145,6 +145,9 @@
     font-weight: 500;
     color: #6B6B6B
   }
+  .data h4 {
+    margin-bottom: 5px;
+  }
   h5{
     font-family: 'Roboto', sans-serif;
     font-size: 30px;
