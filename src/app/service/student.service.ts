@@ -102,6 +102,6 @@ export class StudentService {
   
   // Obtener los estudiantes por medio de page y pageSize
   getStudents(page: number, pageSize: number) {
-    return this.http.get(`${environment.BACKEND_URL}/api/v1/students?page=${page}&size=${pageSize}`);
+    return this.http.get(`${environment.BACKEND_URL}/api/v1/student?page=${page}&size=${pageSize}`);
   }
 }

@@ -27,15 +27,15 @@
             </select>              
         </div>
         <div>
-            <input type="number" min="1" value="1" [(ngModel)] = "page">
-            <input type="number" id="miInput" name="miInput" min="1" value="10" [(ngModel)]="pageSize">
+            <input type="number" min="1" [(ngModel)]="inputValue1" (input)="onInputChange()">
+            <input type="number" id="miInput" name="miInput" min="1" [(ngModel)]="inputValue2" (input)="onInputChange()">
         </div>
         <div class="list">
-            <div class="student">
+            <div class="student" *ngFor="let student of students">
                 <img src="../../../assets/icons/usuario.png" alt="student">
                 <div class="student-info">
-                    <h2>Nombre del estudiante</h2>
-                    <h3>Correo electrónico</h3>
+                    <h2>{{student.nombre}}</h2>
+                    <h3>{{student.correo}}</h3>
                 </div>
                 <i (click)="editStudent(1)" class="fa-duotone fa-square-pen" style="--fa-primary-color: #83ea7b; --fa-secondary-color: #83ea7b;"></i>
                 <button (click)="deleteStudent(1)">
