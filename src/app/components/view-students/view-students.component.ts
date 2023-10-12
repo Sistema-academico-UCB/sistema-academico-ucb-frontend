@@ -16,6 +16,8 @@ export class ViewStudentsComponent {
   selectedCarrerValue: string = '-1';
   searchStudent = new FormControl();
   students: any[] = [];
+  page = new FormControl();
+  pageSize = new FormControl();
 
   constructor(private router: Router, private studentService: StudentService) { 
     this.studentService.getCarrers().subscribe(
@@ -27,6 +29,19 @@ export class ViewStudentsComponent {
 
   ngOnInit(): void {
     this.changeSearchStudent();
+    this.changePage();
+  }
+
+  // Función para controlar los cambios del page y pageSize
+  changePage() {
+    console.log(this.page.value);
+    console.log(this.pageSize.value);
+    this.studentService.getStudents(this.page.value, this.pageSize.value).subscribe(
+      (data: any) => {
+        this.students = data.data;
+        console.log(data);
+      }
+    );
   }
 
   // Función para redirigir a la página de añadir estudiante

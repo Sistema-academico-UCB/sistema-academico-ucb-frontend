@@ -26,6 +26,10 @@
                 <option *ngFor="let carrer of carrers" [value]="carrer.carreraId">{{carrer.nombre}}</option>
             </select>              
         </div>
+        <div>
+            <input type="number" min="1" value="1" [(ngModel)] = "page">
+            <input type="number" id="miInput" name="miInput" min="1" value="10" [(ngModel)]="pageSize">
+        </div>
         <div class="list">
             <div class="student">
                 <img src="../../../assets/icons/usuario.png" alt="student">
