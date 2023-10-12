@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
+<app-navbar [user]="true"></app-navbar>
 
 <div class="list-of-friends">
     <div class="container">
@@ -18,18 +19,18 @@
             <!-- Buscador amigos -->
             <input placeholder="Buscar amigos">
             <!-- Listado de amigos -->
-            <div class="usuario" *ngFor="let friend of friends">
+            <div class="usuario" *ngFor="let friend of friendsList">
                 <div class="imagen">
                     <img src="../../../assets/icons/usuario.png" alt="Foto de perfil">
                 </div>
                 <div class="informacion">
                     <div>
-                        <h2>{{friend.Nombre}} {{friend.Apellido}}</h2>
-                        <h4>{{friend.Carrera}}</h4>
+                        <a href="{{friend.userId}}/profile"><h2>{{friend.nombre}} {{friend.apellidoPaterno}}</h2></a>
+                        <a href="{{friend.userId}}/profile"><h4>{{friend.correo}}</h4></a>
                     </div>
                 </div>
                 <div class="botones">
-                    <button class="button-red" (click)="openConfirmationDialog()"> <img src="../../../assets/icons/trash.svg" alt="eliminar" class="trash"></button>
+                    <button class="button-red" (click)="openConfirmationDialog(friend.userId)"> <img src="../../../assets/icons/trash.svg" alt="eliminar" class="trash"></button>
                 </div>
             </div>
         </div>

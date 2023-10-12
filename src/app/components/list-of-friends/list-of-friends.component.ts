@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UserDto } from 'src/app/dto/user.dto';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-list-of-friends',
@@ -6,36 +8,58 @@ import { Component } from '@angular/core';
   styleUrls: ['./list-of-friends.component.css']
 })
 export class ListOfFriendsComponent {
-  
-  ngOnInit(){
-    this.friends=this.friends
+
+  constructor(private userService: UserService) {
   }
 
-  friends = [
-    {
-      userId: 1,
-      Nombre: 'Gonzalo',
-      Apellido: 'Choque',
-      Carrera: 'Sistemas'
-    },
-    {
-      userId: 2,
-      Nombre: 'Valeria',
-      Apellido: 'Paredez',
-      Carrera: 'Civil'
-    }
-  ];
+  user: UserDto = {} as UserDto;
+  friendsList: UserDto[] = []; 
+  friendToDeleteId: number;
+  
+  ngOnInit(){
+    console.log("Obteniendo información del usuario");
+    this.userService.getUserInfo()
+    .subscribe({
+      next:data => {
+        console.log(data.data);
+        this.user.userId = data.data.userId;
+        this.userService.getFriends(this.user.userId).subscribe(
+          (data: any) => {
+            this.friendsList = data.data;
+            console.log(data);
+          }
+        );
+      },
+      error: (error) => console.log(error),
+    });
+  }
+
+  
 
   //Logica para el popup
   isDialogVisible = false;
-
-  openConfirmationDialog() {
+  openConfirmationDialog(userId: number) {
+    this.friendToDeleteId = userId; 
     this.isDialogVisible = true;
   }
 
+
   confirmDelete() {
     // Realiza la eliminación aquí
-    console.log('Elemento eliminado');
+    if (this.friendToDeleteId) {
+      // Realiza la eliminación utilizando this.friendToDeleteId
+      console.log('Elemento eliminado:', this.friendToDeleteId);
+      // Limpia el ID después de la eliminación
+      this.userService.deleteFriend(this.friendToDeleteId).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.ngOnInit();
+        }
+      );
+      this.friendToDeleteId = 0;
+
+
+    }
     this.isDialogVisible = false; // Cierra el cuadro de diálogo
   }
 

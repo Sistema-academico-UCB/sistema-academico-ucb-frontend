@@ -84,4 +84,14 @@ export class UserService {
     };
     return this.http.post(`${this.userUrl}/user/friend/${friendId}`, null, { headers: header });
   }
+
+  // Función para eliminar a un amigo
+  public deleteFriend(friendId: number){
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    };
+    return this.http.delete(`${this.userUrl}/user/friend/${friendId}`, { headers: header });
+  }
 }
