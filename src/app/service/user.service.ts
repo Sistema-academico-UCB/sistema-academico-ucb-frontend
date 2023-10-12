@@ -69,4 +69,14 @@ export class UserService {
     console.log(this.token);
     return this.http.put(`${this.userUrl}/user/friend/${friendId}/${response}`, '', { headers: header });
   }
+
+  //Funcion para saber si son amigos o no
+  public getFriendStatus(friendId: string){
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    };
+    return this.http.get(`${this.userUrl}/user/friend/${friendId}`, { headers: header });
+  }
 }

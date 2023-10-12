@@ -28,9 +28,9 @@ export class NavbarComponent {
   confirm() {
     const token = localStorage.getItem('token');
     console.log(token);
-    localStorage.clear();
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    localStorage.clear();
+    window.location.href = '/login';
   }
 
   cancel() {

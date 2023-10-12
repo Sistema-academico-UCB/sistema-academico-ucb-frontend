@@ -30,10 +30,10 @@ export class LoginComponent {
           const rol = this.getRol(token).toUpperCase();
           if(rol != "ADMIN"){
             localStorage.setItem('token', token);
-            this.router.navigate(['/profile']);
+            window.location.href = '/profile';
           } else {
             localStorage.setItem('token', token);
-            this.router.navigate(['/view-students']);
+            window.location.href = '/view-students';
           }
         } else {
           this.errorMessage.nativeElement.classList.add('show');

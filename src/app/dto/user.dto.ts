@@ -1,4 +1,5 @@
 export interface UserDto {
+    userId: number,
     username: string,
     rol: string,
     nombre: string,

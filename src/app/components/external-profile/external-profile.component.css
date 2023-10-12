@@ -87,6 +87,27 @@
     border: none;
     padding: 5px 15px;
     cursor: pointer;
+    border-radius: 5px;
+  }
+  .pendiente {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #bebebe;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 15px;
+    text-align: center;
+  }
+  .amigos {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #9E3775;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 25px;
+    text-align: center;
   }
   .pfpfriend{
     width: 10%;

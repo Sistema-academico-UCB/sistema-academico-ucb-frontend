@@ -1,17 +1,17 @@
 <app-navbar [user]="true"></app-navbar>
 <div class="profile">
     <div class="portada">
-        <img src={{user.urlHeader}} alt="Imagen de portada">
+        <img src={{user.uuidPortada}} alt="Imagen de portada">
         <div class="perfil">
             <div class="imagen">
-                <img src={{user.urlPfp}} alt="Foto de perfil">
+                <img src={{user.uuidFoto}} alt="Foto de perfil">
             </div>
         </div>
     </div>
     <div class="container">
         <div class="datos">
             <div>
-                <h5>{{user.username}}</h5>
+                <h5>{{user.nombre}} {{user.apellidoPaterno}} {{user.apellidoMaterno}}</h5>
             </div>
             <div class="right">
                 <div>
@@ -19,10 +19,12 @@
                 </div>
                 <br>
                 <div class="carrera">
-                    <h4>Carrera/Departemento</h4>
+                    <h4>{{user.correo}}</h4>
                 </div>
                 <div>
-                    <button class="agregar">Agregar como amigo</button>
+                    <button *ngIf="typeFriend == 2" class="agregar">Agregar como amigo</button>
+                    <div *ngIf="typeFriend == 3" class="pendiente">Solicitud pendiente</div>
+                    <div *ngIf="typeFriend == 1" class="amigos">Amigo</div>
                 </div>
             </div>
         </div>
@@ -30,7 +32,6 @@
             <div></div>
             <div class="margen">
                 <a [routerLink]="[id,'/profile']"><h1>Mi perfil</h1></a>
-                <!-- [routerLink]="['/viewchapter', id, Chapters[0].chapterId]" -->
             </div>
             <div>
                 <a [routerLink]="[id,'/profile-info']"><h2>Información</h2></a>
@@ -40,13 +41,13 @@
             <div class="data">
                 <h3>Acerca de</h3>
                 <br>
-                <h4>{{user.description}}</h4>
+                <h4>{{user.descripcion}}</h4>
             </div>
             <div>
                 <div class="data">
                     <h3>Cuenta</h3>
                     <br>
-                    <h4>Se unio el {{registroDia}} de septiembre de {{registroYear}}</h4>
+                    <h4>Se unio el {{user.fechaRegistro}}</h4>
                 </div>
                 <div class="data" style="height: 300px; ">
                     <div style="display: flex;">
@@ -54,7 +55,7 @@
                         <div class="amigo">2</div>
                     </div>
                     <div class="data-amigo">
-                        <img src={{user.urlPfp}} alt="Foto de perfil" class="pfpfriend">
+                        <img src="../../../assets/icons/usuario.png" alt="Foto de perfil" class="pfpfriend">
                         <h4>Micaela</h4>
                     </div>
                 </div>

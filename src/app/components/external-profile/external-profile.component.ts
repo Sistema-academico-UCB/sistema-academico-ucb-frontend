@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 import { ActivatedRoute } from '@angular/router';
+import { UserDto } from 'src/app/dto/user.dto';
 
 
 @Component({
@@ -8,52 +9,61 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './external-profile.component.html',
   styleUrls: ['./external-profile.component.css']
 })
-export class ExternalProfileComponent {
-  constructor(private userService: UserService, private route: ActivatedRoute) {
-  }
-  id: string | null;
-  Id: number
 
-  user = {
-    name: '',
-    username: '',
-    email: '',
-    register: '',
-    urlPfp: '../../../assets/icons/usuario.png',
-    urlHeader: '../../../assets/icons/portada-arboles.jpg',
-    description: '',
-    carrera: '',
-    rol: ''
-  };
-  registroDia:string=''
-  registroMes:string=''
-  registroYear:string=''
+export class ExternalProfileComponent {
+  
+  constructor(private userService: UserService, private route: ActivatedRoute) { }
+  id: string | null;
+
+  user: UserDto = {} as UserDto;
+  friendsList: UserDto[] = []; 
+  countFriends: number = 0;
+  typeFriend: number = 0;
+
   ngOnInit(){
-    this.id = this.route.snapshot.paramMap.get('user');
-    console.log("Obteniendo información del usuario", this.id);
-    this.Id = Number(this.id);
-    this.userService.getOtherUserInfo(this.Id.toString())
-    .subscribe({
-      next:data => {
-        if (data.data.uuidFoto != ''){
-          this.user.urlPfp = data.data.uuidFoto;
+    this.route.params.subscribe(params => {
+      this.id = params['user'];
+    });
+    if (this.id != null) {
+      this.userService.getOtherUserInfo(this.id).subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data.data.uuidFoto != ''){
+            this.user.uuidFoto = data.data.uuidFoto;
+          } else {
+            this.user.uuidFoto = '../../../assets/icons/usuario.png';
+          }
+          if (data.data.uuidPortada != ''){
+            this.user.uuidPortada = data.data.uuidPortada;
+          } else {
+            this.user.uuidPortada = '../../../assets/icons/portada-arboles.jpg';
+          }
+          this.user.username = data.data.username;
+          this.user.nombre = data.data.nombre;
+          this.user.apellidoPaterno = data.data.apellidoPaterno;
+          this.user.apellidoMaterno = data.data.apellidoMaterno;
+          this.user.rol = data.data.rol;
+          this.user.correo = data.data.correo;
+          this.user.descripcion = data.data.descripcion;
+          this.user.fechaRegistro = this.formattedDate(data.data.fechaRegistro);
         }
-        if (data.data.uuidPortada != ''){
-          this.user.urlHeader = data.data.uuidPortada;
-        }
-        this.user.name = data.data.nombre;
-        this.user.username = data.data.username;
-        this.user.email = data.data.email;
-        this.user.register = data.data.fechaRegistro;
-        this.user.description=data.data.descripcion;
-        this.registroDia=data.data.fechaRegistro.substring(8,10);
-        this.registroMes=data.data.fechaRegistro.substring(5,7);
-        this.registroYear=data.data.fechaRegistro.substring(0,4);
-        this.user.rol = data.data.rol;
-        console.log(data.data)
-    },
-    error: (error) => console.log(error),
-  })
+      );
+      this.userService.getFriendStatus(this.id).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.typeFriend = data.data;
+        });
+    }
+  }
+
+  public formattedDate(originalDate: string): string {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+    const date = new Date(originalDate);
+    return date.toLocaleDateString('es-ES', options);
   }
 
 }
