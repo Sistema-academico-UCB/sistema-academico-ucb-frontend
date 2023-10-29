@@ -20,7 +20,7 @@ export class ProfileEditComponent {
   @ViewChild('Description') Description!: ElementRef;
 
   // Datos del usuario
-  user = { name: '', username: '', email: '', register: '', urlPfp: '', urlHeader: '', description: ''};
+  user = { name: '', username: '', email: '', register: '', uuidFoto: '', uuidPortada: '', description: ''};
 
   // Variables
   txtDescription: string = this.user.description; // Descripción del usuario
@@ -33,15 +33,16 @@ export class ProfileEditComponent {
     this.userService.getUserInfo()
     .subscribe({
       next:data => {
-        if (this.user.urlPfp == ''){
-          this.user.urlPfp = '../../../assets/icons/usuario.png';
+        console.log(data);
+        if (data.data.uuidFoto == ''){
+          this.user.uuidFoto = '../../../assets/icons/usuario.png';
         } else {
-          this.user.urlPfp = data.data.uuidFoto;
+          this.user.uuidFoto = data.data.uuidFoto;
         }
-        if (this.user.urlHeader == ''){
-          this.user.urlHeader = '../../../assets/icons/portada-arboles.jpg';
+        if (data.data.uuidPortada == ''){
+          this.user.uuidPortada = '../../../assets/icons/portada-arboles.jpg';
         } else {
-          this.user.urlHeader = data.data.uuidPortada;
+          this.user.uuidPortada = data.data.uuidPortada;
         }
         this.user.description = data.data.descripcion;
         this.txtDescription = this.user.description;
@@ -58,8 +59,8 @@ export class ProfileEditComponent {
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.result != null){
-        this.user.urlPfp = reader.result?.toString();
-        console.log(this.user.urlPfp);
+        this.user.uuidFoto = reader.result?.toString();
+        console.log(this.user.uuidFoto);
       }
     };
     reader.readAsDataURL(this.selectedPfp);
@@ -69,8 +70,8 @@ export class ProfileEditComponent {
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.result != null){
-        this.user.urlHeader = reader.result?.toString();
-        console.log(this.user.urlHeader);
+        this.user.uuidPortada = reader.result?.toString();
+        console.log(this.user.uuidPortada);
       }
     };
     reader.readAsDataURL(this.selectedHeader);

@@ -12,8 +12,14 @@ export class NavbarComponent {
 
   @Input() admin: boolean;
   @Input() user: boolean;
+  name: string = '';
 
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService) {
+    const nameLocal = localStorage.getItem('name');
+    if (nameLocal != null){
+      this.name = nameLocal;
+    }
+  }
 
   showOptions: boolean = false;
   logoutPopup: boolean = false;

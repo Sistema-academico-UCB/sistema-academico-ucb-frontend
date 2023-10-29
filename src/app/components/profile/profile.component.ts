@@ -38,6 +38,9 @@ export class ProfileComponent {
         this.user.nombre = data.data.nombre;
         this.user.apellidoPaterno = data.data.apellidoPaterno;
         this.user.apellidoMaterno = data.data.apellidoMaterno;
+        const firstName = this.user.nombre.split(' ')[0];
+        const name = firstName + ' ' + this.user.apellidoPaterno;
+        localStorage.setItem('name', name);
         this.user.rol = data.data.rol;
         this.user.correo = data.data.correo;
         this.user.descripcion = data.data.descripcion;

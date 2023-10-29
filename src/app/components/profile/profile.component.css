@@ -17,13 +17,13 @@
 .container {
   background-color: #ffffff;
   box-sizing: border-box;
-  margin: 20px 8% 20px 8%;
+  margin: 0 8% 20px 8%;
 }
 /*Establece estilos para el contenedor de la portada */
 .portada {
   position: relative;
   width: 100%;
-  height: 45vh; /* Una cuarta parte de la altura de la pantalla */
+  height: 40vh; /* Una cuarta parte de la altura de la pantalla */
 }
 /* Establece estilos para la imagen de portada */
 .portada img {
@@ -34,22 +34,21 @@
 /* Establece estilos para el contenedor de la foto de perfil */
 .perfil {
   position: absolute;
-  top: 200px;
+  top: 23vh;
+  left: 8%;
   display: center;
-  width: 30%; /* La mitad de la foto de perfil está dentro de la portada */
-  height: 30%; /* Altura igual a la de la portada */
+  width: 30vh; /* La mitad de la foto de perfil está dentro de la portada */
+  height: 30vh; /* Altura igual a la de la portada */
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 8px;
 }
 /* Establece estilos para la foto de perfil */
 .perfil img {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   object-fit: cover; /* Ajusta la imagen de perfil para cubrir todo el contenedor */
   border-radius: 50%;
-}
-.imagen{
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 /* Establece estilos para el botón en la esquina inferior derecha */
 .boton {
@@ -66,14 +65,12 @@
   border-radius: 5%;
 }
 .datos{
-  display: grid;
-  grid-template-columns: 79% 20%;
-  gap: 1%;
-}
-.right{
   display: flex;
   flex-direction: column; 
   align-items: flex-end;
+  height: 14vh;
+  padding: 20px 0 0 0;
+  gap: 10px;
 }
 .carrera{
   background-color: #D9D9D9;
@@ -85,7 +82,6 @@
   height: 10%;
 }
 .data-amigo{
-
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -93,14 +89,13 @@
   margin-top: 7px;
 }
 .header{
-  margin-top: 3vh;
+  margin-top: 15px;
   display: grid;
-  grid-template-columns: 20% 17% 17% 46%;
+  grid-template-columns: 17% 17% 64%;
   gap: 1%;
   display: center;
   justify-content: center;
   border-bottom: 1px solid #CBCBCB;
-
 }
 .informacion{
   margin-top: 2vh;
@@ -114,8 +109,8 @@
 .data{
   border: #CBCBCB 1px solid;
   border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 20px;
+  padding: 15px 20px;
+  margin-bottom: 10px;
 }
 .margen{
   border-bottom: 3px solid #3EB7AE;;
@@ -133,37 +128,36 @@
 }
 
 /*tipografia*/
-h1{
-  font-family: 'Roboto', sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: #003531;
-}
-h2{
-  font-family: 'Roboto', sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: #757575;;
-}
-h3{
+h1, h2, h3 {
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
+}	
+h1, h2 {
+  padding: 0 0 5px 10px;
+}
+h1, h3 {
   color: #003531;
 }
-h4{
+h2 {
+  color: #757575;
+}
+h3 {
+  padding-bottom: 10px;
+}
+h4 {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   font-weight: 500;
   color: #6B6B6B
 }
-h5{
+h5 {
   font-family: 'Roboto', sans-serif;
   font-size: 30px;
   font-weight: 700;
   color: black;
 }
-a{
+a {
   text-decoration: none;
-
+  cursor: pointer;
 }

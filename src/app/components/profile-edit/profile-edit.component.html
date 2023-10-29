@@ -1,24 +1,25 @@
+<!--Iconos-->
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
 <div class="profile">
-    <div style="background-image: url({{user.urlHeader}}); background-size: cover; background-position: center; color: white; min-height: 45vh;">
+    <div style="background-image: url({{user.uuidPortada}}); background-size: cover; background-position: center; color: white; min-height: 45vh;">
         <button class="image-header" (click)="imgHeader.click()">
             <i class="fa-solid fa-camera" style="font-size: 15px; color: white;"></i>
             &nbsp;Editar portada
         </button>
         <input type="file" accept="image/*" #imgHeader style="display:none" (change)="onFileSelectedHeader($event)">
-    </div>
-    <div class="center image-profile" style="align-items: start;">
-        <img src="{{user.urlPfp}}" alt="Foto de perfíl" width="200px" style="border-radius: 100%; height: 200px;">
-        <button class="image-pfp center" (click)="imgProfile.click()">
-            <i class="fa-solid fa-camera" style="font-size: 15px; color: white;"></i>
-        </button>
-        <input type="file" accept="image/*" #imgProfile style="display:none" (change)="onFileSelectedPfp($event)">
+        <div class="center image-profile" style="align-items: start;">
+            <img src="{{user.uuidFoto}}" alt="Foto de perfíl" width="300px" style="border-radius: 100%; height: 300px;">
+            <button class="image-pfp center" (click)="imgProfile.click()">
+                <i class="fa-solid fa-camera" style="font-size: 15px; color: white;"></i>
+            </button>
+            <input type="file" accept="image/*" #imgProfile style="display:none" (change)="onFileSelectedPfp($event)">
+        </div>
     </div>
     <div class="container">
         <div class="informacion">
             <h3>Acerca de</h3>
             <br>
             <textarea [(ngModel)]="txtDescription" placeholder="Agrega una descripcion" >{{user.description}}</textarea>
-            <!-- <input class="chapterTitle" [(ngModel)]="description" placeholder="Título del capítulo"> -->
         </div>
         <!-- Mensaje de advertencia -->
         <div #errorMessage class="warning">
@@ -50,5 +51,3 @@
         </div>
     </div>
 </div>
-<!--Iconos-->
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
