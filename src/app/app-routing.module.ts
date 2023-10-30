@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddStudentComponent } from './components/add-student/add-student.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { AddTeacherComponent } from './components/add-teacher/add-teacher.component';
 import { ListOfFriendsComponent } from './components/list-of-friends/list-of-friends.component';
@@ -22,7 +21,6 @@ const routes: Routes = [
   { path: 'view-teachers', component: ViewTeachersComponent },
   { path: 'add-teacher', component: AddTeacherComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'profile-info', component: ProfileInfoComponent },
   { path: 'profile-edit', component: ProfileEditComponent },
   { path: 'list-of-friends', component: ListOfFriendsComponent },
   { path: ':user/profile', component: ExternalProfileComponent },

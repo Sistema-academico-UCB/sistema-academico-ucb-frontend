@@ -12,14 +12,10 @@ export class NavbarComponent {
 
   @Input() admin: boolean;
   @Input() user: boolean;
-  name: string = '';
+  @Input() name: string;
+  @Input() uuidFoto: string;
 
-  constructor(private router: Router, private userService: UserService) {
-    const nameLocal = localStorage.getItem('name');
-    if (nameLocal != null){
-      this.name = nameLocal;
-    }
-  }
+  constructor(private router: Router, private userService: UserService) { }
 
   showOptions: boolean = false;
   logoutPopup: boolean = false;

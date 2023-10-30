@@ -19,8 +19,19 @@ export class ExternalProfileComponent {
   friendsList: UserDto[] = []; 
   countFriends: number = 0;
   typeFriend: number = 0;
+  name: string = '';
+  uuidFoto: string = '';
+  firstOption: boolean = true;
 
   ngOnInit(){
+    const nameLocal = localStorage.getItem('name');
+    if (nameLocal) {
+      this.name = nameLocal;
+    }
+    const uuidFotoLocal = localStorage.getItem('uuidFoto');
+    if (uuidFotoLocal) {
+      this.uuidFoto = uuidFotoLocal;
+    }
     this.route.params.subscribe(params => {
       this.id = params['user'];
     });
@@ -46,6 +57,7 @@ export class ExternalProfileComponent {
           this.user.rol = data.data.rol;
           this.user.correo = data.data.correo;
           this.user.descripcion = data.data.descripcion;
+          this.user.genero = data.data.genero;
           this.user.fechaRegistro = this.formattedDate(data.data.fechaRegistro);
           this.userService.getFriends(this.user.userId).subscribe(
             (data: any) => {
@@ -83,5 +95,9 @@ export class ExternalProfileComponent {
         }
       );
     }
+  }
+
+  firstOptionChange() {
+    this.firstOption = !this.firstOption;
   }
 }

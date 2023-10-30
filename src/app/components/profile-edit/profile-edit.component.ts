@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
-import { StudentService } from 'src/app/service/student.service';
-
+import { AwsService } from 'src/app/service/aws.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -12,7 +11,7 @@ import { StudentService } from 'src/app/service/student.service';
 export class ProfileEditComponent {
   
   // Constructor
-  constructor(private userService: UserService, private StudentService: StudentService) {}
+  constructor(private userService: UserService, private awsService: AwsService) {}
 
   // Controlador para el mensaje de error
   @ViewChild('errorMessage') errorMessage!: ElementRef;
@@ -20,7 +19,16 @@ export class ProfileEditComponent {
   @ViewChild('Description') Description!: ElementRef;
 
   // Datos del usuario
-  user = { name: '', username: '', email: '', register: '', uuidFoto: '', uuidPortada: '', description: ''};
+  user = { 
+    name: '', 
+    username: '', 
+    email: '', 
+    register: '', 
+    uuidFoto: '', 
+    uuidPortada: '', 
+    description: ''};
+  auxUuidFoto = ''; // Auxiliar para el uuid de la foto
+  auxUuidPortada = ''; // Auxiliar para el uuid de la portada
 
   // Variables
   txtDescription: string = this.user.description; // Descripción del usuario
@@ -36,13 +44,17 @@ export class ProfileEditComponent {
         console.log(data);
         if (data.data.uuidFoto == ''){
           this.user.uuidFoto = '../../../assets/icons/usuario.png';
+          this.auxUuidFoto = '../../../assets/icons/usuario.png';
         } else {
           this.user.uuidFoto = data.data.uuidFoto;
+          this.auxUuidFoto = data.data.uuidFoto;
         }
         if (data.data.uuidPortada == ''){
           this.user.uuidPortada = '../../../assets/icons/portada-arboles.jpg';
+          this.auxUuidPortada = '../../../assets/icons/portada-arboles.jpg';
         } else {
           this.user.uuidPortada = data.data.uuidPortada;
+          this.auxUuidPortada = data.data.uuidPortada;
         }
         this.user.description = data.data.descripcion;
         this.txtDescription = this.user.description;
@@ -80,36 +92,218 @@ export class ProfileEditComponent {
   // Función para guardar los datos
   guardarDatos(){
     if(this.validacion()) {
-      console.log("Guardando datos");
-      this.StudentService.updateStudent(this.txtDescription)
-      .subscribe({
-        next:data => {
-          console.log(data);
-          this.confirmationPopup = true;
-      },
-      error: (error) => console.log(error),
-      })
-    } else {
-      console.log("Datos no guardados");
+      if (this.user.uuidFoto == this.auxUuidFoto) {
+        if (this.user.uuidPortada == this.auxUuidPortada) {
+          this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
+            next: data => {
+              console.log(data);
+              this.confirmationPopup = true;
+            },
+            error: error => {
+              console.log(error);
+              this.errorPopup = true;
+            }
+          });
+        } else {
+          if (this.auxUuidPortada == "../../../assets/icons/portada-arboles.jpg"){
+            this.awsService.uploadFile(this.user.uuidPortada).subscribe({
+              next: (data) => {
+                console.log(data);
+                this.user.uuidPortada = data.uploadResult.Location;
+                this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
+                  next: data => {
+                    console.log(data);
+                    this.confirmationPopup = true;
+                  },
+                  error: error => {
+                    console.log(error);
+                    this.errorPopup = true;
+                  }
+                });
+              },
+            });
+          } else {
+            let fileName = this.auxUuidPortada.split("/").pop();
+            console.log(fileName);
+            if (fileName != null) {
+              this.awsService.deleteFile(fileName).subscribe({
+                next: (data) => {
+                  console.log(data);
+                  this.awsService.uploadFile(this.user.uuidPortada).subscribe({
+                    next: (data) => {
+                      console.log(data);
+                      this.user.uuidPortada = data.uploadResult.Location;
+                      this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
+                        next: data => {
+                          console.log(data);
+                          this.confirmationPopup = true;
+                        },
+                        error: error => {
+                          console.log(error);
+                          this.errorPopup = true;
+                        }
+                      });
+                    },
+                  });
+                },
+              });
+            }
+          }
+        }
+      } else {
+        if (this.auxUuidFoto == "../../../assets/icons/usuario.png") {
+          this.awsService.uploadFile(this.user.uuidFoto).subscribe({
+            next: (data) => {
+              console.log(data);
+              this.user.uuidFoto = data.uploadResult.Location;
+              if (this.user.uuidPortada == this.auxUuidPortada) {
+                this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
+                  next: data => {
+                    console.log(data);
+                    this.confirmationPopup = true;
+                  },
+                  error: error => {
+                    console.log(error);
+                    this.errorPopup = true;
+                  }
+                });
+              } else {
+                if (this.auxUuidPortada == "../../../assets/icons/portada-arboles.jpg"){
+                  this.awsService.uploadFile(this.user.uuidPortada).subscribe({
+                    next: (data) => {
+                      console.log(data);
+                      this.user.uuidPortada = data.uploadResult.Location;
+                      this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
+                        next: data => {
+                          console.log(data);
+                          this.confirmationPopup = true;
+                        },
+                        error: error => {
+                          console.log(error);
+                          this.errorPopup = true;
+                        }
+                      });
+                    },
+                  });
+                } else {
+                  let fileName = this.auxUuidPortada.split("/").pop();
+                  console.log(fileName);
+                  if (fileName != null) {
+                    this.awsService.deleteFile(fileName).subscribe({
+                      next: (data) => {
+                        console.log(data);
+                        this.awsService.uploadFile(this.user.uuidPortada).subscribe({
+                          next: (data) => {
+                            console.log(data);
+                            this.user.uuidPortada = data.uploadResult.Location;
+                            this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
+                              next: data => {
+                                console.log(data);
+                                this.confirmationPopup = true;
+                              },
+                              error: error => {
+                                console.log(error);
+                                this.errorPopup = true;
+                              }
+                            });
+                          },
+                        });
+                      },
+                    });
+                  }
+                }
+              }
+            },
+          });
+        } else {
+          let fileName = this.auxUuidFoto.split("/").pop();
+          console.log(fileName);
+          if (fileName != null) {
+            this.awsService.deleteFile(fileName).subscribe({
+              next: (data) => {
+                console.log(data);
+                this.awsService.uploadFile(this.user.uuidFoto).subscribe({
+                  next: (data) => {
+                    console.log(data);
+                    this.user.uuidFoto = data.uploadResult.Location;
+                    if (this.user.uuidPortada == this.auxUuidPortada) {
+                      this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
+                        next: data => {
+                          console.log(data);
+                          this.confirmationPopup = true;
+                        },
+                        error: error => {
+                          console.log(error);
+                          this.errorPopup = true;
+                        }
+                      });
+                    } else {
+                      if (this.auxUuidPortada == "../../../assets/icons/portada-arboles.jpg"){
+                        this.awsService.uploadFile(this.user.uuidPortada).subscribe({
+                          next: (data) => {
+                            this.user.uuidPortada = data.uploadResult.Location;
+                            this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
+                              next: data => {
+                                console.log(data);
+                                this.confirmationPopup = true;
+                              },
+                              error: error => {
+                                console.log(error);
+                                this.errorPopup = true;
+                              }
+                            });
+                          },
+                        });
+                      } else {
+                        let fileName = this.auxUuidPortada.split("/").pop();
+                        console.log(fileName);
+                        if (fileName != null) {
+                          this.awsService.deleteFile(fileName).subscribe({
+                            next: (data) => {
+                              console.log(data);
+                              this.awsService.uploadFile(this.user.uuidPortada).subscribe({
+                                next: (data) => {
+                                  console.log(data);
+                                  this.user.uuidPortada = data.uploadResult.Location;
+                                  this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
+                                    next: data => {
+                                      console.log(data);
+                                      this.confirmationPopup = true;
+                                    },
+                                    error: error => {
+                                      console.log(error);
+                                      this.errorPopup = true;
+                                    }
+                                  });
+                                },
+                              });
+                            },
+                          });
+                        }
+                      }
+                    }
+                  },
+                });
+              },
+            });
+          }
+        }
+      }
     }
   }
+
   /*Mensaje error*/
-  mensajeError(atributo: number) {
-    let atributos = [
-      this.Description,
-    ];
+  mensajeError() {
     this.errorMessage.nativeElement.classList.add('warning-active');
-    atributos[atributo].nativeElement.classList.add('input-empty');
     setTimeout(() => {
       this.errorMessage.nativeElement.classList.remove('warning-active');
-      atributos[atributo].nativeElement.classList.remove('input-empty');
-    }, 3000);
+    }, 2500);
   }
   /*Validacion*/
   validacion() {
     let flag = false;
     if (this.txtDescription == "") {
-      this.mensajeError(1);
+      this.mensajeError();
     } else {
       flag = true;
     }

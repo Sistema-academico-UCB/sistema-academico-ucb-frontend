@@ -15,8 +15,18 @@ export class ListOfFriendsComponent {
   user: UserDto = {} as UserDto;
   friendsList: UserDto[] = []; 
   friendToDeleteId: number;
+  name: string = '';
+  uuidFoto: string = '';
   
   ngOnInit(){
+    const nameLocal = localStorage.getItem('name');
+    if (nameLocal) {
+      this.name = nameLocal;
+    }
+    const uuidFotoLocal = localStorage.getItem('uuidFoto');
+    if (uuidFotoLocal) {
+      this.uuidFoto = uuidFotoLocal;
+    }
     console.log("Obteniendo información del usuario");
     this.userService.getUserInfo()
     .subscribe({

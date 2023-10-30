@@ -94,4 +94,18 @@ export class UserService {
     };
     return this.http.delete(`${this.userUrl}/user/friend/${friendId}`, { headers: header });
   }
+
+  updateProfile(uuidFoto: string, uuidPortada: string, descripcion:string){
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    };
+    const body = {
+      "descripcion": descripcion,
+      "uuidFoto": uuidFoto,
+      "uuidPortada": uuidPortada
+    }
+    return this.http.put(`${this.userUrl}/user/profile`, body, { headers: header });
+  }
 }

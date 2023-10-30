@@ -1,11 +1,11 @@
-<app-navbar [user]="true"></app-navbar>
+<app-navbar [user]="true" [name]="name" [uuidFoto]="user.uuidFoto"></app-navbar>
 <div class="profile">
     <div class="portada">
-        <img src={{user.uuidPortada}} alt="Imagen de portada">
+        <img src={{user.uuidPortada}}>
         <div class="perfil">
-            <img src={{user.uuidFoto}} alt="Foto de perfil">
+            <img src={{user.uuidFoto}}>
         </div>
-        <a routerLink="/profile-edit"><button class="boton">Editar perfil</button></a>
+        <a *ngIf="firstOption" routerLink="/profile-edit"><button class="boton">Editar perfil</button></a>
     </div>
     <div class="container">
         <div class="datos">
@@ -15,18 +15,38 @@
             </div>
         </div>
         <div><h5>{{user.nombre}} {{user.apellidoPaterno}} {{user.apellidoMaterno}}</h5></div>
-        <div class="header">
+        <div class="header" *ngIf="firstOption">
             <div class="margen">
-                <a routerLink="/profile"><h1>Mi perfil</h1></a>
+                <a><h1>Mi perfil</h1></a>
             </div>
             <div>
-                <a routerLink="/profile-info"><h2>Información</h2></a>
+                <a (click)="firstOptionChange()"><h2>Información</h2></a>
             </div>
         </div>
+        <div class="header" *ngIf="!firstOption">
+            <div>
+                <a (click)="firstOptionChange()"><h2>Mi perfil</h2></a>
+            </div>
+            <div class="margen">
+                <a><h1>Información</h1></a>
+            </div>
+            <div></div>
+        </div>
         <div class="informacion">
-            <div class="data">
+            <div class="data" *ngIf="firstOption">
                 <h3>Acerca de</h3>
                 <h4>{{user.descripcion}}</h4>
+            </div>
+            <div class="data" *ngIf="!firstOption">
+                <h4> Información</h4>
+                <h4>Información básica</h4>
+                <h4>* Organización : Regional La Paz</h4>
+                <h4>* Género : {{user.genero}}</h4>
+                <h4>* Lugar de residencia: Bolivia</h4>
+                <h4>Contacto</h4>
+                <h4>* Correo electrónico :  {{user.correo}}</h4>
+                <h4>Personalizado</h4>
+                <h4>* Registro UCB : {{user.userId}}</h4>
             </div>
             <div>
                 <div class="data">

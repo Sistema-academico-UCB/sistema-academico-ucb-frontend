@@ -1,14 +1,14 @@
 <!--Iconos-->
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
 <div class="profile">
-    <div style="background-image: url({{user.uuidPortada}}); background-size: cover; background-position: center; color: white; min-height: 45vh;">
+    <div style="background-image: url({{user.uuidPortada}}); background-size: cover; background-position: center; color: white; height: 40vh;">
         <button class="image-header" (click)="imgHeader.click()">
             <i class="fa-solid fa-camera" style="font-size: 15px; color: white;"></i>
             &nbsp;Editar portada
         </button>
         <input type="file" accept="image/*" #imgHeader style="display:none" (change)="onFileSelectedHeader($event)">
         <div class="center image-profile" style="align-items: start;">
-            <img src="{{user.uuidFoto}}" alt="Foto de perfíl" width="300px" style="border-radius: 100%; height: 300px;">
+            <img src="{{user.uuidFoto}}" alt="Foto de perfíl">
             <button class="image-pfp center" (click)="imgProfile.click()">
                 <i class="fa-solid fa-camera" style="font-size: 15px; color: white;"></i>
             </button>
@@ -19,7 +19,7 @@
         <div class="informacion">
             <h3>Acerca de</h3>
             <br>
-            <textarea [(ngModel)]="txtDescription" placeholder="Agrega una descripcion" >{{user.description}}</textarea>
+            <textarea [(ngModel)]="txtDescription" placeholder="Agrega una descripcion" maxlength="398" style="resize:none;">{{user.description}}</textarea>
         </div>
         <!-- Mensaje de advertencia -->
         <div #errorMessage class="warning">
@@ -36,7 +36,7 @@
             <div>
                 <div class="confirmation-content"><i class="fa-solid fa-circle-check" style="color: #30ff24;"></i></div>
                 <div class="confirmation-content"><p>Actualizacion correcta de datos</p></div>
-                <div class="confirmation-content"><button class="button-p" (click)="confirmationPopup = false">Aceptar</button></div>
+                <div class="confirmation-content"><a href="/profile"><button class="button-p">Aceptar</button></a></div>
             </div>
         </div>
     </div>

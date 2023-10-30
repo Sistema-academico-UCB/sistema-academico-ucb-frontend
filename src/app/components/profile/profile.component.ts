@@ -16,8 +16,18 @@ export class ProfileComponent {
   user: UserDto = {} as UserDto;
   friendsList: UserDto[] = []; 
   countFriends: number = 0;
+  firstOption: boolean = true;
+  name: string = '';
 
   ngOnInit(){
+    const nameLocal = localStorage.getItem('name');
+    if (nameLocal) {
+      this.name = nameLocal;
+    }
+    const uuidFotoLocal = localStorage.getItem('uuidFoto');
+    if (uuidFotoLocal) {
+      this.user.uuidFoto = uuidFotoLocal;
+    }
     console.log("Obteniendo información del usuario");
     this.userService.getUserInfo()
     .subscribe({
@@ -38,12 +48,19 @@ export class ProfileComponent {
         this.user.nombre = data.data.nombre;
         this.user.apellidoPaterno = data.data.apellidoPaterno;
         this.user.apellidoMaterno = data.data.apellidoMaterno;
-        const firstName = this.user.nombre.split(' ')[0];
-        const name = firstName + ' ' + this.user.apellidoPaterno;
-        localStorage.setItem('name', name);
+        const nombre = localStorage.getItem('name');
+        if(!nombre) {
+          this.name = this.user.nombre.split(' ')[0] + ' ' + this.user.apellidoPaterno;
+          localStorage.setItem('name', this.name);
+        }
+        const uuid = localStorage.getItem('uuidFoto');
+        if(!uuid) {
+          localStorage.setItem('uuidFoto', this.user.uuidFoto);
+        }
         this.user.rol = data.data.rol;
         this.user.correo = data.data.correo;
         this.user.descripcion = data.data.descripcion;
+        this.user.genero = data.data.genero;
         this.user.fechaRegistro = this.formattedDate(data.data.fechaRegistro);
         this.userService.getFriends(this.user.userId).subscribe(
           (data: any) => {
@@ -65,6 +82,10 @@ export class ProfileComponent {
     };
     const date = new Date(originalDate);
     return date.toLocaleDateString('es-ES', options);
+  }
+
+  firstOptionChange() {
+    this.firstOption = !this.firstOption;
   }
  
 }

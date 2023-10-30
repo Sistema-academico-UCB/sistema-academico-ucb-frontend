@@ -18,7 +18,7 @@
     </div>
     <div>
         <button class="btn-user center" (click)="showOptions = !showOptions">
-          <img src="../../../assets/icons/usuario.png" width="35px" style="border-radius: 100%; height: 35px;">
+          <img src="{{uuidFoto}}" width="35px" style="border-radius: 100%; height: 35px;">
           <span>{{name}}</span>
           <i class="fa-solid" [ngClass]="{'fa-caret-up': showOptions, 'fa-caret-down': !showOptions}"></i>
         </button>
