@@ -13,7 +13,6 @@ import { ListOfFriendsComponent } from './components/list-of-friends/list-of-fri
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { ExternalProfileComponent } from './components/external-profile/external-profile.component';
-import { ExternalProfileInfoComponent } from './components/external-profile-info/external-profile-info.component';
 import { ViewStudentsComponent } from './components/view-students/view-students.component';
 import { ViewTeachersComponent } from './components/view-teachers/view-teachers.component';
 
@@ -28,7 +27,6 @@ import { ViewTeachersComponent } from './components/view-teachers/view-teachers.
     NavbarComponent,
     LoginComponent,
     ExternalProfileComponent,
-    ExternalProfileInfoComponent,
     ViewStudentsComponent,
     ViewTeachersComponent
   ],

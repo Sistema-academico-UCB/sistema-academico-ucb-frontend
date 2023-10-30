@@ -96,6 +96,7 @@ export class ProfileEditComponent {
         if (this.user.uuidPortada == this.auxUuidPortada) {
           this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
             next: data => {
+              localStorage.setItem('uuidFoto', this.user.uuidFoto);
               console.log(data);
               this.confirmationPopup = true;
             },
@@ -112,6 +113,7 @@ export class ProfileEditComponent {
                 this.user.uuidPortada = data.uploadResult.Location;
                 this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
                   next: data => {
+                    localStorage.setItem('uuidFoto', this.user.uuidFoto);
                     console.log(data);
                     this.confirmationPopup = true;
                   },
@@ -135,6 +137,7 @@ export class ProfileEditComponent {
                       this.user.uuidPortada = data.uploadResult.Location;
                       this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
                         next: data => {
+                          localStorage.setItem('uuidFoto', this.user.uuidFoto);
                           console.log(data);
                           this.confirmationPopup = true;
                         },
@@ -159,6 +162,7 @@ export class ProfileEditComponent {
               if (this.user.uuidPortada == this.auxUuidPortada) {
                 this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
                   next: data => {
+                    localStorage.setItem('uuidFoto', this.user.uuidFoto);
                     console.log(data);
                     this.confirmationPopup = true;
                   },
@@ -175,6 +179,7 @@ export class ProfileEditComponent {
                       this.user.uuidPortada = data.uploadResult.Location;
                       this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
                         next: data => {
+                          localStorage.setItem('uuidFoto', this.user.uuidFoto);
                           console.log(data);
                           this.confirmationPopup = true;
                         },
@@ -198,6 +203,7 @@ export class ProfileEditComponent {
                             this.user.uuidPortada = data.uploadResult.Location;
                             this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
                               next: data => {
+                                localStorage.setItem('uuidFoto', this.user.uuidFoto);
                                 console.log(data);
                                 this.confirmationPopup = true;
                               },
@@ -229,6 +235,7 @@ export class ProfileEditComponent {
                     if (this.user.uuidPortada == this.auxUuidPortada) {
                       this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
                         next: data => {
+                          localStorage.setItem('uuidFoto', this.user.uuidFoto);
                           console.log(data);
                           this.confirmationPopup = true;
                         },
@@ -244,6 +251,7 @@ export class ProfileEditComponent {
                             this.user.uuidPortada = data.uploadResult.Location;
                             this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
                               next: data => {
+                                localStorage.setItem('uuidFoto', this.user.uuidFoto);
                                 console.log(data);
                                 this.confirmationPopup = true;
                               },
@@ -267,6 +275,7 @@ export class ProfileEditComponent {
                                   this.user.uuidPortada = data.uploadResult.Location;
                                   this.userService.updateProfile(this.user.uuidFoto, this.user.uuidPortada, this.txtDescription).subscribe({
                                     next: data => {
+                                      localStorage.setItem('uuidFoto', this.user.uuidFoto);
                                       console.log(data);
                                       this.confirmationPopup = true;
                                     },
