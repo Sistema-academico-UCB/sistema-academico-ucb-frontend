@@ -32,22 +32,23 @@ export class ViewStudentsComponent {
 
   ngOnInit(): void {
     this.changeSearchStudent();
-    this.changePage(0,5,'');
+    this.changePage(0,5,'',1);
   }
 
   // Función para controlar los cambios del page y pageSize
-  changePage(page: number, pageSize: number, searchText?: string) {
-    this.studentService.getStudents(page, pageSize).subscribe(
+  changePage(page: number, pageSize: number, searchText: string, semestre:number) {
+    console.log(page, pageSize, searchText, semestre)
+    this.studentService.getStudents(page, pageSize, searchText, semestre).subscribe(
       (data: any) => {
         this.students = data.data;
-  
-        // Filtrar la lista de estudiantes basándose en el parámetro 'searchText'
-        this.filteredStudents = this.students.filter(student => {
-          const studentName = student.nombre ? student.nombre.toLowerCase() : ''; // Asegúrate de que el nombre no sea null o undefined
-          const searchTextLowerCase = searchText ? searchText.toLowerCase() : ''; // Asegúrate de que la cadena de búsqueda no sea null o undefined
+        console.log(this.students)
+        // // Filtrar la lista de estudiantes basándose en el parámetro 'searchText'
+        // this.filteredStudents = this.students.filter(student => {
+        //   const studentName = student.nombre ? student.nombre.toLowerCase() : ''; // Asegúrate de que el nombre no sea null o undefined
+        //   const searchTextLowerCase = searchText ? searchText.toLowerCase() : ''; // Asegúrate de que la cadena de búsqueda no sea null o undefined
           
-          return studentName.includes(searchTextLowerCase);
-        });
+        //   return studentName.includes(searchTextLowerCase);
+        // });
       }
     );
   }
@@ -59,7 +60,7 @@ export class ViewStudentsComponent {
 
   // Función para redirigir a la página de editar estudiante
   editStudent(studentId: number){
-    this.router.navigate(['edit-student', studentId]);
+    this.router.navigate(['student-edit', studentId]);
   }
 
   // Función para redirigir a la página de eliminar estudiante
@@ -89,12 +90,15 @@ export class ViewStudentsComponent {
   }
   inputValue1: number = 1;
   inputValue2: number = 10;
+  inputValue3: number = 1;
+
 
   onInputChange() {
     console.log('Numero de la pagina', this.inputValue1);
     console.log('Tamaño de los datos', this.inputValue2);
     console.log('Carnet de identidad', this.searchText);
-    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText);
+    console.log('Carrera', this.selectedCarrerValue)
+    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.inputValue3);
 
   }
 

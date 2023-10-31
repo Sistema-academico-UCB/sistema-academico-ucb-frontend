@@ -54,6 +54,12 @@ p {
 .button button:hover {
     background-color: #9E3775;
 }
+.paginacion{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    gap: 10px;
+}
 /*Listas*/
 .options-list {
     margin: 0 0 0 90px;

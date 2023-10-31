@@ -98,9 +98,12 @@ export class StudentService {
   }
   
   // Obtener los estudiantes por medio de page y pageSize
-  getStudents(page: number, pageSize: number) {
-    return this.http.get(`${environment.BACKEND_URL}/api/v1/student?page=${page}&size=${pageSize}`);
+  getStudents(page: number, pageSize: number, name: string, semestre:number) {
+    return this.http.get(`${environment.BACKEND_URL}/api/v1/student?page=${page}&size=${pageSize}&nombre=${name}&semestre=${semestre}&sortType=desc`);
   }
+
+  //GET http://localhost:8080/api/v1/student?page=0&size=5&nombre=a&semestre=2&sortType=desc
+
 
   // Obtener estudiante por medio de Id
   getStudent(Id: string){

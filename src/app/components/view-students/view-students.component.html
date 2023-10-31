@@ -15,29 +15,25 @@
         </button>
     </div>
     <div class="options-list">
+        <div class="paginacion">
+            <p>Registros por página</p><input type="number" id="miInput" name="miInput" min="1" [(ngModel)]="inputValue2" (input)="onInputChange()">
+            <input type="number" min="1" [(ngModel)]="inputValue1" (input)="onInputChange()">
+        </div>
         <div class="options">
             <div class="search">
                 <i class="fa-solid fa-search"></i>
                 <input [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el carnet del estudiante">
             </div>
-            <select (change)="changeSelectCarrer()" [(ngModel)]="selectedCarrerValue">
-                <option disabled selected hidden value="-1">Seleccione la carrera</option>
-                <option value="0">Todas las carreras</option>
-                <option *ngFor="let carrer of carrers" [value]="carrer.carreraId">{{carrer.nombre}}</option>
-            </select>              
-        </div>
-        <div>
-            <input type="number" min="1" [(ngModel)]="inputValue1" (input)="onInputChange()">
-            <input type="number" id="miInput" name="miInput" min="1" [(ngModel)]="inputValue2" (input)="onInputChange()">
+            <input class="search" type="number" min="1" [(ngModel)]="inputValue3" (input)="onInputChange()">                          
         </div>
         <div class="list">
-            <div class="student" *ngFor="let student of filteredStudents">
+            <div class="student" *ngFor="let student of students">
                 <img src="../../../assets/icons/usuario.png" alt="student">
                 <div class="student-info">
                     <h2>{{student.nombre}}</h2>
                     <h3>{{student.correo}}</h3>
                 </div>
-                <i (click)="editStudent(1)" class="fa-duotone fa-square-pen" style="--fa-primary-color: #83ea7b; --fa-secondary-color: #83ea7b;"></i>
+                <i (click)="editStudent(student.estudianteId)" class="fa-duotone fa-square-pen" style="--fa-primary-color: #83ea7b; --fa-secondary-color: #83ea7b;"></i>
                 <button (click)="deleteStudent(1)">
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
