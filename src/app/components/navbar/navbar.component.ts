@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationDto } from 'src/app/dto/notification.dto';
 import { UserService } from 'src/app/service/user.service';
+import { forkJoin } from 'rxjs'; // Importa forkJoin desde 'rxjs'
+
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +16,9 @@ export class NavbarComponent {
   @Input() user: boolean;
   @Input() name: string;
   @Input() uuidFoto: string;
+  searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
+  users:any []=[];
+  docente:any []=[];
 
   constructor(private router: Router, private userService: UserService) { }
 
@@ -57,5 +62,39 @@ export class NavbarComponent {
       }
     );
     this.showNotification = false;
+  }
+  navigateToProfile(userId: number) {
+    this.router.navigate(['', userId, 'profile']);
+  }
+  // Función para buscar personas
+  search(searchText: string) {
+    console.log(searchText)
+    this.userService.getUsers(searchText).subscribe(
+      (data: any) => {
+        this.users = data.data;
+        console.log(this.users)
+        this.userService.getTeachers(searchText).subscribe(
+          (data: any) => {
+            this.docente = data.data;
+            this.users = this.users.concat(this.docente);
+            console.log(this.users)
+          }
+        )
+      }
+    );
+    // forkJoin([
+    //   this.userService.getUsers(searchText),
+    //   this.userService.getDocentes(searchText), // Reemplaza con la función para obtener docentes
+    // ]).subscribe(([userData, docenteData]: [any, any]) => {
+    //   this.users = userData.data;
+    //   // Agrega los docentes a la lista de usuarios
+    //   this.users = this.users.concat(docenteData.data);
+    //   console.log(this.users);
+    // });
+  }
+
+  onInputChange() {
+    console.log('Carnet de identidad', this.searchText);
+    this.search(this.searchText);
   }
 }

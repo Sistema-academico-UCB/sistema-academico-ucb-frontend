@@ -16,6 +16,12 @@
         <img class="logo" src="../../../favicon.ico"/>
         <h2>&nbsp;&nbsp;Sistema academico</h2>
     </div>
+    <div class="options">
+        <div class="search">
+            <i class="fa-solid fa-search"></i>
+            <input class="buscar" [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el nombre de la persona">
+        </div>
+    </div>
     <div>
         <button class="btn-user center" (click)="showOptions = !showOptions">
           <img src="{{uuidFoto}}" width="35px" style="border-radius: 100%; height: 35px;">
@@ -32,6 +38,11 @@
         </div>
     </div>    
 </nav>
+<div class="student-data" *ngIf="users.length > 0">
+    <ul>
+      <li *ngFor="let user of users" (click)="navigateToProfile(user.userId)">{{ user.apellidoPaterno }} {{ user.nombre }}</li>
+    </ul>
+</div>
 
 <!--Modal de cerrar sesión-->
 <div class="popup center" *ngIf="logoutPopup">

@@ -227,3 +227,75 @@ hr {
     color: #fff;
     font-weight: 600;
 }
+
+/*Listas*/
+.options-list {
+    margin: 0 0 0 90px;
+    display: flex;
+    flex-direction: column;
+}
+.options {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 40%;
+    background-color: white;
+}
+.search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #CBCBCB;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+.search i {
+    color: #CBCBCB;
+    font-weight: 500;
+}
+
+.search input {
+    width: 100%;
+    border: none;
+    padding: 5px 10px 5px 5px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #383838;
+    outline: none;
+    border-radius: 5px;
+}
+.search:hover {
+    border: 1px solid #9E3775;
+}
+.search:hover i {
+    color: #9E3775;
+}
+select {
+    border: 1px solid #CBCBCB;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #383838;
+    outline: none;
+    cursor: pointer;
+}
+.student-data {
+    position: relative; /* Establece una posición absoluta para la lista de coincidencias */
+    top: 100%; /* Coloca la lista debajo del campo de búsqueda */
+    left: 0; /* Alinea la lista a la izquierda del contenedor principal */
+    z-index: 1; /* Asegura que la lista se superponga sobre otros contenidos */
+    border: 1px solid #ccc; /* Agrega un borde a la lista */
+    padding: 10px; /* Añade espacio interno para mejorar la presentación */
+    border-radius: 5px; /* Añade bordes redondeados */
+    background-color: #fff; /* Agrega un fondo blanco a la lista */
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 5px 0; /* Agrega espacio entre los nombres de los estudiantes */
+    cursor: pointer;
+  }
