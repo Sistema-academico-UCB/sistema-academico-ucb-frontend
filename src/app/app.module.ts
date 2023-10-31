@@ -17,6 +17,7 @@ import { ViewStudentsComponent } from './components/view-students/view-students.
 import { ViewTeachersComponent } from './components/view-teachers/view-teachers.component';
 import { StudentEditComponent } from './components/student-edit/student-edit.component';
 import { DatePipe } from '@angular/common';
+import { TeacherEditComponent } from './components/teacher-edit/teacher-edit.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { DatePipe } from '@angular/common';
     ExternalProfileComponent,
     ViewStudentsComponent,
     ViewTeachersComponent,
-    StudentEditComponent
+    StudentEditComponent,
+    TeacherEditComponent
   ],
   imports: [
     BrowserModule,
