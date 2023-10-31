@@ -32,7 +32,7 @@ export class ViewTeachersComponent {
 
   ngOnInit(): void {
     this.changeSearchStudent();
-    this.changePage(0,5,'','');
+    this.changePage(this.inputValue1 -1 , this.inputValue2,'','');
   }
 
   // Función para controlar los cambios del page y pageSize
