@@ -22,7 +22,11 @@
         <div class="options">
             <div class="search">
                 <i class="fa-solid fa-search"></i>
-                <input [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el nombre del docente">
+                <input [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el nombre del estudiante">
+            </div>
+            <div class="search">
+                <i class="fa-solid fa-search"></i>
+                <input [(ngModel)]="searchCI" (input)="onInputChange()" type="text" placeholder="Ingresa carnet del estudiante">
             </div>
             <input class="search" type="number" min="1" [(ngModel)]="inputValue3" (input)="onInputChange()">                          
         </div>
@@ -30,8 +34,8 @@
             <div class="student" *ngFor="let student of students">
                 <img src="../../../assets/icons/usuario.png" alt="student">
                 <div class="student-info">
-                    <h2>{{student.nombre}}</h2>
-                    <h3>{{student.correo}}</h3>
+                    <h2>{{student.apellidoPaterno}} {{student.apellidoMaterno}}, {{student.nombre}}</h2>
+                    <h3>CI: {{student.carnetIdentidad}} | {{student.correo}}</h3>
                 </div>
                 <i (click)="editStudent(student.docenteId)" class="fa-duotone fa-square-pen" style="--fa-primary-color: #83ea7b; --fa-secondary-color: #83ea7b;"></i>
                 <button (click)="openConfirmationDialog(student.userId)">
@@ -47,7 +51,7 @@
 <div class="custom-confirm-dialog" *ngIf="isDialogVisible">
   <div class="dialog-content">
     <div class="div-trash"> <img src="../../../assets/icons/trash.svg" alt="eliminar" class="trash-1"></div>
-    <h5>Confirmación de Eliminación de Estudiante</h5>
+    <h5>Confirmación de Eliminación de docente</h5>
     <p>¿Estás seguro de que deseas eliminar a este usuario de la lista? Esta acción no se puede deshacer. Por favor, confirma tu elección.</p>
   </div>
   <div class="dialog-actions">

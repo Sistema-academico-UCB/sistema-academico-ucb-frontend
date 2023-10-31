@@ -23,6 +23,7 @@ export class ViewTeachersComponent {
 
 
   searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
+  searchCI: string = ''; // Propiedad para almacenar la cadena de búsqueda
   filteredStudents: any[] = []; // Arreglo filtrado de estudiantes
 
   constructor(private router: Router, private teacherService: TeacherService, private userService: UserService) { 
@@ -31,13 +32,13 @@ export class ViewTeachersComponent {
 
   ngOnInit(): void {
     this.changeSearchStudent();
-    this.changePage(0,5,'');
+    this.changePage(0,5,'','');
   }
 
   // Función para controlar los cambios del page y pageSize
-  changePage(page: number, pageSize: number, searchText: string) {
+  changePage(page: number, pageSize: number, searchText: string, searchCI: string) {
     console.log(page, pageSize, searchText)
-    this.teacherService.getTeachers(page, pageSize, searchText).subscribe(
+    this.teacherService.getTeachers(page, pageSize, searchText, searchCI).subscribe(
       (data: any) => {
         this.students = data.data;
         console.log(this.students)
@@ -97,7 +98,7 @@ export class ViewTeachersComponent {
     console.log('Tamaño de los datos', this.inputValue2);
     console.log('Carnet de identidad', this.searchText);
     console.log('Carrera', this.selectedCarrerValue)
-    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText);
+    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.searchCI);
 
   }
 
