@@ -19,27 +19,27 @@
         <div class="personal-information">
             <div>
                 <h4>Nombres(s)</h4>
-                <input #nombreInput type="text" placeholder="Ingresa el/los nombre(s) del estudiante" maxlength="150">
+                <input #nombreInput type="text" placeholder="Ingresa el/los nombre(s) del estudiante" [value]="estudiante.nombre" maxlength="150">
             </div>
             <div>
                 <h4>Apellido paterno</h4>
-                <input #apellidoPaternoInput type="text" placeholder="Ingresa el apellido paterno del estudiante" maxlength="100">
+                <input #apellidoPaternoInput type="text" placeholder="Ingresa el apellido paterno del estudiante" [value]="estudiante.apellidoPaterno" maxlength="100">
             </div>
             <div>
                 <h4>Apellido materno</h4>
-                <input #apellidoMaternoInput type="text" placeholder="Ingresa el apellido materno del estudiante" maxlength="100">
+                <input #apellidoMaternoInput type="text" placeholder="Ingresa el apellido materno del estudiante" [value]="estudiante.apellidoMaterno" maxlength="100">
             </div>
             <div>
                 <h4>Carnet de identidad</h4>
-                <input #ciInput type="text" placeholder="Ingresa el CI del estudiante" maxlength="50" (input)="updatePassword()">
+                <input #ciInput type="text" placeholder="Ingresa el CI del estudiante" [value]="estudiante.carnetIdentidad" maxlength="50" >
             </div>
             <div>
                 <h4>Fecha de nacimiento</h4>
-                <input #fechaNacimientoInput type="date" placeholder="dd/mm/aaaa">
+                <input #fechaNacimientoInput type="date" placeholder="dd/mm/aaaa" [value]="estudiante.fechaNacimiento">
             </div>
             <div>
                 <h4>Género</h4>
-                <select #generoSelect name="gender">
+                <select #generoSelect name="gender" [(ngModel)]="estudiante.genero">
                     <option value="Hombre" selected>Hombre</option>
                     <option value="Mujer">Mujer</option>
                     <option value="No binario">No binario</option>
@@ -52,24 +52,24 @@
         <div class="contact-information">
             <div>
                 <h4>Correo electrónico</h4>
-                <input #correoInput type="email" placeholder="Ingresa el correo electrónico del estudiante" maxlength="150">
+                <input #correoInput type="email" placeholder="Ingresa el correo electrónico del estudiante" [value]="estudiante.correo" maxlength="150">
             </div>
             <div>
                 <h4>Celular</h4>
-                <input #celularInput type="text" placeholder="Ingresa el número de celular del estudiante" maxlength="50" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                <input #celularInput type="text" placeholder="Ingresa el número de celular del estudiante" [value]="estudiante.celular" maxlength="50" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
             </div>
         </div>
         <!-- estudiante-direccion -->
         <div class="direction">
             <h4>Dirección</h4>
-            <input #direccionInput type="text" placeholder="Ingresa la dirección del estudiante" maxlength="150">
+            <input #direccionInput type="text" placeholder="Ingresa la dirección del estudiante" [value]="estudiante.direccion" maxlength="150">
         </div>
         <!-- Detalle-registro -->
         <h2>Detalles del Registro</h2>
         <div class="personal-information">
             <div>
                 <h4>Fecha de registro</h4>
-                <p>{{fechaActual | date: 'dd/MM/yyyy'}}</p>
+                <p>{{estudiante.fechaRegistro | date: 'dd/MM/yyyy'}}</p>
             </div>
             <div>
                 <h4>Lugar de residencia</h4>
@@ -81,7 +81,7 @@
             </div>
             <div>
                 <h4>Estado civil</h4>
-                <select #estadoCivilSelect name="gender">
+                <select #estadoCivilSelect name="gender" [(ngModel)]="estudiante.estadoCivil">
                     <option value="Soltero/a" selected>Soltero/a</option>
                     <option value="Casado/a">Casado/a</option>
                     <option value="Divorciado/a">Divorciado/a</option>
@@ -91,7 +91,7 @@
             </div>
             <div>
                 <h4>Colegio del que se graduo</h4>
-                <select #colegioSelect name="school">
+                <select #colegioSelect name="school" [(ngModel)]="estudiante.colegioId">
                     <option value="0" selected hidden>Seleccione un colegio</option>
                     <!--Opciones del vector colegios-->
                     <option *ngFor="let colegio of colegios" [value]="colegio.colegioId">{{colegio.nombreColegio}}</option>
@@ -99,7 +99,7 @@
             </div>
             <div>
                 <h4>Semestre</h4>
-                <input #semestreInput type="number" placeholder="Ingrese el semestre actual del estudiante" min="1">
+                <input #semestreInput type="number" placeholder="Ingrese el semestre actual del estudiante" [value]="estudiante.semestre" min="1">
             </div>
         </div>
         <!-- Informacion de cuenta -->
@@ -107,11 +107,11 @@
         <div class="personal-information">
             <div>
                 <h4>Username</h4>
-                <input #usuarioInput type="text" placeholder="Ingresa el nombre de usuario del estudiante" maxlength="50">
+                <input #usuarioInput type="text" placeholder="Ingresa el nombre de usuario del estudiante" [value]="estudiante.username" maxlength="50">
             </div>
             <div>
                 <h4>Contraseña</h4>
-                <input #contrasenaInput type="text" disabled>
+                <input #contrasenaInput type="text" [value]="estudiante.secret">
             </div>
         </div>
         <!-- Informacion de carrera -->
@@ -119,7 +119,7 @@
         <div class="personal-information">
             <div>
                 <h4>Carrera escogida</h4>
-                <select #carreraSelect name="carrer">
+                <select #carreraSelect name="carrer" [(ngModel)]="estudiante.carreraId">
                     <option value="0" selected hidden>Seleccione la carrera elegida</option>
                     <!--Opciones del vector carreras-->
                     <option *ngFor="let carrera of carreras" [value]="carrera.carreraId">{{carrera.sigla}} - {{carrera.nombre}}</option>
@@ -142,7 +142,7 @@
         <div class="success center">
             <div>
                 <div class="confirmation-content"><i class="fa-solid fa-circle-check" style="color: #30ff24;"></i></div>
-                <div class="confirmation-content"><p>El estudiante fue registrado correctamente</p></div>
+                <div class="confirmation-content"><p>El estudiante fue actualizado correctamente</p></div>
                 <div class="confirmation-content"><button (click)="confirmationPopup = false">Aceptar</button></div>
             </div>
         </div>

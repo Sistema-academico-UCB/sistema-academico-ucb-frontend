@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'profile-edit', component: ProfileEditComponent },
   { path: 'list-of-friends', component: ListOfFriendsComponent },
   { path: ':user/profile', component: ExternalProfileComponent },
-  { path: 'student-edit', component: StudentEditComponent}
+  { path: ':student/student-edit', component: StudentEditComponent}
 ];
 
 @NgModule({

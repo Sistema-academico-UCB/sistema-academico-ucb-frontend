@@ -2,6 +2,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CarrerDto } from 'src/app/dto/carrer.dto';
 import { CollegeDto } from 'src/app/dto/college.dto';
 import { StudentService } from 'src/app/service/student.service';
+import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -16,14 +18,20 @@ export class StudentEditComponent {
   lugarResidencia = "Bolivia";
   departamento = "La Paz";
 
-  constructor(private StudentService: StudentService) { }
-
+  constructor(private StudentService: StudentService, private datePipe: DatePipe, private route: ActivatedRoute) { }
+  id: string | null;
   // Lista de colegios
   colegios: CollegeDto[] = [];
   // Lista de carreras
   carreras: CarrerDto[] = [];
 
+  // Estudiante
+  estudiante: any = {};
+
   ngOnInit(){
+    this.route.params.subscribe(params => {
+      this.id = params['student'];
+    });
     // Obtener la lista de colegios
     this.StudentService.getColleges().subscribe(
       (data: any) => {
@@ -42,7 +50,22 @@ export class StudentEditComponent {
         console.log(error);
       }
     );
+    if (this.id != null) {
+      //Obtener datos del estudiante
+      this.StudentService.getStudent(this.id).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.estudiante = data.data;
+          this.estudiante.fechaNacimiento = this.datePipe.transform(this.estudiante.fechaNacimiento, 'yyyy-MM-dd');
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
   }
+
+
 
   /*Declaramos los atributos del estudiante*/
   @ViewChild('errorMessage') errorMessage!: ElementRef;
@@ -80,7 +103,8 @@ export class StudentEditComponent {
           if(this.validacion4()){
             if(this.validacion5()){
               this.confirmationPopup = true;
-              this.StudentService.createStudent(
+              this.StudentService.updateStudent(
+                this.estudiante.estudianteId,
                 this.nombreInput.nativeElement.value,
                 this.apellidoPaternoInput.nativeElement.value,
                 this.apellidoMaternoInput.nativeElement.value,
@@ -89,8 +113,11 @@ export class StudentEditComponent {
                 this.correoInput.nativeElement.value,
                 this.generoSelect.nativeElement.value,
                 this.celularInput.nativeElement.value,
+                this.estudiante.descripcion,
+                this.estudiante.uuidFoto,
+                this.estudiante.uuidPortada,
                 this.direccionInput.nativeElement.value,
-                this.fechaActual,
+                this.estudiante.fechaRegistro,
                 this.estadoCivilSelect.nativeElement.value,
                 this.usuarioInput.nativeElement.value,
                 this.contrasenaInput.nativeElement.value,
@@ -100,7 +127,6 @@ export class StudentEditComponent {
               ).subscribe(
                 (data: any) => {
                   console.log(data);
-                  this.limpiarCampos();
                 },
                 (error) => {
                   console.log(error);
@@ -114,25 +140,6 @@ export class StudentEditComponent {
     } else {
       console.log("Datos no guardados");
     }
-  }
-
-  /*Limpiar campos*/
-  limpiarCampos() {
-    this.nombreInput.nativeElement.value = "";
-    this.apellidoPaternoInput.nativeElement.value = "";
-    this.apellidoMaternoInput.nativeElement.value = "";
-    this.ciInput.nativeElement.value = "";
-    this.fechaNacimientoInput.nativeElement.value = "";
-    this.correoInput.nativeElement.value = "";
-    this.celularInput.nativeElement.value = "";
-    this.direccionInput.nativeElement.value = "";
-    this.semestreInput.nativeElement.value = "";
-    this.usuarioInput.nativeElement.value = "";
-    this.contrasenaInput.nativeElement.value = "";
-    this.colegioSelect.nativeElement.value = "0";
-    this.carreraSelect.nativeElement.value = "0";
-    this.estadoCivilSelect.nativeElement.value = "Soltero/a";
-    this.generoSelect.nativeElement.value = "Hombre";
   }
 
   /*Mensaje error*/
@@ -226,8 +233,4 @@ export class StudentEditComponent {
     return flag;
   }
 
-  /*Funcion para actualizar el pawssword*/
-  updatePassword(){
-    this.contrasenaInput.nativeElement.value = this.ciInput.nativeElement.value;
-  }
 }

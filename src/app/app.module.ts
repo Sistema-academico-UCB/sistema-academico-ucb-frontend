@@ -16,6 +16,8 @@ import { ExternalProfileComponent } from './components/external-profile/external
 import { ViewStudentsComponent } from './components/view-students/view-students.component';
 import { ViewTeachersComponent } from './components/view-teachers/view-teachers.component';
 import { StudentEditComponent } from './components/student-edit/student-edit.component';
+import { DatePipe } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +41,7 @@ import { StudentEditComponent } from './components/student-edit/student-edit.com
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
