@@ -1,1 +1,43 @@
-<p>view-teachers works!</p>
+<app-navbar [admin]="true" name="" uuidFoto=""></app-navbar>
+<div class="view-students">
+    <div class="header">
+        <div class="circle">
+            <i class="fa-solid fa-user-tie"></i>
+        </div>
+        <div>
+            <h1>Lista de Docentes</h1>
+            <p>Explora la lista completa de docentes inscritos y su información relevante. Aquí puedes encontrar lo que necesitas para brindar el mejor apoyo académico y mantener una comunidad docente sólida y comprometida.</p>
+        </div>
+    </div>
+    <div class="button">
+        <button (click)="addStudent()">
+            <span>AGREGAR NUEVO</span>
+        </button>
+    </div>
+    <div class="options-list">
+        <div class="paginacion">
+            <p>Registros por página</p><input type="number" id="miInput" name="miInput" min="1" [(ngModel)]="inputValue2" (input)="onInputChange()">
+            <input type="number" min="1" [(ngModel)]="inputValue1" (input)="onInputChange()">
+        </div>
+        <div class="options">
+            <div class="search">
+                <i class="fa-solid fa-search"></i>
+                <input [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el nombre del docente">
+            </div>
+            <input class="search" type="number" min="1" [(ngModel)]="inputValue3" (input)="onInputChange()">                          
+        </div>
+        <div class="list">
+            <div class="student" *ngFor="let student of students">
+                <img src="../../../assets/icons/usuario.png" alt="student">
+                <div class="student-info">
+                    <h2>{{student.nombre}}</h2>
+                    <h3>{{student.correo}}</h3>
+                </div>
+                <i (click)="editStudent(student.docenteId)" class="fa-duotone fa-square-pen" style="--fa-primary-color: #83ea7b; --fa-secondary-color: #83ea7b;"></i>
+                <button (click)="deleteStudent(1)">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
