@@ -15,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ExternalProfileComponent } from './components/external-profile/external-profile.component';
 import { ViewStudentsComponent } from './components/view-students/view-students.component';
 import { ViewTeachersComponent } from './components/view-teachers/view-teachers.component';
+import { StudentEditComponent } from './components/student-edit/student-edit.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ViewTeachersComponent } from './components/view-teachers/view-teachers.
     LoginComponent,
     ExternalProfileComponent,
     ViewStudentsComponent,
-    ViewTeachersComponent
+    ViewTeachersComponent,
+    StudentEditComponent
   ],
   imports: [
     BrowserModule,

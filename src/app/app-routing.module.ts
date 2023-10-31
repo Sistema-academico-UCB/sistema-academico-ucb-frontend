@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ExternalProfileComponent } from './components/external-profile/external-profile.component';
 import { ViewTeachersComponent } from './components/view-teachers/view-teachers.component';
 import { ViewStudentsComponent } from './components/view-students/view-students.component';
+import { StudentEditComponent } from './components/student-edit/student-edit.component';
 
 
 
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'profile-edit', component: ProfileEditComponent },
   { path: 'list-of-friends', component: ListOfFriendsComponent },
   { path: ':user/profile', component: ExternalProfileComponent },
+  { path: 'student-edit', component: StudentEditComponent}
 ];
 
 @NgModule({

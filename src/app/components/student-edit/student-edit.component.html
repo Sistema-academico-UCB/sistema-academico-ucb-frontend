@@ -1,0 +1,160 @@
+<app-navbar [admin]="true" name="" uuidFoto=""></app-navbar>
+<div class="add-student">
+    <div class="container">
+        <!-- Cabezera de la página -->
+        <div class="header">
+            <div class="icon-header center">
+                <i class="fa-solid fa-user-plus" style="color: #9E3775;"></i>
+            </div>
+            <div class="title-header">
+                <div>
+                    <h1>Edición de Estudiante</h1>
+                    <h3>Acceda y gestione los estudiantes en nuestro sistema académico con privilegios de administrador.</h3>
+                </div>
+            </div>
+        </div>
+        <hr class="line"/>
+        <!-- Datos estudiante -->
+        <h2>Datos personales</h2>
+        <div class="personal-information">
+            <div>
+                <h4>Nombres(s)</h4>
+                <input #nombreInput type="text" placeholder="Ingresa el/los nombre(s) del estudiante" maxlength="150">
+            </div>
+            <div>
+                <h4>Apellido paterno</h4>
+                <input #apellidoPaternoInput type="text" placeholder="Ingresa el apellido paterno del estudiante" maxlength="100">
+            </div>
+            <div>
+                <h4>Apellido materno</h4>
+                <input #apellidoMaternoInput type="text" placeholder="Ingresa el apellido materno del estudiante" maxlength="100">
+            </div>
+            <div>
+                <h4>Carnet de identidad</h4>
+                <input #ciInput type="text" placeholder="Ingresa el CI del estudiante" maxlength="50" (input)="updatePassword()">
+            </div>
+            <div>
+                <h4>Fecha de nacimiento</h4>
+                <input #fechaNacimientoInput type="date" placeholder="dd/mm/aaaa">
+            </div>
+            <div>
+                <h4>Género</h4>
+                <select #generoSelect name="gender">
+                    <option value="Hombre" selected>Hombre</option>
+                    <option value="Mujer">Mujer</option>
+                    <option value="No binario">No binario</option>
+                    <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+                </select>
+            </div>
+        </div>
+        <!-- Estudiante contacto -->
+        <h2>Contacto</h2>
+        <div class="contact-information">
+            <div>
+                <h4>Correo electrónico</h4>
+                <input #correoInput type="email" placeholder="Ingresa el correo electrónico del estudiante" maxlength="150">
+            </div>
+            <div>
+                <h4>Celular</h4>
+                <input #celularInput type="text" placeholder="Ingresa el número de celular del estudiante" maxlength="50" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            </div>
+        </div>
+        <!-- estudiante-direccion -->
+        <div class="direction">
+            <h4>Dirección</h4>
+            <input #direccionInput type="text" placeholder="Ingresa la dirección del estudiante" maxlength="150">
+        </div>
+        <!-- Detalle-registro -->
+        <h2>Detalles del Registro</h2>
+        <div class="personal-information">
+            <div>
+                <h4>Fecha de registro</h4>
+                <p>{{fechaActual | date: 'dd/MM/yyyy'}}</p>
+            </div>
+            <div>
+                <h4>Lugar de residencia</h4>
+                <p>{{lugarResidencia}}</p>
+            </div>
+            <div>
+                <h4>Departamento</h4>
+                <p>{{departamento}}</p>
+            </div>
+            <div>
+                <h4>Estado civil</h4>
+                <select #estadoCivilSelect name="gender">
+                    <option value="Soltero/a" selected>Soltero/a</option>
+                    <option value="Casado/a">Casado/a</option>
+                    <option value="Divorciado/a">Divorciado/a</option>
+                    <option value="Viudo/a">Viudo/a</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            <div>
+                <h4>Colegio del que se graduo</h4>
+                <select #colegioSelect name="school">
+                    <option value="0" selected hidden>Seleccione un colegio</option>
+                    <!--Opciones del vector colegios-->
+                    <option *ngFor="let colegio of colegios" [value]="colegio.colegioId">{{colegio.nombreColegio}}</option>
+                </select>
+            </div>
+            <div>
+                <h4>Semestre</h4>
+                <input #semestreInput type="number" placeholder="Ingrese el semestre actual del estudiante" min="1">
+            </div>
+        </div>
+        <!-- Informacion de cuenta -->
+        <h2>Información de cuenta</h2>
+        <div class="personal-information">
+            <div>
+                <h4>Username</h4>
+                <input #usuarioInput type="text" placeholder="Ingresa el nombre de usuario del estudiante" maxlength="50">
+            </div>
+            <div>
+                <h4>Contraseña</h4>
+                <input #contrasenaInput type="text" disabled>
+            </div>
+        </div>
+        <!-- Informacion de carrera -->
+        <h2>Elección de carrera</h2>
+        <div class="personal-information">
+            <div>
+                <h4>Carrera escogida</h4>
+                <select #carreraSelect name="carrer">
+                    <option value="0" selected hidden>Seleccione la carrera elegida</option>
+                    <!--Opciones del vector carreras-->
+                    <option *ngFor="let carrera of carreras" [value]="carrera.carreraId">{{carrera.sigla}} - {{carrera.nombre}}</option>
+                </select>
+            </div>
+        </div>
+        <!-- Mensaje de advertencia -->
+        <div #errorMessage class="warning">
+            <p>Por favor, debe llenar todos los campos correspondientes</p>
+        </div>
+        <!-- Guardar -->
+        <div class="save-button">
+            <div><hr class="line"/></div>
+            <div class="center"><button (click)="guardarDatos()">Guardar</button></div>
+            <div><hr class="line"/></div>
+        </div>
+    </div>
+    <!--Mensaje de que todo salio bien y el estudiante fue registrado correctamente-->
+    <div class="popup center" *ngIf="confirmationPopup">
+        <div class="success center">
+            <div>
+                <div class="confirmation-content"><i class="fa-solid fa-circle-check" style="color: #30ff24;"></i></div>
+                <div class="confirmation-content"><p>El estudiante fue registrado correctamente</p></div>
+                <div class="confirmation-content"><button (click)="confirmationPopup = false">Aceptar</button></div>
+            </div>
+        </div>
+    </div>
+    <!--Mensaje de que algo salio mal al momento de registrar al estudiante-->
+    <div class="popup center" *ngIf="errorPopup">
+        <div class="success center">
+            <div>
+                <div class="confirmation-content"><i class="fa-solid fa-circle-xmark" style="color: #ff4d4d;"></i></div>
+                <div class="confirmation-content"><p>Ocurrió un error, el estudiante no pudo<br>ser registrado</p></div>
+                <div class="confirmation-content"><button (click)="errorPopup = false">Aceptar</button></div>
+            </div>
+        </div>
+    </div>
+</div>

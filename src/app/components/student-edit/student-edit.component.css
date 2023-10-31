@@ -1,0 +1,221 @@
+/*Quitar los estilos generales*/
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  /*Background*/
+  .add-student {
+    background-color: #ffffff;
+    font-family: 'Montserrat', sans-serif !important;
+    min-height: 100%;
+    box-sizing: border-box;
+  }
+  /*Contenedor*/
+  .container {
+    background-color: #ffffff;
+    box-sizing: border-box;
+    margin: 2% 4%;
+  }
+  /*Cabezera*/
+  .header {
+    display: grid;
+    grid-template-columns: 60px calc(99% - 60px);
+    gap: 1%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .icon-header {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #FFBDE5;
+  }
+  .icon-header i {
+    font-size: 30px;
+    margin-left: 6px;
+  }
+  .title-header {
+    display: flex;
+    align-items: center;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #003531;
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #383838;
+  }
+  
+  /*Línea*/
+  .line {
+    margin: 15px 0px 20px 0px;
+    border: 0.2px solid #cdcdcd;
+  }
+  
+  /*Subtitulos*/
+  h2{
+    font-size: 25px;
+    font-weight: 700;
+    color: #003531;
+  }
+  
+  /*Labels*/
+  h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #383838;
+    margin-bottom: 3px;
+  }
+  
+  /*Primera seccion*/
+  .personal-information {
+    display: grid;
+    grid-template-columns: 32% 33% 33%;
+    gap: 15px 1%;
+    margin: 10px 0px 20px 0px;
+  }
+  
+  /*Segunda seccion*/
+  .contact-information {
+    display: grid;
+    grid-template-columns: 66% 33%;
+    gap: 1%;
+    margin: 10px 0px 15px 0px;
+  }
+  .direction {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /*Tercera seccion*/
+  p {
+    font-size: 15px;
+    font-weight: 600;
+    color: #757575;
+  }
+  
+  /*Inputs*/
+  input, select {
+    font-size: 15px;
+    border: #D9D9D9 1px solid;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    padding: 3px 6px;
+  }
+  input:focus {
+    border: 1px solid #9E3775;
+  }
+  .input-empty {
+    border: 1px solid #FFBDE5;
+  }
+  
+  /*Select*/
+  select {
+    font-size: 14px;
+    color: #383838;
+  }
+  
+  /*Advertencia*/
+  .warning {
+    display: none;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #ff7171;
+  }
+  .warning p {
+    color: white !important;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .warning-active {
+    display: flex;
+    align-items: center;
+  }
+  
+  /*Boton guardar*/
+  .save-button {
+    display: grid;
+    grid-template-columns: 1fr 120px 1fr;
+    gap: 1%;
+  } 
+  button{
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    padding: 6px 0px;
+    background-color: #6edad2;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  button:focus {
+    border: none;
+  }
+  button:hover {
+    background-color: #3EB7AE;
+    color: #ffffff;
+  }
+  .save-button div .line {
+    margin-top: 20px;
+  }
+  
+  /*Error con el password*/
+  .password h4 {
+    color: red;
+  }
+  .password {
+    display: none;
+  }
+  .password-active {
+    display: flex;
+  }
+  
+  /*-----------------------------------------------------------------------------------------------------*/
+  /*Mensaje de confirmacion*/
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.199);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+  }
+  .success {
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+  }
+  .confirmation-content {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .confirmation-content i {
+    font-size: 60px;
+    margin-top: 10px;
+  }
+  .confirmation-content p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #003531;
+  }
+  .confirmation-content button {
+    width: 100px;
+    margin-top: 10px;
+  }
