@@ -34,10 +34,24 @@
                     <h3>{{student.correo}}</h3>
                 </div>
                 <i (click)="editStudent(student.estudianteId)" class="fa-duotone fa-square-pen" style="--fa-primary-color: #83ea7b; --fa-secondary-color: #83ea7b;"></i>
-                <button (click)="deleteStudent(1)">
+                <button (click)="openConfirmationDialog(student.userId)">
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Popup -->
+<div class="overlay" *ngIf="isDialogVisible"></div> <!-- Fondo oscuro -->
+<div class="custom-confirm-dialog" *ngIf="isDialogVisible">
+  <div class="dialog-content">
+    <div class="div-trash"> <img src="../../../assets/icons/trash.svg" alt="eliminar" class="trash-1"></div>
+    <h5>Confirmación de Eliminación de Estudiante</h5>
+    <p>¿Estás seguro de que deseas eliminar a este usuario de la lista? Esta acción no se puede deshacer. Por favor, confirma tu elección.</p>
+  </div>
+  <div class="dialog-actions">
+    <button (click)="confirmDelete()" class="Aceptar">Confirmar</button>
+    <button (click)="cancelDelete()" class="Cancelar">Cancelar</button>
+  </div>
 </div>

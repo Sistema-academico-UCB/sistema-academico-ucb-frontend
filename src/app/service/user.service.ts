@@ -108,4 +108,9 @@ export class UserService {
     }
     return this.http.put(`${this.userUrl}/user/profile`, body, { headers: header });
   }
+
+  //Funcion para eliminar a un usuario
+  deletedUser(id:number){
+    return this.http.delete(`${this.userUrl}/user/${id}`);
+  }
 }

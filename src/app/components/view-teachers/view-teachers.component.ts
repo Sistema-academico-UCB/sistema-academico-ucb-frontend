@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
 import { CarrerDto } from 'src/app/dto/carrer.dto';
 import { TeacherService } from 'src/app/service/teacher.service';
+import { UserService } from 'src/app/service/user.service';
+
 
 @Component({
   selector: 'app-view-teachers',
@@ -17,11 +19,13 @@ export class ViewTeachersComponent {
   students: any[] = [];
   page = new FormControl();
   pageSize = new FormControl();
+  teacherDeletedId: number;
+
 
   searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
   filteredStudents: any[] = []; // Arreglo filtrado de estudiantes
 
-  constructor(private router: Router, private teacherService: TeacherService) { 
+  constructor(private router: Router, private teacherService: TeacherService, private userService: UserService) { 
 
   }
 
@@ -95,5 +99,39 @@ export class ViewTeachersComponent {
     console.log('Carrera', this.selectedCarrerValue)
     this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText);
 
+  }
+
+  
+  //Logica para el popup
+  isDialogVisible = false;
+  openConfirmationDialog(userId: number) {
+    this.teacherDeletedId = userId; 
+    this.isDialogVisible = true;
+  }
+
+
+  confirmDelete() {
+    // Realiza la eliminación aquí
+    if (this.teacherDeletedId) {
+      // Realiza la eliminación utilizando this.friendToDeleteId
+      console.log('Elemento eliminado:', this.teacherDeletedId);
+      // Limpia el ID después de la eliminación
+      this.userService.deletedUser(this.teacherDeletedId).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.ngOnInit();
+        }
+      );
+      this.teacherDeletedId = 0;
+
+
+    }
+    this.isDialogVisible = false; // Cierra el cuadro de diálogo
+  }
+
+  cancelDelete() {
+    // Cancela la eliminación aquí
+    console.log('Eliminación cancelada');
+    this.isDialogVisible = false; // Cierra el cuadro de diálogo
   }
 }

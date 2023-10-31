@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
 import { CarrerDto } from 'src/app/dto/carrer.dto';
 import { StudentService } from 'src/app/service/student.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-view-students',
@@ -18,11 +19,14 @@ export class ViewStudentsComponent {
   students: any[] = [];
   page = new FormControl();
   pageSize = new FormControl();
+  studentDeletedId: number;
+
+
 
   searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
   filteredStudents: any[] = []; // Arreglo filtrado de estudiantes
 
-  constructor(private router: Router, private studentService: StudentService) { 
+  constructor(private router: Router, private studentService: StudentService, private userService: UserService) { 
     this.studentService.getCarrers().subscribe(
       (data: any) => {
         this.carrers = data.data;
@@ -42,13 +46,6 @@ export class ViewStudentsComponent {
       (data: any) => {
         this.students = data.data;
         console.log(this.students)
-        // // Filtrar la lista de estudiantes basándose en el parámetro 'searchText'
-        // this.filteredStudents = this.students.filter(student => {
-        //   const studentName = student.nombre ? student.nombre.toLowerCase() : ''; // Asegúrate de que el nombre no sea null o undefined
-        //   const searchTextLowerCase = searchText ? searchText.toLowerCase() : ''; // Asegúrate de que la cadena de búsqueda no sea null o undefined
-          
-        //   return studentName.includes(searchTextLowerCase);
-        // });
       }
     );
   }
@@ -100,6 +97,39 @@ export class ViewStudentsComponent {
     console.log('Carrera', this.selectedCarrerValue)
     this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.inputValue3);
 
+  }
+
+  //Logica para el popup
+  isDialogVisible = false;
+  openConfirmationDialog(userId: number) {
+    this.studentDeletedId = userId; 
+    this.isDialogVisible = true;
+  }
+
+
+  confirmDelete() {
+    // Realiza la eliminación aquí
+    if (this.studentDeletedId) {
+      // Realiza la eliminación utilizando this.friendToDeleteId
+      console.log('Elemento eliminado:', this.studentDeletedId);
+      // Limpia el ID después de la eliminación
+      this.userService.deletedUser(this.studentDeletedId).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.ngOnInit();
+        }
+      );
+      this.studentDeletedId = 0;
+
+
+    }
+    this.isDialogVisible = false; // Cierra el cuadro de diálogo
+  }
+
+  cancelDelete() {
+    // Cancela la eliminación aquí
+    console.log('Eliminación cancelada');
+    this.isDialogVisible = false; // Cierra el cuadro de diálogo
   }
 
 }
