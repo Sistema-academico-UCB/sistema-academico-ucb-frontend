@@ -64,37 +64,34 @@ export class NavbarComponent {
     this.showNotification = false;
   }
   navigateToProfile(userId: number) {
-    this.router.navigate(['', userId, 'profile']);
+    //this.router.navigate(['', userId, 'profile']);
+    const newRoute = `${userId}/profile`;
+    this.router.navigate([newRoute]);
   }
   // Función para buscar personas
   search(searchText: string) {
     console.log(searchText)
-    this.userService.getUsers(searchText).subscribe(
-      (data: any) => {
-        this.users = data.data;
-        console.log(this.users)
-        this.userService.getTeachers(searchText).subscribe(
-          (data: any) => {
-            this.docente = data.data;
-            this.users = this.users.concat(this.docente);
-            console.log(this.users)
-          }
-        )
-      }
-    );
-    // forkJoin([
-    //   this.userService.getUsers(searchText),
-    //   this.userService.getDocentes(searchText), // Reemplaza con la función para obtener docentes
-    // ]).subscribe(([userData, docenteData]: [any, any]) => {
-    //   this.users = userData.data;
-    //   // Agrega los docentes a la lista de usuarios
-    //   this.users = this.users.concat(docenteData.data);
-    //   console.log(this.users);
-    // });
+    if(searchText!=''){
+      this.userService.getUsers(searchText).subscribe(
+        (data: any) => {
+          this.users = data.data;
+          console.log(this.users)
+          this.userService.getTeachers(searchText).subscribe(
+            (data: any) => {
+              this.docente = data.data;
+              this.users = this.users.concat(this.docente);
+              console.log(this.users)
+            }
+          )
+        }
+      );
+    }else{
+      this.users =[];
+    }
   }
 
   onInputChange() {
-    console.log('Carnet de identidad', this.searchText);
+    console.log('Nombre a buscar', this.searchText);
     this.search(this.searchText);
   }
 }

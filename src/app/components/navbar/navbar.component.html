@@ -21,6 +21,11 @@
             <i class="fa-solid fa-search"></i>
             <input class="buscar" [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el nombre de la persona">
         </div>
+        <div class="student-data" *ngIf="users.length > 0">
+            <ul>
+              <li *ngFor="let user of users" (click)="navigateToProfile(user.userId)">{{ user.apellidoPaterno }} {{ user.nombre }} <hr></li>
+            </ul>
+        </div>
     </div>
     <div>
         <button class="btn-user center" (click)="showOptions = !showOptions">
@@ -38,11 +43,6 @@
         </div>
     </div>    
 </nav>
-<div class="student-data" *ngIf="users.length > 0">
-    <ul>
-      <li *ngFor="let user of users" (click)="navigateToProfile(user.userId)">{{ user.apellidoPaterno }} {{ user.nombre }}</li>
-    </ul>
-</div>
 
 <!--Modal de cerrar sesión-->
 <div class="popup center" *ngIf="logoutPopup">

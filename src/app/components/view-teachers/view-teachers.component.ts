@@ -32,13 +32,13 @@ export class ViewTeachersComponent {
 
   ngOnInit(): void {
     this.changeSearchStudent();
-    this.changePage(this.inputValue1 -1 , this.inputValue2,'','');
+    this.changePage(this.inputValue1 -1 , this.inputValue2,'','',1);
   }
 
   // Función para controlar los cambios del page y pageSize
-  changePage(page: number, pageSize: number, searchText: string, searchCI: string) {
+  changePage(page: number, pageSize: number, searchText: string, searchCI: string, departamentoCarreraId:number) {
     console.log(page, pageSize, searchText)
-    this.teacherService.getTeachers(page, pageSize, searchText, searchCI).subscribe(
+    this.teacherService.getTeachers(page, pageSize, searchText, searchCI, departamentoCarreraId).subscribe(
       (data: any) => {
         this.students = data.data;
         console.log(this.students)
@@ -98,7 +98,8 @@ export class ViewTeachersComponent {
     console.log('Tamaño de los datos', this.inputValue2);
     console.log('Carnet de identidad', this.searchText);
     console.log('Carrera', this.selectedCarrerValue)
-    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.searchCI);
+    console.log('Departemento',this.inputValue3)
+    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.searchCI, this.inputValue3);
 
   }
 

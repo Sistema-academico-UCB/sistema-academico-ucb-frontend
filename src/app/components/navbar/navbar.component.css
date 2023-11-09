@@ -280,9 +280,10 @@ select {
     cursor: pointer;
 }
 .student-data {
-    position: relative; /* Establece una posición absoluta para la lista de coincidencias */
-    top: 100%; /* Coloca la lista debajo del campo de búsqueda */
-    left: 0; /* Alinea la lista a la izquierda del contenedor principal */
+    position: absolute; /* Establece una posición absoluta para la lista de coincidencias */
+    left: 35%; /* Alinea la lista a la izquierda del contenedor principal */
+    top: 6%;
+    width: 37%;
     z-index: 1; /* Asegura que la lista se superponga sobre otros contenidos */
     border: 1px solid #ccc; /* Agrega un borde a la lista */
     padding: 10px; /* Añade espacio interno para mejorar la presentación */
