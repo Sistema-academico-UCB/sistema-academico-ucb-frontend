@@ -116,10 +116,10 @@ export class UserService {
 
   // Obtener los usuario por medio de nombres
   getUsers(name: string) {
-    return this.http.get(`${environment.BACKEND_URL}/api/v1/student?page=0&size=10&nombre=${name}&sortType=asc`);
+    return this.http.get(`${environment.BACKEND_URL}/api/v1/student?page=0&size=20&nombre=${name}&sortType=asc`);
   }
   // Obtener los usuario por medio de nombres
   getTeachers(name: string) {
-    return this.http.get(`${environment.BACKEND_URL}/api/v1/teacher?page=0&size=10&nombre=${name}&sortType=asc`);
+    return this.http.get(`${environment.BACKEND_URL}/api/v1/teacher?page=0&size=20&nombre=${name}&sortType=asc`);
   }
 }

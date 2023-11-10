@@ -19,11 +19,11 @@
     <div class="options">
         <div class="search">
             <i class="fa-solid fa-search"></i>
-            <input class="buscar" [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el nombre de la persona">
+            <input class="buscar" [formControl]="searchText" type="text" placeholder="Ingresa el nombre de la persona">
         </div>
         <div class="student-data" *ngIf="users.length > 0">
             <ul>
-              <li *ngFor="let user of users" (click)="navigateToProfile(user.userId)">{{ user.apellidoPaterno }} {{ user.nombre }} <hr></li>
+              <li *ngFor="let user of users" (click)="navigateToProfile(user.userId)">{{ user.apellidoPaterno }} {{ user.apellidoMaterno }}{{ user.nombre }} <hr></li>
             </ul>
         </div>
     </div>
