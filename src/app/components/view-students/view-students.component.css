@@ -68,7 +68,7 @@ p {
 }
 .options {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 20px;
     margin: 15px 0;
 }
@@ -211,6 +211,10 @@ select {
     color: #FF0000;
     background-color: #FFDBDB;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
   }
   .trash-1{
     width: 30px;

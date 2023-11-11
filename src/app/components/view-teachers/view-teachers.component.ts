@@ -5,6 +5,7 @@ import { debounceTime } from 'rxjs';
 import { CarrerDto } from 'src/app/dto/carrer.dto';
 import { TeacherService } from 'src/app/service/teacher.service';
 import { UserService } from 'src/app/service/user.service';
+import { DepartmentDto } from 'src/app/dto/department.dto';
 
 
 @Component({
@@ -20,6 +21,8 @@ export class ViewTeachersComponent {
   page = new FormControl();
   pageSize = new FormControl();
   teacherDeletedId: number;
+  // Lista de departamentos
+  departamentos: DepartmentDto[] = [];
 
 
   searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
@@ -33,22 +36,24 @@ export class ViewTeachersComponent {
   ngOnInit(): void {
     this.changeSearchStudent();
     this.changePage(this.inputValue1 -1 , this.inputValue2,'','',1);
+    // Obtener la lista de departamentos
+    this.teacherService.getDepartments().subscribe(
+      (data: any) => {
+        this.departamentos = data.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   // Función para controlar los cambios del page y pageSize
   changePage(page: number, pageSize: number, searchText: string, searchCI: string, departamentoCarreraId:number) {
-    console.log(page, pageSize, searchText)
+    console.log(page, pageSize, searchText, departamentoCarreraId)
     this.teacherService.getTeachers(page, pageSize, searchText, searchCI, departamentoCarreraId).subscribe(
       (data: any) => {
         this.students = data.data;
         console.log(this.students)
-        // // Filtrar la lista de estudiantes basándose en el parámetro 'searchText'
-        // this.filteredStudents = this.students.filter(student => {
-        //   const studentName = student.nombre ? student.nombre.toLowerCase() : ''; // Asegúrate de que el nombre no sea null o undefined
-        //   const searchTextLowerCase = searchText ? searchText.toLowerCase() : ''; // Asegúrate de que la cadena de búsqueda no sea null o undefined
-          
-        //   return studentName.includes(searchTextLowerCase);
-        // });
       }
     );
   }
@@ -90,7 +95,7 @@ export class ViewTeachersComponent {
   }
   inputValue1: number = 1;
   inputValue2: number = 10;
-  inputValue3: number = 1;
+  inputValue3: number = 0;
 
 
   onInputChange() {

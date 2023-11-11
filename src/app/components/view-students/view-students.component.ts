@@ -20,7 +20,8 @@ export class ViewStudentsComponent {
   page = new FormControl();
   pageSize = new FormControl();
   studentDeletedId: number;
-
+  // Lista de carreras
+  carreras: CarrerDto[] = [];
 
 
   searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
@@ -38,6 +39,15 @@ export class ViewStudentsComponent {
   ngOnInit(): void {
     this.changeSearchStudent();
     this.changePage(this.inputValue1 -1 , this.inputValue2,'','',1);
+    // Obtener la lista de carreras
+    this.studentService.getCarrers().subscribe(
+      (data: any) => {
+        this.carreras = data.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   // Función para controlar los cambios del page y pageSize
@@ -88,14 +98,16 @@ export class ViewStudentsComponent {
   }
   inputValue1: number = 1;
   inputValue2: number = 10;
-  inputValue3: number = 1;
+  inputValue3: number = 0;
+  inputValue4: number = 0;
 
 
   onInputChange() {
     console.log('Numero de la pagina', this.inputValue1);
     console.log('Tamaño de los datos', this.inputValue2);
+    console.log(this.inputValue3);
     console.log('Carnet de identidad', this.searchText);
-    console.log('Carrera', this.selectedCarrerValue)
+    console.log(this.inputValue4);
 
     this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.searchCI,this.inputValue3);
 

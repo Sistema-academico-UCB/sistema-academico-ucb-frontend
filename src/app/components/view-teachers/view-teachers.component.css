@@ -212,6 +212,9 @@ select {
     color: #FF0000;
     background-color: #FFDBDB;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .trash-1{
     width: 30px;
