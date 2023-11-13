@@ -15,9 +15,31 @@
         </button>
     </div>
     <div class="options-list">
-        <div class="paginacion">
+        <!-- <div class="paginacion">
             <p>Registros por página</p><input type="number" id="miInput" name="miInput" min="1" [(ngModel)]="inputValue2" (input)="onInputChange()">
             <input type="number" min="1" [(ngModel)]="inputValue1" (input)="onInputChange()">
+        </div> -->
+        <div class="paginacion">
+            <div class="paginator-container">
+                <div class="page-info">
+                    Registros por página
+                </div>
+                <select [(ngModel)]="inputValue2" name="size" (ngModelChange)="onInputChange()">
+                    <option value="5" selected hidden>5</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                </select>   
+                <div class="page-info">
+                    {{ inicio }} - {{ fin }} de 100
+                </div>
+                <button (click)="onPageChange(paginaActual - 1)" [disabled]="paginaActual === 1">
+                  <span>&lt;</span>
+                </button>
+                <button (click)="onPageChange(paginaActual + 1)" [disabled]="paginaActual * elementosPorPagina >= listaElementos.length">
+                  <span>&gt;</span>
+                </button>
+            </div>
         </div>
         <div class="options">
             <div class="search">

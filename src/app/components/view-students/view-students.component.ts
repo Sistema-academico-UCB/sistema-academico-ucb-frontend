@@ -108,6 +108,8 @@ export class ViewStudentsComponent {
     console.log(this.inputValue3);
     console.log('Carnet de identidad', this.searchText);
     console.log(this.inputValue4);
+    this.inicio = (this.inputValue2 * (this.paginaActual-1)) + 1;
+    this.fin = (this.inputValue2 * this.paginaActual) + 1
 
     this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.searchCI,this.inputValue3);
 
@@ -144,6 +146,28 @@ export class ViewStudentsComponent {
     // Cancela la eliminación aquí
     console.log('Eliminación cancelada');
     this.isDialogVisible = false; // Cierra el cuadro de diálogo
+  }
+
+  //Logica para la paginación - arreglar****
+  listaElementos: any[] = this.generateMockData(100);
+  elementosPorPagina = 10;
+  paginaActual = 1;
+  mathProperty: any;
+  inicio = 1;
+  fin = 10;
+
+  onPageChange(page: number): void {
+    this.paginaActual = page;
+    this.inputValue1 = page;
+    this.onInputChange();
+  }
+
+  private generateMockData(count: number): any[] {
+    return Array.from({ length: count }).map((_, index) => ({
+      id: index + 1,
+      nombre: `Elemento ${index + 1}`,
+      descripcion: `Descripción del Elemento ${index + 1}`
+    }));
   }
 
 }

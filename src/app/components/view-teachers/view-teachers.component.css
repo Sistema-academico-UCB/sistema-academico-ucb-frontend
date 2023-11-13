@@ -260,3 +260,41 @@ select {
     text-decoration: none;
   
   }
+  /*Estilos para la paginación*/
+  .content {
+    margin-top: 20px;
+  }
+  
+  .paginator-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 24px; 
+  }
+
+  button span {
+    font-weight: bold;
+    height: 40px;
+
+  }
+  
+  button[disabled] {
+    cursor: not-allowed;
+    color: #bdc3c7;
+  }
+  
+  .page-info {
+    margin: 0 16px;
+    font-size: 14px;
+  }
+  
+  span {
+    margin-right: 4px;
+  }
