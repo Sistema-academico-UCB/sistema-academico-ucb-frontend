@@ -5,6 +5,8 @@ import { debounceTime } from 'rxjs';
 import { CarrerDto } from 'src/app/dto/carrer.dto';
 import { StudentService } from 'src/app/service/student.service';
 import { UserService } from 'src/app/service/user.service';
+import * as XLSX from 'xlsx';
+
 
 @Component({
   selector: 'app-view-students',
@@ -170,4 +172,110 @@ export class ViewStudentsComponent {
     }));
   }
 
+  /*Logica para la importación datos excel*/
+  carnetsSet = new Set<string>();
+  emailSet = new Set<string>();
+  confirmationPopup = false;
+  hasDuplicates = false;
+  hasInvalidData = false;
+  celularRegex = /^\d+$/; // Expresión regular para verificar que el campo celular solo contenga dígitos
+
+  onFileChange(event: any): void {
+    const target: DataTransfer = event.target as DataTransfer;
+    if (target.files.length !== 1) throw new Error('Cannot use multiple files');
+
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const bstr: string = e.target.result;
+      const workbook: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+      const sheetName: string = workbook.SheetNames[0];
+      const sheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
+      const data: any[] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+      // Aquí 'data' contiene los datos del archivo Excel.
+      console.log(data);
+
+      // Validación previa para el carnet de identidad
+      for (const studentData of data) {
+        const carnetIdentidad = studentData[3];
+        const email = studentData[5]; 
+        const celular = studentData[7];
+        // Validación para el carnet de identidad
+        if (this.carnetsSet.has(carnetIdentidad)) {
+          this.hasDuplicates = true;
+          console.error(`Error: El carnet de identidad ${carnetIdentidad} está duplicado.`);
+          break;
+        } else {
+          this.carnetsSet.add(carnetIdentidad);
+        }
+        
+        // Validación para el correo electrónico
+        if (this.emailSet.has(email)) {
+          this.hasDuplicates = true;
+          console.error(`Error: El correo electrónico ${email} está duplicado.`);
+          break; 
+        } else {
+          this.emailSet.add(email);
+        }
+
+        if (typeof celular === 'string' && !celular.match(this.celularRegex)) {
+          this.hasInvalidData = true;
+          console.error(`Error: El número de celular ${celular} no es válido. Solo se permiten dígitos.`);
+          break; 
+        }
+      }
+
+      if (this.hasDuplicates || this.hasInvalidData) {
+        console.error('Se encontraron duplicados en los carnets de identidad, correos electrónicos o datos no válidos. No se pueden registrar estudiantes.');
+      } else {
+          data.forEach(studentData => {
+            console.log(studentData);
+            const nombre = studentData[0]; 
+            const apellidoPaterno = studentData[1];
+            const apellidoMaterno = studentData[2]; 
+            const carnetIdentidad = studentData[3];
+            const fechaNacimiento = studentData[4];
+            const correo = studentData[5];
+            const genero = studentData[6];
+            const celular = studentData[7];
+            const direccion = studentData[8];
+            const fechaRegistro = studentData[9];
+            const estadoCivil = studentData[10];
+            const username = studentData[11];
+            const secret = studentData[12];
+            const semestre = studentData[13];
+            const colegioId = studentData[14];
+            const carreraId = studentData[15];
+            // Llama a tu función createStudent del servicio con los datos del estudiante.
+            this.studentService.createStudent(
+              nombre,
+              apellidoPaterno,
+              apellidoMaterno,
+              carnetIdentidad,
+              fechaNacimiento,
+              correo,
+              genero,
+              celular,
+              direccion,
+              fechaRegistro,
+              estadoCivil,
+              username,
+              secret,
+              semestre,
+              colegioId,
+              carreraId
+            ).subscribe(
+              response => {
+                console.log('Estudiante registrado con éxito', response);
+              },
+              error => {
+                console.error('Error al registrar estudiante', error);
+              }
+            );
+          });
+          this.confirmationPopup = true;
+        }
+    };
+    reader.readAsBinaryString(target.files[0]);
+  }
 }
