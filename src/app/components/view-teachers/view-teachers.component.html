@@ -70,6 +70,38 @@
             </div>
         </div>
     </div>
+    <!-- upload.component.html -->
+    <input type="file" (change)="onFileChange($event)" />
+    <!--Mensaje de que algo salio mal al momento de registrar-datos duplicados-->
+    <div class="popup center" *ngIf="hasDuplicates">
+        <div class="success center">
+            <div>
+                <div class="confirmation-content"><i class="fa-solid fa-circle-xmark" style="color: #ff4d4d;"></i></div>
+                <div class="confirmation-content"><p>Ocurrió un error, al momento de registrar<br>Se encotraron datos duplicados, por favor revisarlos</p></div>
+                <div class="confirmation-content"><button class="button-popup" (click)="hasDuplicates = false">Aceptar</button></div>
+            </div>
+        </div>
+    </div>
+    <!--Mensaje de que algo salio mal al momento de registrar formato de datos incorrecto-->
+    <div class="popup center" *ngIf="hasInvalidData">
+        <div class="success center">
+            <div>
+                <div class="confirmation-content"><i class="fa-solid fa-circle-xmark" style="color: #ff4d4d;"></i></div>
+                <div class="confirmation-content"><p>Ocurrió un error, al momento de registrar<br>Formato de datos incorrecto, por favor revisarlos</p></div>
+                <div class="confirmation-content"><button class="button-popup" (click)="hasInvalidData = false">Aceptar</button></div>
+            </div>
+        </div>
+    </div>
+    <!--Mensaje de que todo salio bien y el estudiante fue registrado correctamente-->
+    <div class="popup center" *ngIf="confirmationPopup">
+        <div class="success center">
+            <div>
+                <div class="confirmation-content"><i class="fa-solid fa-circle-check" style="color: #30ff24;"></i></div>
+                <div class="confirmation-content"><p>El registro de los docentes se realizo con exito</p></div>
+                <div class="confirmation-content"><button class="button-popup" (click)="confirmationPopup = false">Aceptar</button></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Popup -->

@@ -6,6 +6,7 @@ import { CarrerDto } from 'src/app/dto/carrer.dto';
 import { TeacherService } from 'src/app/service/teacher.service';
 import { UserService } from 'src/app/service/user.service';
 import { DepartmentDto } from 'src/app/dto/department.dto';
+import * as XLSX from 'xlsx';
 
 
 @Component({
@@ -167,4 +168,113 @@ export class ViewTeachersComponent {
        descripcion: `Descripción del Elemento ${index + 1}`
      }));
    }
+
+   /*Logica para la importación datos excel*/
+  carnetsSet = new Set<string>();
+  emailSet = new Set<string>();
+  confirmationPopup = false;
+  hasDuplicates = false;
+  hasInvalidData = false;
+  celularRegex = /^\d+$/; // Expresión regular para verificar que el campo celular solo contenga dígitos
+
+  onFileChange(event: any): void {
+    const target: DataTransfer = event.target as DataTransfer;
+    if (target.files.length !== 1) throw new Error('Cannot use multiple files');
+
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const bstr: string = e.target.result;
+      const workbook: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+      const sheetName: string = workbook.SheetNames[0];
+      const sheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
+      const data: any[] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+      // Aquí 'data' contiene los datos del archivo Excel.
+      console.log(data);
+
+      // Validación previa para el carnet de identidad
+      for (const teacherData of data) {
+        const carnetIdentidad = teacherData[3];
+        const email = teacherData[5]; 
+        const celular = teacherData[7];
+        // Validación para el carnet de identidad
+        if (this.carnetsSet.has(carnetIdentidad)) {
+          this.hasDuplicates = true;
+          console.error(`Error: El carnet de identidad ${carnetIdentidad} está duplicado.`);
+          break;
+        } else {
+          this.carnetsSet.add(carnetIdentidad);
+        }
+        
+        // Validación para el correo electrónico
+        if (this.emailSet.has(email)) {
+          this.hasDuplicates = true;
+          console.error(`Error: El correo electrónico ${email} está duplicado.`);
+          break; 
+        } else {
+          this.emailSet.add(email);
+        }
+
+        if (typeof celular === 'string' && !celular.match(this.celularRegex)) {
+          this.hasInvalidData = true;
+          console.error(`Error: El número de celular ${celular} no es válido. Solo se permiten dígitos.`);
+          break; 
+        }
+      }
+
+      if (this.hasDuplicates || this.hasInvalidData) {
+        console.error('Se encontraron duplicados en los carnets de identidad, correos electrónicos o datos no válidos. No se pueden registrar docentes.');
+      } else {
+          data.forEach(teacherData => {
+            console.log(teacherData);
+            const nombre = teacherData[0]; 
+            const apellidoPaterno = teacherData[1];
+            const apellidoMaterno = teacherData[2]; 
+            const carnetIdentidad = teacherData[3];
+            const fechaNacimiento = teacherData[4];
+            const correo = teacherData[5];
+            const genero = teacherData[6];
+            const celular = teacherData[7];
+            const direccion = teacherData[8];
+            const fechaRegistro = teacherData[9];
+            const estadoCivil = teacherData[10];
+            const username = teacherData[11];
+            const secret = teacherData[12];
+            const tipo = teacherData[13];
+            const profesion = teacherData[14];
+            const departamento = teacherData[15];
+            const directorCarrera = teacherData[16];
+            // Llama a tu función createTeacher del servicio con los datos del profesor.
+            this.teacherService.createTeacher(
+              nombre,
+              apellidoPaterno,
+              apellidoMaterno,
+              carnetIdentidad,
+              fechaNacimiento,
+              correo,
+              genero,
+              celular,
+              direccion,
+              fechaRegistro,
+              estadoCivil,
+              username,
+              secret,
+              tipo,
+              profesion,
+              departamento,
+              directorCarrera
+            ).subscribe(
+              response => {
+                console.log('Docente registrado con éxito', response);
+              },
+              error => {
+                console.error('Error al registrar docente', error);
+              }
+            );
+          });
+          this.confirmationPopup = true;
+        }
+    };
+    reader.readAsBinaryString(target.files[0]);
+  }
 }
