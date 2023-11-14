@@ -61,7 +61,11 @@ export class ViewStudentsComponent {
         this.students = data.data;
         this.total = data.totalElements;
         this.listaElementos = this.generateMockData(this.total);
-        console.log(data)
+        console.log(data);
+        this.fin = (this.inputValue2 * this.paginaActual) + 1
+        if(this.fin > this.total){
+          this.fin = this.total;
+        }
       }
     );
   }
@@ -103,8 +107,8 @@ export class ViewStudentsComponent {
   }
   inputValue1: number = 1;
   inputValue2: number = 10;
-  inputValue3: number = 0;
-  inputValue4: number = 0;
+  inputValue3: number = 1;
+  inputValue4: number = 1;
 
 
   onInputChange() {

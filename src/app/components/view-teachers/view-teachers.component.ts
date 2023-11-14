@@ -59,6 +59,10 @@ export class ViewTeachersComponent {
         this.total = data.totalElements;
         this.listaElementos = this.generateMockData(this.total);
         console.log(this.students)
+        this.fin = (this.inputValue2 * this.paginaActual) + 1
+        if(this.fin > this.total){
+          this.fin = this.total;
+        }
       }
     );
   }
