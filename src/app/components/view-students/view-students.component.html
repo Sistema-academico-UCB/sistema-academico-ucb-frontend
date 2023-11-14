@@ -10,7 +10,12 @@
         </div>
     </div>
     <div class="button">
-        <button (click)="addStudent()">
+        <button class="import" (click)="importExcel.click()">
+            <span>IMPORTAR DESDE EXCEL</span>
+        </button>
+        <!-- upload.component.html -->
+        <input #importExcel type="file" accept=".xlsx, .xls" style="display: none;" (change)="onFileChange($event)"/>
+        <button class="add" (click)="addStudent()">
             <span>AGREGAR NUEVO</span>
         </button>
     </div>
@@ -70,20 +75,17 @@
         </div>
         <div class="list">
             <div class="student" *ngFor="let student of students">
-                <img src="../../../assets/icons/usuario.png" alt="student">
+                <img src="{{student.uuidFoto}}" alt="student">
                 <div class="student-info">
                     <h2>{{student.apellidoPaterno}} {{student.apellidoMaterno}}, {{student.nombre}}</h2>
                     <h3>CI: {{student.carnetIdentidad}} | {{student.correo}}</h3>
                 </div>
-                <i (click)="editStudent(student.estudianteId)" class="fa-duotone fa-square-pen" style="--fa-primary-color: #83ea7b; --fa-secondary-color: #83ea7b;"></i>
-                <button (click)="openConfirmationDialog(student.userId)">
-                    <i class="fa-solid fa-trash-can"></i>
-                </button>
+                <i (click)="pdfReport(student)" class="fa-regular fa-file-pdf pdf-button"></i>
+                <i (click)="editStudent(student.estudianteId)" class="fa-solid fa-pen edit-button"></i>
+                <i (click)="openConfirmationDialog(student.userId)" class="fa-solid fa-trash delete-button"></i>
             </div>
         </div>
     </div>
-    <!-- upload.component.html -->
-    <input type="file" (change)="onFileChange($event)" />
 
     <!-- <div class="content">
         <div *ngFor="let elemento of listaElementos.slice((paginaActual - 1) * elementosPorPagina, paginaActual * elementosPorPagina)">

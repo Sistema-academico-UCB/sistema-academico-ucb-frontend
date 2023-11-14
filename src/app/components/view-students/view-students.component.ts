@@ -284,4 +284,8 @@ export class ViewStudentsComponent {
     };
     reader.readAsBinaryString(target.files[0]);
   }
+
+  pdfReport(student: any) {
+    console.log(student);
+  }
 }
