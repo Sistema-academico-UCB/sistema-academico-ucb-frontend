@@ -7,7 +7,6 @@ import { StudentService } from 'src/app/service/student.service';
 import { UserService } from 'src/app/service/user.service';
 import * as XLSX from 'xlsx';
 
-
 @Component({
   selector: 'app-view-students',
   templateUrl: './view-students.component.html',
@@ -24,6 +23,7 @@ export class ViewStudentsComponent {
   studentDeletedId: number;
   // Lista de carreras
   carreras: CarrerDto[] = [];
+  total: number = 0;
 
 
   searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
@@ -40,11 +40,12 @@ export class ViewStudentsComponent {
 
   ngOnInit(): void {
     this.changeSearchStudent();
-    this.changePage(this.inputValue1 -1 , this.inputValue2,'','',1);
+    this.changePage(this.inputValue1 -1 , this.inputValue2,'','',1,1);
     // Obtener la lista de carreras
     this.studentService.getCarrers().subscribe(
       (data: any) => {
         this.carreras = data.data;
+        console.log(data)
       },
       (error) => {
         console.log(error);
@@ -53,12 +54,14 @@ export class ViewStudentsComponent {
   }
 
   // Función para controlar los cambios del page y pageSize
-  changePage(page: number, pageSize: number, searchText: string, searchCI: string, semestre:number) {
+  changePage(page: number, pageSize: number, searchText: string, searchCI: string, semestre:number, carrera:number) {
     console.log(page, pageSize, searchText, semestre)
-    this.studentService.getStudents(page, pageSize, searchText, searchCI, semestre).subscribe(
+    this.studentService.getStudents(page, pageSize, searchText, searchCI, semestre, carrera).subscribe(
       (data: any) => {
         this.students = data.data;
-        console.log(this.students)
+        this.total = data.totalElements;
+        this.listaElementos = this.generateMockData(this.total);
+        console.log(data)
       }
     );
   }
@@ -112,8 +115,11 @@ export class ViewStudentsComponent {
     console.log(this.inputValue4);
     this.inicio = (this.inputValue2 * (this.paginaActual-1)) + 1;
     this.fin = (this.inputValue2 * this.paginaActual) + 1
+    if(this.fin > this.total){
+      this.fin = this.total;
+    }
 
-    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.searchCI,this.inputValue3);
+    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.searchCI,this.inputValue3, this.inputValue4);
 
   }
 
@@ -151,7 +157,7 @@ export class ViewStudentsComponent {
   }
 
   //Logica para la paginación - arreglar****
-  listaElementos: any[] = this.generateMockData(100);
+  listaElementos: any[] = this.generateMockData(this.total);
   elementosPorPagina = 10;
   paginaActual = 1;
   mathProperty: any;

@@ -24,6 +24,8 @@ export class ViewTeachersComponent {
   teacherDeletedId: number;
   // Lista de departamentos
   departamentos: DepartmentDto[] = [];
+  total: number = 0;
+
 
 
   searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
@@ -54,6 +56,8 @@ export class ViewTeachersComponent {
     this.teacherService.getTeachers(page, pageSize, searchText, searchCI, departamentoCarreraId).subscribe(
       (data: any) => {
         this.students = data.data;
+        this.total = data.totalElements;
+        this.listaElementos = this.generateMockData(this.total);
         console.log(this.students)
       }
     );
@@ -108,6 +112,9 @@ export class ViewTeachersComponent {
 
     this.inicio = (this.inputValue2 * (this.paginaActual-1)) + 1;
     this.fin = (this.inputValue2 * this.paginaActual) + 1
+    if(this.fin > this.total){
+      this.fin = this.total;
+    }
 
     this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.searchCI, this.inputValue3);
 
@@ -148,7 +155,7 @@ export class ViewTeachersComponent {
   }
 
    //Logica para la paginación - arreglar****
-   listaElementos: any[] = this.generateMockData(100);
+   listaElementos: any[] = this.generateMockData(this.total);
    elementosPorPagina = 10;
    paginaActual = 1;
    mathProperty: any;

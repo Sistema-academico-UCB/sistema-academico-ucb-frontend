@@ -31,13 +31,13 @@
                     <option value="25">25</option>
                 </select>   
                 <div class="page-info">
-                    {{ inicio }} - {{ fin }} de 100
+                    {{ inicio }} - {{ fin }} de {{total}}
                 </div>
                 <button (click)="onPageChange(paginaActual - 1)" [disabled]="paginaActual === 1">
                   <span>&lt;</span>
                 </button>
-                <button (click)="onPageChange(paginaActual + 1)" [disabled]="paginaActual * elementosPorPagina >= listaElementos.length">
-                  <span>&gt;</span>
+                <button (click)="onPageChange(paginaActual + 1)" [disabled]="paginaActual * inputValue2 >= listaElementos.length">
+                    <span>&gt;</span>
                 </button>
             </div>
         </div>

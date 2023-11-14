@@ -98,8 +98,8 @@ export class StudentService {
   }
   
   // Obtener los estudiantes por medio de page y pageSize
-  getStudents(page: number, pageSize: number, name: string, ci: string, semestre:number) {
-    return this.http.get(`${environment.BACKEND_URL}/api/v1/student?page=${page}&size=${pageSize}&nombre=${name}&carnet_identidad=${ci}&semestre=${semestre}&sortType=asc`);
+  getStudents(page: number, pageSize: number, name: string, ci: string, semestre:number, carrera:number) {
+    return this.http.get(`${environment.BACKEND_URL}/api/v1/student?page=${page}&size=${pageSize}&nombre=${name}&carnet_identidad=${ci}&carrera_id=${carrera}&semestre=${semestre}&sortType=asc`);
   }
 
   //GET http://localhost:8080/api/v1/student?page=0&size=5&nombre=a&semestre=2&sortType=desc
