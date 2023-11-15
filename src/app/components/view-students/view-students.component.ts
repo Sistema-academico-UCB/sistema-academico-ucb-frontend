@@ -40,7 +40,7 @@ export class ViewStudentsComponent {
 
   ngOnInit(): void {
     this.changeSearchStudent();
-    this.changePage(this.inputValue1 -1 , this.inputValue2,'','',1,1);
+    this.changePage(this.inputValue1 -1 , this.inputValue2,'','','','');
     // Obtener la lista de carreras
     this.studentService.getCarrers().subscribe(
       (data: any) => {
@@ -54,7 +54,7 @@ export class ViewStudentsComponent {
   }
 
   // Función para controlar los cambios del page y pageSize
-  changePage(page: number, pageSize: number, searchText: string, searchCI: string, semestre:number, carrera:number) {
+  changePage(page: number, pageSize: number, searchText: string, searchCI: string, semestre:any, carrera:any) {
     console.log(page, pageSize, searchText, semestre)
     this.studentService.getStudents(page, pageSize, searchText, searchCI, semestre, carrera).subscribe(
       (data: any) => {
@@ -107,8 +107,8 @@ export class ViewStudentsComponent {
   }
   inputValue1: number = 1;
   inputValue2: number = 10;
-  inputValue3: number = 1;
-  inputValue4: number = 1;
+  inputValue3: any = '' ;
+  inputValue4: any = '';
 
 
   onInputChange() {
