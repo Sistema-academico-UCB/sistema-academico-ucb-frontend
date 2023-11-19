@@ -57,7 +57,7 @@
             </div>
             <!-- <input class="search" type="number" min="1" [(ngModel)]="inputValue3" (input)="onInputChange()">       -->
             <select [(ngModel)]="inputValue3" name="semestre" (ngModelChange)="onInputChange()">
-                <option value="1" selected hidden>Seleccione el semestre</option>
+                <option value="" selected>Seleccione el semestre</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -70,7 +70,7 @@
                 <option value="10">10</option>
             </select>                
             <select [(ngModel)]="inputValue4" name="carrera" (ngModelChange)="onInputChange()">
-                <option value="1" selected hidden>Seleccione la carrera</option>
+                <option value="" selected>Seleccione la carrera</option>
                     <option *ngFor="let carrera of carreras" [value]="carrera.carreraId">{{carrera.sigla}} - {{carrera.nombre}}</option>
             </select>   
         </div>

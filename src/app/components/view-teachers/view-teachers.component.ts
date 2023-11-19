@@ -63,6 +63,13 @@ export class ViewTeachersComponent {
         if(this.fin > this.total){
           this.fin = this.total;
         }
+        //agregar carnets y emails obtenido de data de estudiantes al emailSet y carnetsSet
+        for (const student of this.students) {
+          const carnetIdentidad = student.carnetIdentidad;
+          const email = student.correo; 
+          this.carnetsSet.add(carnetIdentidad);
+          this.emailSet.add(email);
+        }
       }
     );
   }
