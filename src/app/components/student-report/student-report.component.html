@@ -1,0 +1,80 @@
+<div  #dataToExport>
+<div class="title">
+    <img src="assets/icons/image.png" width="80px"/>
+    <h2>Información del Estudiante</h2>
+</div>
+<h3>Datos del registro</h3>
+<table>
+    <tr>
+        <th>ID Estudiante</th>
+        <th>Fecha de registro</th>
+    </tr>
+    <tr>
+        <td>{{estudiante.estudianteId}}</td>
+        <td>{{estudiante.fechaRegistro}}</td>
+    </tr>
+</table>
+<h3>Datos personales</h3>
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido Paterno</th>
+        <th>Apellido Materno</th>
+    </tr>
+    <tr>
+        <td>{{estudiante.nombre}}</td>
+        <td>{{estudiante.apellidoPaterno}}</td>
+        <td>{{estudiante.apellidoMaterno}}</td>
+    </tr>
+    <tr>
+        <th>Carnet de Identidad</th>
+        <th>Fecha de Nacimiento</th>
+        <th>Género</th>
+    </tr>
+    <tr>
+        <td>{{estudiante.carnetIdentidad}}</td>
+        <td>{{estudiante.fechaNacimiento}}</td>
+        <td>{{estudiante.genero}}</td>
+    </tr>
+    <tr>
+        <th colspan="2">Celular</th>
+        <th>Estado Civil</th>
+    </tr>
+    <tr>
+        <td colspan="2">{{estudiante.celular}}</td>
+        <td>{{estudiante.estadoCivil}}</td>
+    </tr>
+    <tr>
+        <th colspan="3">Dirección</th>
+    </tr>
+    <tr>
+        <td colspan="3">{{estudiante.direccion}}</td>
+    </tr>
+</table>
+<h3>Información de cuenta</h3>
+<table>
+    <tr>
+        <th colspan="2">Correo</th>
+    </tr>
+    <tr>
+        <td colspan="2">{{estudiante.correo}}</td>
+    </tr>
+    <tr>
+        <th>Nombre de usuario</th>
+        <th>Contraseña</th>
+    </tr>
+    <tr>
+        <td>{{estudiante.username}}</td>
+        <td>{{estudiante.secret}}</td>
+    </tr>
+    <tr>
+        <th>Semestre</th>
+        <th>Carrera</th>
+    </tr>
+    <tr>
+        <td>{{estudiante.semestre}}</td>
+        <td>{{estudiante.carrera}}</td>
+    </tr>
+</table>
+<button (click)="captureScreen()">export</button>
+</div>

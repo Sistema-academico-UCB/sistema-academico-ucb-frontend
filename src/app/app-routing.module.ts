@@ -11,6 +11,7 @@ import { ViewTeachersComponent } from './components/view-teachers/view-teachers.
 import { ViewStudentsComponent } from './components/view-students/view-students.component';
 import { StudentEditComponent } from './components/student-edit/student-edit.component';
 import { TeacherEditComponent } from './components/teacher-edit/teacher-edit.component';
+import { StudentReportComponent } from './components/student-report/student-report.component';
 
 
 
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'add-teacher', component: AddTeacherComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'profile-edit', component: ProfileEditComponent },
+  { path: 'student-report', component: StudentReportComponent},
   { path: 'list-of-friends', component: ListOfFriendsComponent },
   { path: ':user/profile', component: ExternalProfileComponent },
   { path: 'student-edit/:student', component: StudentEditComponent},

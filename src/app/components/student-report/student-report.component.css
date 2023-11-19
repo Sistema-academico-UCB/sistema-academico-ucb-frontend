@@ -1,0 +1,32 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+table {
+    width: 50%;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #ddd;
+}
+th, td {
+    font-size: 14px;
+    padding: 3px !important;
+    text-align: left;
+    padding: 5px 10px !important;
+}
+th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+}
+h2 {
+    margin: 0 0 0 10px;
+    font-size: 25px;
+}
+h3 {
+    margin: 10px 0;
+    font-size: 16px;
+}
+.title {
+    display: flex;
+    align-items: center;
+}
