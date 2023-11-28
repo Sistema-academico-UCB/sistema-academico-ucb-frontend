@@ -88,23 +88,6 @@
         </div>
     </div>
 
-    <!-- <div class="content">
-        <div *ngFor="let elemento of listaElementos.slice((paginaActual - 1) * elementosPorPagina, paginaActual * elementosPorPagina)">
-          {{ elemento }}
-        </div>
-    </div>
-      
-      <div class="paginator-container">
-        <button (click)="onPageChange(paginaActual - 1)" [disabled]="paginaActual === 1">
-          <span>&lt;</span>
-        </button>
-        <div class="page-info">
-          Página {{ paginaActual }} de {{ listaElementos.length / elementosPorPagina > 1 ? paginaActual + 1 : paginaActual }}
-        </div>
-        <button (click)="onPageChange(paginaActual + 1)" [disabled]="paginaActual * elementosPorPagina >= listaElementos.length">
-          <span>&gt;</span>
-        </button>
-      </div> -->
     <!--Mensaje de que algo salio mal al momento de registrar-datos duplicados-->
     <div class="popup center" *ngIf="hasDuplicates">
         <div class="success center">
@@ -135,6 +118,8 @@
             </div>
         </div>
     </div>
+    <!-- Boton para exportar a excel -->
+    <button (click)="exportToExcel()">aaa</button>
 </div>
 
 <!-- Popup -->
