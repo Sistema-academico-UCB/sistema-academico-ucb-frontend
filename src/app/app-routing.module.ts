@@ -13,6 +13,7 @@ import { StudentEditComponent } from './components/student-edit/student-edit.com
 import { TeacherEditComponent } from './components/teacher-edit/teacher-edit.component';
 import { StudentReportComponent } from './components/student-report/student-report.component';
 import { AdminMenuComponent } from './components/admin-menu/admin-menu.component';
+import { AcademicSettingsComponent } from './components/academic-settings/academic-settings.component';
 
 
 
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: ':user/profile', component: ExternalProfileComponent },
   { path: 'student-edit/:student', component: StudentEditComponent},
   { path: 'teacher-edit/:teacher', component:TeacherEditComponent},
-  { path: 'admin-menu', component: AdminMenuComponent}
+  { path: 'admin-menu', component: AdminMenuComponent},
+  { path: 'academic-settings', component: AcademicSettingsComponent}
 ];
 
 @NgModule({
