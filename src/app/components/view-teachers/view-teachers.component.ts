@@ -58,7 +58,13 @@ export class ViewTeachersComponent {
         this.students = data.data;
         this.total = data.totalElements;
         this.listaElementos = this.generateMockData(this.total);
-        console.log(this.students)
+        this.students = this.students.map((student: any) => {
+          if (student.uuidFoto == "") {
+            student.uuidFoto = "./assets/icons/usuario.png";
+          }
+          return student;
+        });
+        console.log(this.students);
         this.fin = (this.inputValue2 * this.paginaActual) + 1
         if(this.fin > this.total){
           this.fin = this.total;
