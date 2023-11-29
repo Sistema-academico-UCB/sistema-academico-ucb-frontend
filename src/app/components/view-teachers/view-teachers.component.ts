@@ -299,4 +299,45 @@ export class ViewTeachersComponent {
   pdfReport(student: any) {
     console.log(student);
   }
+
+  // Función para exportar datos de docentes a Excel
+  exportToExcel(): void {
+    const fileName = 'teachers.xlsx';
+
+    // Función para formatear la fecha en el formato deseado (8/10/2007)
+    const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+    };
+  
+    // Seleccionar solo las propiedades deseadas (nombre, apellido paterno, etc)
+    const selectedData = this.students.map(student => ({
+      Nombre: student.nombre,
+      ApellidoPaterno: student.apellidoPaterno,
+      ApellidoMaterno: student.apellidoMaterno,
+      CarnetIdentidad: student.carnetIdentidad,
+      FechaNacimiento: formatDate(student.fechaNacimiento),
+      Correo: student.correo,
+      Genero: student.genero,
+      Celular: student.celular,
+      Direccion: student.direccion,
+      FechaRegistro: formatDate(student.fechaRegistro),
+      EstadoCivil: student.estadoCivil,
+      Username: student.username,
+      Tipo: student.tipo,
+      Profesion: student.profesionId,
+      Departamento: student.departamentoCarreraId,
+      DirectorCarrera: student.directorCarrera
+
+    }));
+  
+    // Convertir los datos seleccionados a una hoja de cálculo
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(selectedData);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'teachers');
+    XLSX.writeFile(wb, fileName);
+  }
 }
