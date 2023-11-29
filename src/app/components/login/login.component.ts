@@ -33,7 +33,7 @@ export class LoginComponent {
             window.location.href = '/profile';
           } else {
             localStorage.setItem('token', token);
-            window.location.href = '/view-students';
+            window.location.href = '/admin-menu';
           }
         } else {
           this.errorMessage.nativeElement.classList.add('show');
