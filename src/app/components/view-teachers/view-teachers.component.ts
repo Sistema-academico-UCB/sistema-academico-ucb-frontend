@@ -38,7 +38,7 @@ export class ViewTeachersComponent {
 
   ngOnInit(): void {
     this.changeSearchStudent();
-    this.changePage(this.inputValue1 -1 , this.inputValue2,'','',1);
+    this.changePage(this.inputValue1 -1 , this.inputValue2,'','','');
     // Obtener la lista de departamentos
     this.teacherService.getDepartments().subscribe(
       (data: any) => {
@@ -51,7 +51,7 @@ export class ViewTeachersComponent {
   }
 
   // Función para controlar los cambios del page y pageSize
-  changePage(page: number, pageSize: number, searchText: string, searchCI: string, departamentoCarreraId:number) {
+  changePage(page: number, pageSize: number, searchText: string, searchCI: string, departamentoCarreraId:any) {
     console.log(page, pageSize, searchText, departamentoCarreraId)
     this.teacherService.getTeachers(page, pageSize, searchText, searchCI, departamentoCarreraId).subscribe(
       (data: any) => {

@@ -59,8 +59,8 @@
             </div>
             <!-- <input class="search" type="number" min="1" [(ngModel)]="inputValue3" (input)="onInputChange()"> -->
             <select [(ngModel)]="inputValue3" name="departamento" (ngModelChange)="onInputChange()">
-                <option value="0" hidden>Seleccionar departamento</option>
-                    <option *ngFor="let depto of departamentos" [value]="depto.carreraId">{{depto.nombre}}</option>
+                <option value="" selected>Seleccionar departamento</option>
+                <option *ngFor="let depto of departamentos" [value]="depto.carreraId">{{depto.nombre}}</option>
             </select>                             
         </div>
         <div class="list">

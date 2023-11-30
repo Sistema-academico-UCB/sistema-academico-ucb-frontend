@@ -113,7 +113,7 @@ export class TeacherService {
 
   // Obtener los docentes por medio de page y pageSize
   getTeachers(page: number, pageSize: number, name: string, ci: string, departamento:number) {
-    return this.http.get(`${environment.BACKEND_URL}/api/v1/teacher?page=${page}&size=${pageSize}&nombre=${name}&carnet_identidad=${ci}&departamentoId=${departamento}&sortType=asc`);
+    return this.http.get(`${environment.BACKEND_URL}/api/v1/teacher?page=${page}&size=${pageSize}&nombre=${name}&carnet_identidad=${ci}&departamento_id=${departamento}&sortType=asc`);
   }
 
 }
