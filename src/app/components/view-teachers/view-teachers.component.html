@@ -64,15 +64,15 @@
             </select>                             
         </div>
         <div class="list">
-            <div class="student" *ngFor="let student of students">
-                <img src="{{student.uuidFoto}}" alt="teacher">
+            <div class="student" *ngFor="let teacher of teachers">
+                <img src="{{teacher.uuidFoto}}" alt="teacher">
                 <div class="student-info">
-                    <h2>{{student.apellidoPaterno}} {{student.apellidoMaterno}}, {{student.nombre}}</h2>
-                    <h3>CI: {{student.carnetIdentidad}} | {{student.correo}}</h3>
+                    <h2>{{teacher.apellidoPaterno}} {{teacher.apellidoMaterno}}, {{teacher.nombre}}</h2>
+                    <h3>CI: {{teacher.carnetIdentidad}} | {{teacher.correo}}</h3>
                 </div>
-                <i (click)="pdfReport(student)" class="fa-regular fa-file-pdf pdf-button"></i>
-                <i (click)="editStudent(student.docenteId)" class="fa-solid fa-pen edit-button"></i>
-                <i (click)="openConfirmationDialog(student.userId)" class="fa-solid fa-trash delete-button"></i>
+                <i (click)="pdfReport(teacher)" class="fa-regular fa-file-pdf pdf-button"></i>
+                <i (click)="editTeacher(teacher.docenteId)" class="fa-solid fa-pen edit-button"></i>
+                <i (click)="openConfirmationDialog(teacher.userId)" class="fa-solid fa-trash delete-button"></i>
             </div>
         </div>
     </div>

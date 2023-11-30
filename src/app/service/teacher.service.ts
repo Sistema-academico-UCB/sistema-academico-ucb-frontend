@@ -18,7 +18,7 @@ export class TeacherService {
     return this.http.get(`${environment.BACKEND_URL}/api/v1/professions`);
   }
   //Funcion para obtener profesion por medio de Id
-  getProfessionsById(id: number) {
+  getProfessionsById(id: number): Observable<any> {
     return this.http.get<any>(`${environment.BACKEND_URL}/api/v1/professions/${id}`);
   }
 

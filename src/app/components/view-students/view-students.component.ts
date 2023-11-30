@@ -363,14 +363,20 @@ export class ViewStudentsComponent {
     autoTable(pdf, {
       theme: 'grid',
       startY: 150,
+      head: [['Correo electrónico']],
+      body: [[student.correo]],
+    });
+    autoTable(pdf, {
+      theme: 'grid',
+      startY: 165,
       head: [['Nombre de usuario']],
       body: [[student.username]],
     });
     autoTable(pdf, {
-      startY: 165,
+      startY: 180,
       theme: 'grid',
       head: [['Semestre', 'Carrera']],
-      body: [[student.semestre, this.carreras[student.carreraId - 1].nombre]],
+      body: [[student.semestre, this.searchCareerById(student.carreraId)]],
     });
 
     // Guardar PDF con el nombre del estudiante, empezando por el apellido
@@ -380,6 +386,10 @@ export class ViewStudentsComponent {
   formatearFecha(fecha: string): string {
     const fechaFormateada = format(new Date(fecha), 'dd-MM-yyyy');
     return fechaFormateada;
+  }
+  searchCareerById(careerId: number): string {
+    const career = this.carreras.find(career => career.carreraId === careerId);
+    return career ? career.nombre : '';
   }
 
 

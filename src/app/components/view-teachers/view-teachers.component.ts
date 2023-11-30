@@ -7,6 +7,9 @@ import { TeacherService } from 'src/app/service/teacher.service';
 import { UserService } from 'src/app/service/user.service';
 import { DepartmentDto } from 'src/app/dto/department.dto';
 import * as XLSX from 'xlsx';
+import { format } from 'date-fns';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 
 @Component({
@@ -18,7 +21,7 @@ export class ViewTeachersComponent {
   carrers: CarrerDto[] = [];
   selectedCarrerValue: string = '-1';
   searchStudent = new FormControl();
-  students: any[] = [];
+  teachers: any[] = [];
   page = new FormControl();
   pageSize = new FormControl();
   teacherDeletedId: number;
@@ -32,13 +35,13 @@ export class ViewTeachersComponent {
   searchCI: string = ''; // Propiedad para almacenar la cadena de búsqueda
   filteredStudents: any[] = []; // Arreglo filtrado de estudiantes
 
-  constructor(private router: Router, private teacherService: TeacherService, private userService: UserService) { 
+  constructor(private router: Router, private teacherService: TeacherService, private userService: UserService) {
 
   }
 
   ngOnInit(): void {
     this.changeSearchStudent();
-    this.changePage(this.inputValue1 -1 , this.inputValue2,'','','');
+    this.changePage(this.inputValue1 - 1, this.inputValue2, '', '', '');
     // Obtener la lista de departamentos
     this.teacherService.getDepartments().subscribe(
       (data: any) => {
@@ -51,28 +54,28 @@ export class ViewTeachersComponent {
   }
 
   // Función para controlar los cambios del page y pageSize
-  changePage(page: number, pageSize: number, searchText: string, searchCI: string, departamentoCarreraId:any) {
+  changePage(page: number, pageSize: number, searchText: string, searchCI: string, departamentoCarreraId: any) {
     console.log(page, pageSize, searchText, departamentoCarreraId)
     this.teacherService.getTeachers(page, pageSize, searchText, searchCI, departamentoCarreraId).subscribe(
       (data: any) => {
-        this.students = data.data;
+        this.teachers = data.data;
         this.total = data.totalElements;
         this.listaElementos = this.generateMockData(this.total);
-        this.students = this.students.map((student: any) => {
+        this.teachers = this.teachers.map((student: any) => {
           if (student.uuidFoto == "") {
             student.uuidFoto = "./assets/icons/usuario.png";
           }
           return student;
         });
-        console.log(this.students);
+        console.log(this.teachers);
         this.fin = (this.inputValue2 * this.paginaActual) + 1
-        if(this.fin > this.total){
+        if (this.fin > this.total) {
           this.fin = this.total;
         }
         //agregar carnets y emails obtenido de data de estudiantes al emailSet y carnetsSet
-        for (const student of this.students) {
+        for (const student of this.teachers) {
           const carnetIdentidad = student.carnetIdentidad;
-          const email = student.correo; 
+          const email = student.correo;
           this.carnetsSet.add(carnetIdentidad);
           this.emailSet.add(email);
         }
@@ -81,17 +84,17 @@ export class ViewTeachersComponent {
   }
 
   // Función para redirigir a la página de añadir estudiante
-  addStudent(){
+  addStudent() {
     this.router.navigate(['add-teacher']);
   }
 
   // Función para redirigir a la página de editar estudiante
-  editStudent(studentId: number){
+  editTeacher(studentId: number) {
     this.router.navigate(['teacher-edit', studentId]);
   }
 
   // Función para redirigir a la página de eliminar estudiante
-  deleteStudent(studentId: number){
+  deleteTeacher(studentId: number) {
     this.router.navigate(['delete-teacher', studentId]);
   }
 
@@ -108,8 +111,8 @@ export class ViewTeachersComponent {
         console.log(data);
         // Aplicar el filtrado solo si la cadena de búsqueda no está vacía
         this.filteredStudents = this.searchText
-          ? this.students.filter(student => student.name.toLowerCase().includes(this.searchText.toLowerCase()))
-          : this.students;
+          ? this.teachers.filter(student => student.name.toLowerCase().includes(this.searchText.toLowerCase()))
+          : this.teachers;
         // Llamar al servicio para buscar estudiantes
         //this.changePage();
       }
@@ -125,23 +128,23 @@ export class ViewTeachersComponent {
     console.log('Tamaño de los datos', this.inputValue2);
     console.log('Carnet de identidad', this.searchText);
     console.log('Carrera', this.selectedCarrerValue)
-    console.log('Departemento',this.inputValue3)
+    console.log('Departemento', this.inputValue3)
 
-    this.inicio = (this.inputValue2 * (this.paginaActual-1)) + 1;
+    this.inicio = (this.inputValue2 * (this.paginaActual - 1)) + 1;
     this.fin = (this.inputValue2 * this.paginaActual) + 1
-    if(this.fin > this.total){
+    if (this.fin > this.total) {
       this.fin = this.total;
     }
 
-    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.searchCI, this.inputValue3);
+    this.changePage(this.inputValue1 - 1, this.inputValue2, this.searchText, this.searchCI, this.inputValue3);
 
   }
 
-  
+
   //Logica para el popup
   isDialogVisible = false;
   openConfirmationDialog(userId: number) {
-    this.teacherDeletedId = userId; 
+    this.teacherDeletedId = userId;
     this.isDialogVisible = true;
   }
 
@@ -171,29 +174,29 @@ export class ViewTeachersComponent {
     this.isDialogVisible = false; // Cierra el cuadro de diálogo
   }
 
-   //Logica para la paginación - arreglar****
-   listaElementos: any[] = this.generateMockData(this.total);
-   elementosPorPagina = 10;
-   paginaActual = 1;
-   mathProperty: any;
-   inicio = 1;
-   fin = 10;
- 
-   onPageChange(page: number): void {
-     this.paginaActual = page;
-     this.inputValue1 = page;
-     this.onInputChange();
-   }
- 
-   private generateMockData(count: number): any[] {
-     return Array.from({ length: count }).map((_, index) => ({
-       id: index + 1,
-       nombre: `Elemento ${index + 1}`,
-       descripcion: `Descripción del Elemento ${index + 1}`
-     }));
-   }
+  //Logica para la paginación - arreglar****
+  listaElementos: any[] = this.generateMockData(this.total);
+  elementosPorPagina = 10;
+  paginaActual = 1;
+  mathProperty: any;
+  inicio = 1;
+  fin = 10;
 
-   /*Logica para la importación datos excel*/
+  onPageChange(page: number): void {
+    this.paginaActual = page;
+    this.inputValue1 = page;
+    this.onInputChange();
+  }
+
+  private generateMockData(count: number): any[] {
+    return Array.from({ length: count }).map((_, index) => ({
+      id: index + 1,
+      nombre: `Elemento ${index + 1}`,
+      descripcion: `Descripción del Elemento ${index + 1}`
+    }));
+  }
+
+  /*Logica para la importación datos excel*/
   carnetsSet = new Set<string>();
   emailSet = new Set<string>();
   confirmationPopup = false;
@@ -219,7 +222,7 @@ export class ViewTeachersComponent {
       // Validación previa para el carnet de identidad
       for (const teacherData of data) {
         const carnetIdentidad = teacherData[3];
-        const email = teacherData[5]; 
+        const email = teacherData[5];
         const celular = teacherData[7];
         // Validación para el carnet de identidad
         if (this.carnetsSet.has(carnetIdentidad)) {
@@ -229,12 +232,12 @@ export class ViewTeachersComponent {
         } else {
           this.carnetsSet.add(carnetIdentidad);
         }
-        
+
         // Validación para el correo electrónico
         if (this.emailSet.has(email)) {
           this.hasDuplicates = true;
           console.error(`Error: El correo electrónico ${email} está duplicado.`);
-          break; 
+          break;
         } else {
           this.emailSet.add(email);
         }
@@ -242,68 +245,168 @@ export class ViewTeachersComponent {
         if (typeof celular === 'string' && !celular.match(this.celularRegex)) {
           this.hasInvalidData = true;
           console.error(`Error: El número de celular ${celular} no es válido. Solo se permiten dígitos.`);
-          break; 
+          break;
         }
       }
 
       if (this.hasDuplicates || this.hasInvalidData) {
         console.error('Se encontraron duplicados en los carnets de identidad, correos electrónicos o datos no válidos. No se pueden registrar docentes.');
       } else {
-          data.forEach(teacherData => {
-            console.log(teacherData);
-            const nombre = teacherData[0]; 
-            const apellidoPaterno = teacherData[1];
-            const apellidoMaterno = teacherData[2]; 
-            const carnetIdentidad = teacherData[3];
-            const fechaNacimiento = teacherData[4];
-            const correo = teacherData[5];
-            const genero = teacherData[6];
-            const celular = teacherData[7];
-            const direccion = teacherData[8];
-            const fechaRegistro = teacherData[9];
-            const estadoCivil = teacherData[10];
-            const username = teacherData[11];
-            const secret = teacherData[12];
-            const tipo = teacherData[13];
-            const profesion = teacherData[14];
-            const departamento = teacherData[15];
-            const directorCarrera = teacherData[16];
-            // Llama a tu función createTeacher del servicio con los datos del profesor.
-            this.teacherService.createTeacher(
-              nombre,
-              apellidoPaterno,
-              apellidoMaterno,
-              carnetIdentidad,
-              fechaNacimiento,
-              correo,
-              genero,
-              celular,
-              direccion,
-              fechaRegistro,
-              estadoCivil,
-              username,
-              secret,
-              tipo,
-              profesion,
-              departamento,
-              directorCarrera
-            ).subscribe(
-              response => {
-                console.log('Docente registrado con éxito', response);
-              },
-              error => {
-                console.error('Error al registrar docente', error);
-              }
-            );
-          });
-          this.confirmationPopup = true;
-        }
+        data.forEach(teacherData => {
+          console.log(teacherData);
+          const nombre = teacherData[0];
+          const apellidoPaterno = teacherData[1];
+          const apellidoMaterno = teacherData[2];
+          const carnetIdentidad = teacherData[3];
+          const fechaNacimiento = teacherData[4];
+          const correo = teacherData[5];
+          const genero = teacherData[6];
+          const celular = teacherData[7];
+          const direccion = teacherData[8];
+          const fechaRegistro = teacherData[9];
+          const estadoCivil = teacherData[10];
+          const username = teacherData[11];
+          const secret = teacherData[12];
+          const tipo = teacherData[13];
+          const profesion = teacherData[14];
+          const departamento = teacherData[15];
+          const directorCarrera = teacherData[16];
+          // Llama a tu función createTeacher del servicio con los datos del profesor.
+          this.teacherService.createTeacher(
+            nombre,
+            apellidoPaterno,
+            apellidoMaterno,
+            carnetIdentidad,
+            fechaNacimiento,
+            correo,
+            genero,
+            celular,
+            direccion,
+            fechaRegistro,
+            estadoCivil,
+            username,
+            secret,
+            tipo,
+            profesion,
+            departamento,
+            directorCarrera
+          ).subscribe(
+            response => {
+              console.log('Docente registrado con éxito', response);
+            },
+            error => {
+              console.error('Error al registrar docente', error);
+            }
+          );
+        });
+        this.confirmationPopup = true;
+      }
     };
     reader.readAsBinaryString(target.files[0]);
   }
 
-  pdfReport(student: any) {
-    console.log(student);
+  pdfReport(teacher: any) {
+    this.teacherService.getProfessionsById(teacher.profesionId).subscribe({
+      next: (data: any) => {
+        console.log(teacher);
+        console.log(this.departamentos)
+        const pdf = new jsPDF();
+
+        // Agregar contenido al PDF
+        pdf.addImage('assets/icons/image.png', 'PNG', 10, 10, 30, 20);
+
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(30);
+        pdf.setTextColor('#838383');
+        pdf.text('Información del Docente', 50, 25);
+
+        pdf.setFontSize(13);
+        // pdf.setTextColor('#5F5F5F');
+        // Datos del registro
+        pdf.text('Datos del registro', 15, 40);
+        autoTable(pdf, {
+          theme: 'grid',
+          startY: 45,
+          head: [['ID Docente', 'Fecha de registro']],
+          body: [[teacher.docenteId, this.formatearFecha(teacher.fechaRegistro)]],
+        });
+
+        // Datos personales
+        pdf.text('Datos personales', 15, 70);
+        autoTable(pdf, {
+          theme: 'grid',
+          startY: 75,
+          head: [['Nombre', 'Apellido Paterno', 'Apellido Materno']],
+          body: [[teacher.nombre, teacher.apellidoPaterno, teacher.apellidoMaterno]],
+        });
+        autoTable(pdf, {
+          theme: 'grid',
+          startY: 90,
+          head: [['Carnet de Identidad', 'Fecha de nacimiento', 'Género']],
+          body: [[teacher.carnetIdentidad, this.formatearFecha(teacher.fechaNacimiento), teacher.genero]],
+        });
+        autoTable(pdf, {
+          theme: 'grid',
+          startY: 105,
+          head: [['Celular', 'Estado civil']],
+          body: [[teacher.celular, teacher.estadoCivil]],
+        });
+        autoTable(pdf, {
+          theme: 'grid',
+          startY: 120,
+          head: [['Dirección']],
+          body: [[teacher.direccion]],
+        });
+
+        //Información de la cuenta
+        pdf.text('Información de la cuenta', 15, 145);
+        autoTable(pdf, {
+          theme: 'grid',
+          startY: 150,
+          head: [['Correo electrónico']],
+          body: [[teacher.correo]],
+        });
+        autoTable(pdf, {
+          startY: 165,
+          theme: 'grid',
+          head: [['Nombre de usuario']],
+          body: [[teacher.username]],
+        });
+
+        // Información del docente
+        pdf.text('Información del docente', 15, 190);
+        autoTable(pdf, {
+          theme: 'grid',
+          startY: 195,
+          head: [['Tipo de docente', 'Profesión']],
+          body: [[teacher.tipo, data.data.nombreProfesion]],
+        });
+        autoTable(pdf, {
+          theme: 'grid',
+          startY: 210,
+          head: [['Departamento', 'Director de carrera']],
+          body: [[this.searchDepartmentById(teacher.departamentoCarreraId), teacher.directorCarrera ? 'Sí' : 'No']],
+        });
+
+        // Guardar PDF con el nombre del estudiante, empezando por el apellido
+        pdf.save(`${teacher.apellidoPaterno}_${teacher.apellidoMaterno}_${teacher.nombre}.pdf`);
+
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
+
+
+  }
+  searchDepartmentById(departmentId: number): string {
+    const department = this.departamentos.find(department => department.carreraId === departmentId);
+    return department ? department.nombre : '';
+  }
+
+  formatearFecha(fecha: string): string {
+    const fechaFormateada = format(new Date(fecha), 'dd-MM-yyyy');
+    return fechaFormateada;
   }
 
   // Función para exportar datos de docentes a Excel
@@ -312,34 +415,34 @@ export class ViewTeachersComponent {
 
     // Función para formatear la fecha en el formato deseado (8/10/2007)
     const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      return `${month}/${day}/${year}`;
     };
-  
+
     // Seleccionar solo las propiedades deseadas (nombre, apellido paterno, etc)
-    const selectedData = this.students.map(student => ({
-      Nombre: student.nombre,
-      ApellidoPaterno: student.apellidoPaterno,
-      ApellidoMaterno: student.apellidoMaterno,
-      CarnetIdentidad: student.carnetIdentidad,
-      FechaNacimiento: formatDate(student.fechaNacimiento),
-      Correo: student.correo,
-      Genero: student.genero,
-      Celular: student.celular,
-      Direccion: student.direccion,
-      FechaRegistro: formatDate(student.fechaRegistro),
-      EstadoCivil: student.estadoCivil,
-      Username: student.username,
-      Tipo: student.tipo,
-      Profesion: student.profesionId,
-      Departamento: student.departamentoCarreraId,
-      DirectorCarrera: student.directorCarrera
+    const selectedData = this.teachers.map(teacher => ({
+      Nombre: teacher.nombre,
+      ApellidoPaterno: teacher.apellidoPaterno,
+      ApellidoMaterno: teacher.apellidoMaterno,
+      CarnetIdentidad: teacher.carnetIdentidad,
+      FechaNacimiento: formatDate(teacher.fechaNacimiento),
+      Correo: teacher.correo,
+      Genero: teacher.genero,
+      Celular: teacher.celular,
+      Direccion: teacher.direccion,
+      FechaRegistro: formatDate(teacher.fechaRegistro),
+      EstadoCivil: teacher.estadoCivil,
+      Username: teacher.username,
+      Tipo: teacher.tipo,
+      Profesion: teacher.profesionId,
+      Departamento: teacher.departamentoCarreraId,
+      DirectorCarrera: teacher.directorCarrera
 
     }));
-  
+
     // Convertir los datos seleccionados a una hoja de cálculo
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(selectedData);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
