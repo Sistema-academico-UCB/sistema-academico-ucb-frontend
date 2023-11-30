@@ -120,7 +120,7 @@ export class ViewTeachersComponent {
   }
   inputValue1: number = 1;
   inputValue2: number = 10;
-  inputValue3: number = 0;
+  inputValue3: any ='';
 
 
   onInputChange() {
