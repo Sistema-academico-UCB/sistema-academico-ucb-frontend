@@ -1,0 +1,34 @@
+<div class="formulario">
+    <div>
+        <h3>Profesión</h3>
+        <input type="text" [(ngModel)]="nombre">
+    </div>
+    <div class="buttons">
+        <button class="add" (click)="addProf()" *ngIf="!modeEdit">AGREGAR PROFESIÓN</button>
+        <div class="edit-buttons" *ngIf="modeEdit">
+            <button class="add" (click)="updateProf()">EDITAR PROFESIÓN</button>
+            <button class="cancel" (click)="cancelEdit()">CANCELAR</button>
+        </div>
+    </div>
+</div>
+<div class="lista">
+    <table>
+        <thead>
+            <tr>
+                <th>Nro</th>
+                <th>Profesión</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let profesion of profesiones; let i = index">
+                <td class="center">{{i + 1}}</td>
+                <td>{{profesion.nombreProfesion}}</td>
+                <td class="center options">
+                    <i (click)="editProf(profesion)" class="fa-solid fa-pen edit-button"></i>
+                    <i class="fa-solid fa-trash delete-button"></i>
+                </td>
+            </tr>            
+        </tbody>
+    </table>
+</div>

@@ -20,6 +20,12 @@ import { DatePipe } from '@angular/common';
 import { TeacherEditComponent } from './components/teacher-edit/teacher-edit.component';
 import { StudentReportComponent } from './components/student-report/student-report.component';
 import { SharedService } from './service/shared/shared.service';
+import { AdminMenuComponent } from './components/admin-menu/admin-menu.component';
+import { AcademicSettingsComponent } from './components/academic-settings/academic-settings.component';
+import { CareersComponent } from './components/careers/careers.component';
+import { ProfessionsComponent } from './components/professions/professions.component';
+import { DepartmentsComponent } from './components/departments/departments.component';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +42,12 @@ import { SharedService } from './service/shared/shared.service';
     ViewTeachersComponent,
     StudentEditComponent,
     TeacherEditComponent,
-    StudentReportComponent
+    StudentReportComponent,
+    AdminMenuComponent,
+    AcademicSettingsComponent,
+    CareersComponent,
+    ProfessionsComponent,
+    DepartmentsComponent
   ],
   imports: [
     BrowserModule,

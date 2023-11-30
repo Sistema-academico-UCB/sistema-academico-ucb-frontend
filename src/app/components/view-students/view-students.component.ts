@@ -36,7 +36,7 @@ export class ViewStudentsComponent {
   searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
   searchCI: string = ''; // Propiedad para almacenar la cadena de búsqueda
   filteredStudents: any[] = []; // Arreglo filtrado de estudiantes
-  
+
 
   constructor(private router: Router, private studentService: StudentService, private userService: UserService, private sharedService: SharedService) {
     this.studentService.getCarrers().subscribe(
@@ -69,7 +69,12 @@ export class ViewStudentsComponent {
         this.students = data.data;
         this.total = data.totalElements;
         this.listaElementos = this.generateMockData(this.total);
-        console.log(data);
+        this.students = this.students.map((student: any) => {
+          if (student.uuidFoto == "") {
+            student.uuidFoto = "./assets/icons/usuario.png";
+          }
+          return student;
+        });
         this.fin = (this.inputValue2 * this.paginaActual) + 1
         if (this.fin > this.total) {
           this.fin = this.total;
@@ -305,78 +310,116 @@ export class ViewStudentsComponent {
   }
 
   pdfReport(student: any) {
-      
-      const pdf = new jsPDF();
-  
-      // Agregar contenido al PDF
-      pdf.addImage('assets/icons/image.png', 'PNG', 10, 10, 30, 20);
-      
-      pdf.setFont('helvetica', 'bold');
-      pdf.setFontSize(30);
-      pdf.setTextColor('#838383');
-      pdf.text('Información del Estudiante', 50, 25);
-      
-      pdf.setFontSize(13);
-      // pdf.setTextColor('#5F5F5F');
-      // Datos del registro
-      pdf.text('Datos del registro',15, 40);
-      autoTable(pdf,{
-        theme: 'grid',
-        startY: 45,
-        head: [['ID Estudiante', 'Fecha de registro']],
-        body: [[student.estudianteId, this.formatearFecha(student.fechaRegistro)]],
-      });
+    const pdf = new jsPDF();
 
-      // Datos personales
-      pdf.text('Datos personales', 15, 70);
-      autoTable(pdf,{
-        theme: 'grid',
-        startY: 75,
-        head: [['Nombre', 'Apellido Paterno', 'Apellido Materno']],
-        body: [[student.nombre, student.apellidoPaterno, student.apellidoMaterno]],
-      });
-      autoTable(pdf,{
-        theme: 'grid',
-        startY: 90,
-        head: [['Carnet de Identidad', 'Fecha de nacimiento', 'Género']],
-        body: [[student.carnetIdentidad,this.formatearFecha(student.fechaNacimiento), student.genero]],
-      });
-      autoTable(pdf,{
-        theme: 'grid',
-        startY: 105,
-        head: [['Celular', 'Estado civil']],
-        body: [[student.celular, student.estadoCivil]],
-      });
-      autoTable(pdf,{
-        theme: 'grid',
-        startY: 120,
-        head: [['Dirección']],
-        body: [[student.direccion]],
-      });
+    // Agregar contenido al PDF
+    pdf.addImage('assets/icons/image.png', 'PNG', 10, 10, 30, 20);
 
-      //Información de la cuenta
-      pdf.text('Información de la cuenta', 15, 145);
-      autoTable(pdf,{
-        theme: 'grid',
-        startY: 150,
-        head: [['Nombre de usuario']],
-        body: [[student.username]],
-      });
-      autoTable(pdf,{
-        startY: 165,
-        theme: 'grid',
-        head: [['Semestre', 'Carrera']],
-        body: [[student.semestre, this.carreras[student.carreraId - 1].nombre]],
-      });
-      
-      // Guardar PDF con el nombre del estudiante, empezando por el apellido
-      pdf.save(`${student.apellidoPaterno}_${student.apellidoMaterno}_${student.nombre}.pdf`);
-    }
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(30);
+    pdf.setTextColor('#838383');
+    pdf.text('Información del Estudiante', 50, 25);
 
-    formatearFecha(fecha: string): string {
-      const fechaFormateada = format(new Date(fecha), 'dd-MM-yyyy');
-      return fechaFormateada;
-    }
+    pdf.setFontSize(13);
+    // pdf.setTextColor('#5F5F5F');
+    // Datos del registro
+    pdf.text('Datos del registro', 15, 40);
+    autoTable(pdf, {
+      theme: 'grid',
+      startY: 45,
+      head: [['ID Estudiante', 'Fecha de registro']],
+      body: [[student.estudianteId, this.formatearFecha(student.fechaRegistro)]],
+    });
 
-  
+    // Datos personales
+    pdf.text('Datos personales', 15, 70);
+    autoTable(pdf, {
+      theme: 'grid',
+      startY: 75,
+      head: [['Nombre', 'Apellido Paterno', 'Apellido Materno']],
+      body: [[student.nombre, student.apellidoPaterno, student.apellidoMaterno]],
+    });
+    autoTable(pdf, {
+      theme: 'grid',
+      startY: 90,
+      head: [['Carnet de Identidad', 'Fecha de nacimiento', 'Género']],
+      body: [[student.carnetIdentidad, this.formatearFecha(student.fechaNacimiento), student.genero]],
+    });
+    autoTable(pdf, {
+      theme: 'grid',
+      startY: 105,
+      head: [['Celular', 'Estado civil']],
+      body: [[student.celular, student.estadoCivil]],
+    });
+    autoTable(pdf, {
+      theme: 'grid',
+      startY: 120,
+      head: [['Dirección']],
+      body: [[student.direccion]],
+    });
+
+    //Información de la cuenta
+    pdf.text('Información de la cuenta', 15, 145);
+    autoTable(pdf, {
+      theme: 'grid',
+      startY: 150,
+      head: [['Nombre de usuario']],
+      body: [[student.username]],
+    });
+    autoTable(pdf, {
+      startY: 165,
+      theme: 'grid',
+      head: [['Semestre', 'Carrera']],
+      body: [[student.semestre, this.carreras[student.carreraId - 1].nombre]],
+    });
+
+    // Guardar PDF con el nombre del estudiante, empezando por el apellido
+    pdf.save(`${student.apellidoPaterno}_${student.apellidoMaterno}_${student.nombre}.pdf`);
+  }
+
+  formatearFecha(fecha: string): string {
+    const fechaFormateada = format(new Date(fecha), 'dd-MM-yyyy');
+    return fechaFormateada;
+  }
+
+
+  // Función para exportar datos de estudiantes a Excel
+  exportToExcel(): void {
+    const fileName = 'students.xlsx';
+
+    // Función para formatear la fecha en el formato deseado (8/10/2007)
+    const formatDate = (dateString: string): string => {
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      return `${month}/${day}/${year}`;
+    };
+
+    // Seleccionar solo las propiedades deseadas (nombre, apellido paterno, etc)
+    const selectedData = this.students.map(student => ({
+      Nombre: student.nombre,
+      ApellidoPaterno: student.apellidoPaterno,
+      ApellidoMaterno: student.apellidoMaterno,
+      CarnetIdentidad: student.carnetIdentidad,
+      FechaNacimiento: formatDate(student.fechaNacimiento),
+      Correo: student.correo,
+      Genero: student.genero,
+      Celular: student.celular,
+      Direccion: student.direccion,
+      FechaRegistro: formatDate(student.fechaRegistro),
+      EstadoCivil: student.estadoCivil,
+      Username: student.username,
+      Semestre: student.semestre,
+      Colegio: student.colegioId,
+      Carrera: student.carreraId
+    }));
+
+    // Convertir los datos seleccionados a una hoja de cálculo
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(selectedData);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'students');
+    XLSX.writeFile(wb, fileName);
+  }
+
 }

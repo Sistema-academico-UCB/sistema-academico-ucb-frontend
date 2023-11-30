@@ -1,0 +1,58 @@
+/*General*/
+.academic-settings {
+    margin: 20px 4%;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+/*Título*/
+.header {
+    display: grid;
+    grid-template-columns: 70px calc(100% - 90px);
+    gap: 20px;
+    align-items: center;
+}
+.circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: rgb(200, 255, 192);
+    color: #80d373;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+}
+h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 600;
+    color: #003531;
+}
+p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 400;
+    color: #383838;
+}
+/*Opciones*/
+.options {
+    margin-left: 90px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+}
+h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #757575;
+    padding: 25px 80px 5px 10px;
+    cursor: pointer;
+}
+.selected {
+    color: #383838;
+    border-bottom: 2px solid #80d373;
+}
+.margen {
+    margin: 20px 0 20px 90px;
+}

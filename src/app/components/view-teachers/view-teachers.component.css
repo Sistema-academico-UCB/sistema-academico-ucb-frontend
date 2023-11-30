@@ -37,12 +37,26 @@ p {
 }
 /*Boton*/
 .button {
-    display: flex;
-    justify-content: flex-end;
-    margin: 10px 0 0 0;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 20px 0 0 0;
+  gap: 20px;
 }
-.button .import {
+.export {
+  border: none;
+  border-radius: 5px;
+  background-color: #336688;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 9px 20px 8px 20px;
+}
+.export:hover {
+  background-color: #0a497b;
+}
+.import {
   border: none;
   border-radius: 5px;
   background-color: #02733B;
@@ -52,10 +66,10 @@ p {
   cursor: pointer;
   padding: 9px 20px 8px 20px;
 }
-.button .import:hover {
+.import:hover {
   background-color: #03552c;
 }
-.button .add {
+.add {
   border: none;
   border-radius: 5px;
   background-color: #b86396;
@@ -65,7 +79,7 @@ p {
   cursor: pointer;
   padding: 9px 20px 8px 20px;
 }
-.button .add:hover {
+.add:hover {
   background-color: #9E3775;
 }
 .paginacion{
@@ -283,7 +297,7 @@ select {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
   }
   
   button {

@@ -1,0 +1,42 @@
+<div class="formulario">
+    <div class="row-2">
+        <div>
+            <h3>Sigla</h3>
+            <input type="text" [(ngModel)]="sigla">
+        </div>
+        <div>
+            <h3>Nombre</h3>
+            <input type="text" [(ngModel)]="nombre">
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="add" (click)="addCarrer()" *ngIf="!modeEdit">AGREGAR CARRERA</button>
+        <div class="edit-buttons" *ngIf="modeEdit">
+            <button class="add" (click)="updateCarrer()">EDITAR CARRERA</button>
+            <button class="cancel" (click)="cancelEdit()">CANCELAR</button>
+        </div>
+    </div>
+</div>
+<div class="lista">
+    <table>
+        <thead>
+            <tr>
+                <th>Nro</th>
+                <th>Sigla</th>
+                <th>Carrera</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let carrer of carrers; let i = index">
+                <td class="center">{{i + 1}}</td>
+                <td class="center">{{carrer.sigla}}</td>
+                <td>{{carrer.nombre}}</td>
+                <td class="center options">
+                    <i (click)="editCarrer(carrer)" class="fa-solid fa-pen edit-button"></i>
+                    <i class="fa-solid fa-trash delete-button"></i>
+                </td>
+            </tr>            
+        </tbody>
+    </table>
+</div>

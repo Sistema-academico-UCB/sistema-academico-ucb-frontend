@@ -1,0 +1,22 @@
+<app-navbar [admin]="true" name="" uuidFoto=""></app-navbar>
+<div class="academic-settings">
+    <div class="header">
+        <div class="circle">
+            <i class="fa-solid fa-cog"></i>
+        </div>
+        <div>
+            <h1>Configuración académica</h1>
+            <p>Personaliza la oferta educativa según las necesidades de tu institución. Gestiona carreras, profesiones y departamentos para alinear la plataforma con tus objetivos académicos.</p>
+        </div>
+    </div>
+    <div class="options">
+        <h2 [class.selected]="option === 1" (click)="option=1">Carreras</h2>
+        <h2 [class.selected]="option === 2" (click)="option=2">Departamentos</h2>
+        <h2 [class.selected]="option === 3" (click)="option=3">Profesiones</h2>
+    </div>
+    <div class="margen">
+        <app-careers *ngIf="option === 1"></app-careers>
+        <app-departments *ngIf="option === 2"></app-departments>
+        <app-professions *ngIf="option === 3"></app-professions>
+    </div>
+</div>

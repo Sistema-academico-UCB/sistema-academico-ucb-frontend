@@ -1,0 +1,64 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 2% 5%;
+    font-family: 'Montserrat', sans-serif;
+}
+/*Título*/
+h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 600;
+    color: #003531;
+    margin-bottom: 5px;
+}
+h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #383838;
+}
+p {
+    font-size: 14px;
+    font-weight: 200;
+    color: #757575;
+    margin-top: 5px;
+}
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+i {
+    font-size: 70px;
+    margin-bottom: 15px;
+}
+/*Opciones*/
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+    margin: 3% 6%;
+}
+/*Cards*/
+.card {
+    padding: 25px 30px;
+    border-radius: 10px;
+}
+.student {
+    background-color: #fccfea;
+}
+.student i {
+    color: #9E3775;
+}
+.teacher {
+    background-color: #FFE4D9;
+}
+.teacher i {
+    color: #fFA17A;
+}
+.config {
+    background-color: rgb(200, 255, 192);
+}
+.config i {
+    color: #80d373;
+}
