@@ -19,7 +19,7 @@ import { StudentEditComponent } from './components/student-edit/student-edit.com
 import { DatePipe } from '@angular/common';
 import { TeacherEditComponent } from './components/teacher-edit/teacher-edit.component';
 import { StudentReportComponent } from './components/student-report/student-report.component';
-
+import { SharedService } from './service/shared/shared.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,7 @@ import { StudentReportComponent } from './components/student-report/student-repo
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

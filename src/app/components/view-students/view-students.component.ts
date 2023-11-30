@@ -6,6 +6,12 @@ import { CarrerDto } from 'src/app/dto/carrer.dto';
 import { StudentService } from 'src/app/service/student.service';
 import { UserService } from 'src/app/service/user.service';
 import * as XLSX from 'xlsx';
+import { StudentReportComponent } from '../student-report/student-report.component';
+import { SharedService } from 'src/app/service/shared/shared.service';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable'
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-view-students',
@@ -13,6 +19,7 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./view-students.component.css']
 })
 export class ViewStudentsComponent {
+  @ViewChild(StudentReportComponent, { static: false }) private studentReport: StudentReportComponent;
 
   carrers: CarrerDto[] = [];
   selectedCarrerValue: string = '-1';
@@ -29,8 +36,9 @@ export class ViewStudentsComponent {
   searchText: string = ''; // Propiedad para almacenar la cadena de búsqueda
   searchCI: string = ''; // Propiedad para almacenar la cadena de búsqueda
   filteredStudents: any[] = []; // Arreglo filtrado de estudiantes
+  
 
-  constructor(private router: Router, private studentService: StudentService, private userService: UserService) { 
+  constructor(private router: Router, private studentService: StudentService, private userService: UserService, private sharedService: SharedService) {
     this.studentService.getCarrers().subscribe(
       (data: any) => {
         this.carrers = data.data;
@@ -40,7 +48,7 @@ export class ViewStudentsComponent {
 
   ngOnInit(): void {
     this.changeSearchStudent();
-    this.changePage(this.inputValue1 -1 , this.inputValue2,'','','','');
+    this.changePage(this.inputValue1 - 1, this.inputValue2, '', '', '', '');
     // Obtener la lista de carreras
     this.studentService.getCarrers().subscribe(
       (data: any) => {
@@ -54,7 +62,7 @@ export class ViewStudentsComponent {
   }
 
   // Función para controlar los cambios del page y pageSize
-  changePage(page: number, pageSize: number, searchText: string, searchCI: string, semestre:any, carrera:any) {
+  changePage(page: number, pageSize: number, searchText: string, searchCI: string, semestre: any, carrera: any) {
     console.log(page, pageSize, searchText, semestre)
     this.studentService.getStudents(page, pageSize, searchText, searchCI, semestre, carrera).subscribe(
       (data: any) => {
@@ -63,7 +71,7 @@ export class ViewStudentsComponent {
         this.listaElementos = this.generateMockData(this.total);
         console.log(data);
         this.fin = (this.inputValue2 * this.paginaActual) + 1
-        if(this.fin > this.total){
+        if (this.fin > this.total) {
           this.fin = this.total;
         }
         //agregar carnets y emails obtenido de data de estudiantes al emailSet y carnetsSet
@@ -78,17 +86,17 @@ export class ViewStudentsComponent {
   }
 
   // Función para redirigir a la página de añadir estudiante
-  addStudent(){
+  addStudent() {
     this.router.navigate(['add-student']);
   }
 
   // Función para redirigir a la página de editar estudiante
-  editStudent(studentId: number){
+  editStudent(studentId: number) {
     this.router.navigate(['student-edit', studentId]);
   }
 
   // Función para redirigir a la página de eliminar estudiante
-  deleteStudent(studentId: number){
+  deleteStudent(studentId: number) {
     this.router.navigate(['delete-student', studentId]);
   }
 
@@ -114,7 +122,7 @@ export class ViewStudentsComponent {
   }
   inputValue1: number = 1;
   inputValue2: number = 10;
-  inputValue3: any = '' ;
+  inputValue3: any = '';
   inputValue4: any = '';
 
 
@@ -124,20 +132,20 @@ export class ViewStudentsComponent {
     console.log(this.inputValue3);
     console.log('Carnet de identidad', this.searchText);
     console.log(this.inputValue4);
-    this.inicio = (this.inputValue2 * (this.paginaActual-1)) + 1;
+    this.inicio = (this.inputValue2 * (this.paginaActual - 1)) + 1;
     this.fin = (this.inputValue2 * this.paginaActual) + 1
-    if(this.fin > this.total){
+    if (this.fin > this.total) {
       this.fin = this.total;
     }
 
-    this.changePage(this.inputValue1 -1, this.inputValue2, this.searchText, this.searchCI,this.inputValue3, this.inputValue4);
+    this.changePage(this.inputValue1 - 1, this.inputValue2, this.searchText, this.searchCI, this.inputValue3, this.inputValue4);
 
   }
 
   //Logica para el popup
   isDialogVisible = false;
   openConfirmationDialog(userId: number) {
-    this.studentDeletedId = userId; 
+    this.studentDeletedId = userId;
     this.isDialogVisible = true;
   }
 
@@ -215,7 +223,7 @@ export class ViewStudentsComponent {
       // Validación previa para el carnet de identidad
       for (const studentData of data) {
         const carnetIdentidad = studentData[3];
-        const email = studentData[5]; 
+        const email = studentData[5];
         const celular = studentData[7];
         // Validación para el carnet de identidad
         if (this.carnetsSet.has(carnetIdentidad)) {
@@ -225,12 +233,12 @@ export class ViewStudentsComponent {
         } else {
           this.carnetsSet.add(carnetIdentidad);
         }
-        
+
         // Validación para el correo electrónico
         if (this.emailSet.has(email)) {
           this.hasDuplicates = true;
           console.error(`Error: El correo electrónico ${email} está duplicado.`);
-          break; 
+          break;
         } else {
           this.emailSet.add(email);
         }
@@ -238,65 +246,137 @@ export class ViewStudentsComponent {
         if (typeof celular === 'string' && !celular.match(this.celularRegex)) {
           this.hasInvalidData = true;
           console.error(`Error: El número de celular ${celular} no es válido. Solo se permiten dígitos.`);
-          break; 
+          break;
         }
       }
 
       if (this.hasDuplicates || this.hasInvalidData) {
         console.error('Se encontraron duplicados en los carnets de identidad, correos electrónicos o datos no válidos. No se pueden registrar estudiantes.');
       } else {
-          data.forEach(studentData => {
-            console.log(studentData);
-            const nombre = studentData[0]; 
-            const apellidoPaterno = studentData[1];
-            const apellidoMaterno = studentData[2]; 
-            const carnetIdentidad = studentData[3];
-            const fechaNacimiento = studentData[4];
-            const correo = studentData[5];
-            const genero = studentData[6];
-            const celular = studentData[7];
-            const direccion = studentData[8];
-            const fechaRegistro = studentData[9];
-            const estadoCivil = studentData[10];
-            const username = studentData[11];
-            const secret = studentData[12];
-            const semestre = studentData[13];
-            const colegioId = studentData[14];
-            const carreraId = studentData[15];
-            // Llama a tu función createStudent del servicio con los datos del estudiante.
-            this.studentService.createStudent(
-              nombre,
-              apellidoPaterno,
-              apellidoMaterno,
-              carnetIdentidad,
-              fechaNacimiento,
-              correo,
-              genero,
-              celular,
-              direccion,
-              fechaRegistro,
-              estadoCivil,
-              username,
-              secret,
-              semestre,
-              colegioId,
-              carreraId
-            ).subscribe(
-              response => {
-                console.log('Estudiante registrado con éxito', response);
-              },
-              error => {
-                console.error('Error al registrar estudiante', error);
-              }
-            );
-          });
-          this.confirmationPopup = true;
-        }
+        data.forEach(studentData => {
+          console.log(studentData);
+          const nombre = studentData[0];
+          const apellidoPaterno = studentData[1];
+          const apellidoMaterno = studentData[2];
+          const carnetIdentidad = studentData[3];
+          const fechaNacimiento = studentData[4];
+          const correo = studentData[5];
+          const genero = studentData[6];
+          const celular = studentData[7];
+          const direccion = studentData[8];
+          const fechaRegistro = studentData[9];
+          const estadoCivil = studentData[10];
+          const username = studentData[11];
+          const secret = studentData[12];
+          const semestre = studentData[13];
+          const colegioId = studentData[14];
+          const carreraId = studentData[15];
+          // Llama a tu función createStudent del servicio con los datos del estudiante.
+          this.studentService.createStudent(
+            nombre,
+            apellidoPaterno,
+            apellidoMaterno,
+            carnetIdentidad,
+            fechaNacimiento,
+            correo,
+            genero,
+            celular,
+            direccion,
+            fechaRegistro,
+            estadoCivil,
+            username,
+            secret,
+            semestre,
+            colegioId,
+            carreraId
+          ).subscribe(
+            response => {
+              console.log('Estudiante registrado con éxito', response);
+            },
+            error => {
+              console.error('Error al registrar estudiante', error);
+            }
+          );
+        });
+        this.confirmationPopup = true;
+      }
     };
     reader.readAsBinaryString(target.files[0]);
   }
 
   pdfReport(student: any) {
-    console.log(student);
-  }
+      
+      const pdf = new jsPDF();
+  
+      // Agregar contenido al PDF
+      pdf.addImage('assets/icons/image.png', 'PNG', 10, 10, 30, 20);
+      
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(30);
+      pdf.setTextColor('#838383');
+      pdf.text('Información del Estudiante', 50, 25);
+      
+      pdf.setFontSize(13);
+      // pdf.setTextColor('#5F5F5F');
+      // Datos del registro
+      pdf.text('Datos del registro',15, 40);
+      autoTable(pdf,{
+        theme: 'grid',
+        startY: 45,
+        head: [['ID Estudiante', 'Fecha de registro']],
+        body: [[student.estudianteId, this.formatearFecha(student.fechaRegistro)]],
+      });
+
+      // Datos personales
+      pdf.text('Datos personales', 15, 70);
+      autoTable(pdf,{
+        theme: 'grid',
+        startY: 75,
+        head: [['Nombre', 'Apellido Paterno', 'Apellido Materno']],
+        body: [[student.nombre, student.apellidoPaterno, student.apellidoMaterno]],
+      });
+      autoTable(pdf,{
+        theme: 'grid',
+        startY: 90,
+        head: [['Carnet de Identidad', 'Fecha de nacimiento', 'Género']],
+        body: [[student.carnetIdentidad,this.formatearFecha(student.fechaNacimiento), student.genero]],
+      });
+      autoTable(pdf,{
+        theme: 'grid',
+        startY: 105,
+        head: [['Celular', 'Estado civil']],
+        body: [[student.celular, student.estadoCivil]],
+      });
+      autoTable(pdf,{
+        theme: 'grid',
+        startY: 120,
+        head: [['Dirección']],
+        body: [[student.direccion]],
+      });
+
+      //Información de la cuenta
+      pdf.text('Información de la cuenta', 15, 145);
+      autoTable(pdf,{
+        theme: 'grid',
+        startY: 150,
+        head: [['Nombre de usuario']],
+        body: [[student.username]],
+      });
+      autoTable(pdf,{
+        startY: 165,
+        theme: 'grid',
+        head: [['Semestre', 'Carrera']],
+        body: [[student.semestre, this.carreras[student.carreraId - 1].nombre]],
+      });
+      
+      // Guardar PDF con el nombre del estudiante, empezando por el apellido
+      pdf.save(`${student.apellidoPaterno}_${student.apellidoMaterno}_${student.nombre}.pdf`);
+    }
+
+    formatearFecha(fecha: string): string {
+      const fechaFormateada = format(new Date(fecha), 'dd-MM-yyyy');
+      return fechaFormateada;
+    }
+
+  
 }
