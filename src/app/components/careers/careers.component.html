@@ -8,6 +8,9 @@
             <h3>Nombre</h3>
             <input type="text" [(ngModel)]="nombre">
         </div>
+        <div *ngIf="emptyMessage" class="empty-message">
+            <h5>Por favor, ingrese la sigla y el nombre de la carrera.</h5>
+        </div>
     </div>
     <div class="buttons">
         <button class="add" (click)="addCarrer()" *ngIf="!modeEdit">AGREGAR CARRERA</button>
@@ -34,9 +37,29 @@
                 <td>{{carrer.nombre}}</td>
                 <td class="center options">
                     <i (click)="editCarrer(carrer)" class="fa-solid fa-pen edit-button"></i>
-                    <i class="fa-solid fa-trash delete-button"></i>
+                    <i (click)="deleteCarrer(carrer)" class="fa-solid fa-trash delete-button"></i>
                 </td>
             </tr>            
         </tbody>
     </table>
+</div>
+<!--Modal de mensaje-->
+<div class="overlay" *ngIf="showPopup">
+    <div class="popup">
+        <i class="{{popupIcon}}"></i>
+        <h2>{{popupTitle}}</h2>
+        <h3>{{popupMessage}}</h3>
+    </div>
+</div>
+<!--Modal de confirmación-->
+<div class="overlay" *ngIf="showPopupDelete">
+    <div class="popup">
+        <i class="fa-solid fa-trash gradient-red"></i>
+        <h2>Confirmación</h2>
+        <h3>¿Estás segur@ de eliminar la carrera?</h3>
+        <div class="edit-buttons" style="margin-top: 8px;">
+            <button class="add" (click)="confirmDelete()">ACEPTAR</button>
+            <button class="cancel" (click)="cancelDelete()">CANCELAR</button>
+        </div>
+    </div>
 </div>

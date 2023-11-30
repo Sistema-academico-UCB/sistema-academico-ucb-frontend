@@ -11,12 +11,21 @@ import { StudentService } from 'src/app/service/student.service';
 export class CareersComponent {
 
   carrers: CarrerDto[] = [];
-  id: Number = 0;
+  aux: any = [];
   sigla: string = '';
   nombre: string = '';
   modeEdit: boolean = false;
+  showPopup: boolean = false;
+  popupTitle: string = 'Carrera guardada';
+  popupMessage: string = 'La carrera se guardó correctamente';
+  popupIcon: string = 'fa-regular fa-circle-check gradient-green';
+  showPopupDelete: boolean = false;
 
   constructor(private studentService: StudentService, private adminService: AdminService) {
+    this.getCarrers();
+  }
+
+  getCarrers() {
     this.studentService.getCarrers().subscribe(
       (data: any) => {
         this.carrers = data.data;
@@ -24,52 +33,140 @@ export class CareersComponent {
     );
   }
 
+  emptyMessage: boolean = false;
   addCarrer() {
-    const carrer: CarrerDto = {
-      sigla: this.sigla,
-      nombre: this.nombre,
-      programa: this.nombre,
-      carrera: true,
-      estado: true
-    }
-    this.adminService.addCarrer(carrer).subscribe(
-      (data: any) => {
-        this.carrers.push(data.data);
+    const siglaAux = this.sigla.replace(/\s/g, '');
+    const nombreAux = this.nombre.replace(/\s/g, '');
+    if (siglaAux === '' || nombreAux === '') {
+      this.emptyMessage = true;
+      setTimeout(() => {
+        this.emptyMessage = false;
+      }, 2000);
+    } else {
+      const body = {
+        'sigla': this.sigla,
+        'nombre': this.nombre,
+        'programa': this.nombre,
+        'carrera': true,
+        'estado': true
       }
-    );
+      this.adminService.addCarrer(body).subscribe(
+        (data: any) => {
+          if (data.success){
+            this.getCarrers();
+            this.popupTitle = 'Carrera guardada';
+            this.popupMessage = 'La carrera se guardó correctamente';
+            this.popupIcon = 'fa-regular fa-circle-check gradient-green';
+            this.showPopup = true;
+            this.sigla = '';
+            this.nombre = '';
+            setTimeout(() => {
+              this.showPopup = false;
+            }, 2000);
+          } else {
+            this.popupTitle = 'Error';
+            this.popupMessage = 'La carrera no se pudo guardar';
+            this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+            this.showPopup = true;
+            setTimeout(() => {
+              this.showPopup = false;
+            }, 2000);
+          }
+        }
+      );
+    }
   }
 
   editCarrer(carrer: CarrerDto) {
     console.log(carrer);
-    this.id = carrer.carreraId || 0;
+    this.aux = carrer;
     this.sigla = carrer.sigla;
     this.nombre = carrer.nombre;
     this.modeEdit = true;
   }
 
   updateCarrer() {
-    console.log(this.id);
-    console.log(this.sigla);
-    console.log(this.nombre);
-    this.adminService.updateCarrer(this.sigla, this.nombre, this.id).subscribe(
-      (data: any) => {
-        this.carrers.push(data.data);
+    const siglaAux = this.sigla.replace(/\s/g, '');
+    const nombreAux = this.nombre.replace(/\s/g, '');
+    if (siglaAux === '' || nombreAux === '') {
+      this.emptyMessage = true;
+      setTimeout(() => {
+        this.emptyMessage = false;
+      }, 2000);
+    } else {
+      const body = {
+        'sigla': this.sigla,
+        'nombre': this.nombre,
+        'programa': this.nombre,
+        'carrera': true,
+        'estado': true
       }
-    );
+      this.adminService.updateCarrer(body, this.aux.carreraId).subscribe(
+        (data: any) => {
+          if (data.success){
+            this.getCarrers();
+            this.popupTitle = 'Carrera actualizada';
+            this.popupMessage = 'La carrera se actualizó correctamente';
+            this.popupIcon = 'fa-regular fa-circle-check gradient-green';
+            this.showPopup = true;
+            this.cancelEdit();
+            setTimeout(() => {
+              this.showPopup = false;
+            }, 2000);
+          } else {
+            this.popupTitle = 'Error';
+            this.popupMessage = 'La carrera no se pudo actualizar';
+            this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+            this.showPopup = true;
+            setTimeout(() => {
+              this.showPopup = false;
+            }, 2000);
+          }
+        }
+      );
+    }
   }
 
   cancelEdit() {
     this.modeEdit = false;
-    this.id = 0;
     this.sigla = '';
     this.nombre = '';
+    this.aux = [];
   }
 
-  deleteCarrer(carrerId: Number) {
-    console.log(carrerId);
-    this.adminService.deleteCarrer(carrerId).subscribe(
+  deleteCarrer(carrer: CarrerDto) {
+    this.aux = carrer;
+    this.showPopupDelete = true;
+  }
+
+  cancelDelete() {
+    this.showPopupDelete = false;
+    this.aux = [];
+  }
+
+  confirmDelete() {
+    this.adminService.deleteCarrer(this.aux.carreraId).subscribe(
       (data: any) => {
-        this.carrers = this.carrers.filter(carrer => carrer.carreraId !== carrerId);
+        this.showPopupDelete = false;
+        if(data.success) {
+          this.carrers = this.carrers.filter(carrer => carrer.carreraId !== this.aux.carreraId);
+          this.popupTitle = 'Carrera eliminada';
+          this.popupMessage = 'La carrera se eliminó correctamente';
+          this.popupIcon = 'fa-regular fa-circle-check gradient-green';
+          this.showPopup = true;
+          setTimeout(() => {
+            this.showPopup = false;
+          }, 2000);
+        } else {
+          this.popupTitle = 'Error';
+          this.popupMessage = 'La carrera no se pudo eliminar';
+          this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+          this.showPopup = true;
+          setTimeout(() => {
+            this.showPopup = false;
+          }, 2000);
+        }
+        this.aux = [];
       }
     );
   }

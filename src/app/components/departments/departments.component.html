@@ -1,7 +1,16 @@
 <div class="formulario">
-    <div>
-        <h3>Nombre del departamento</h3>
-        <input type="text" [(ngModel)]="nombre">
+    <div class="row-2">
+        <div>
+            <h3>Sigla</h3>
+            <input type="text" [(ngModel)]="sigla">
+        </div>
+        <div>
+            <h3>Nombre</h3>
+            <input type="text" [(ngModel)]="nombre">
+        </div>
+        <div *ngIf="emptyMessage" class="empty-message">
+            <h5>Por favor, ingrese la sigla y el nombre del departamento.</h5>
+        </div>
     </div>
     <div class="buttons">
         <button class="add" (click)="addDepto()" *ngIf="!modeEdit">AGREGAR DEPARTAMENTO</button>
@@ -16,6 +25,7 @@
         <thead>
             <tr>
                 <th>Nro</th>
+                <th>Sigla</th>
                 <th>Departamento</th>
                 <th>Acciones</th>
             </tr>
@@ -23,12 +33,33 @@
         <tbody>
             <tr *ngFor="let depto of departamentos; let i = index">
                 <td class="center">{{i + 1}}</td>
+                <td class="center">{{depto.sigla}}</td>
                 <td>{{depto.nombre}}</td>
                 <td class="center options">
                     <i (click)="editDepto(depto)" class="fa-solid fa-pen edit-button"></i>
-                    <i class="fa-solid fa-trash delete-button"></i>
+                    <i (click)="deleteDepto(depto)" class="fa-solid fa-trash delete-button"></i>
                 </td>
             </tr>            
         </tbody>
     </table>
+</div>
+<!--Modal de mensaje-->
+<div class="overlay" *ngIf="showPopup">
+    <div class="popup">
+        <i class="{{popupIcon}}"></i>
+        <h2>{{popupTitle}}</h2>
+        <h3>{{popupMessage}}</h3>
+    </div>
+</div>
+<!--Modal de confirmación-->
+<div class="overlay" *ngIf="showPopupDelete">
+    <div class="popup">
+        <i class="fa-solid fa-trash gradient-red"></i>
+        <h2>Confirmación</h2>
+        <h3>¿Estás segur@ de eliminar el departamento?</h3>
+        <div class="edit-buttons" style="margin-top: 8px;">
+            <button class="add" (click)="confirmDelete()">ACEPTAR</button>
+            <button class="cancel" (click)="cancelDelete()">CANCELAR</button>
+        </div>
+    </div>
 </div>

@@ -26,7 +26,7 @@ input:focus {
 .buttons {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .add {
     font-size: 15px;
@@ -67,6 +67,14 @@ input:focus {
     justify-content: flex-end;
     gap: 20px;
 }
+.empty-message {
+    grid-column: span 2;
+    text-align: right;
+    color: #ff7171;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 8px;
+}
 /*----------------------------------------------*/
 /*Lista*/
 table {
@@ -96,4 +104,62 @@ th, td {
 }
 .delete-button:hover {
     color: #f57878;
+}
+
+/*----------------------------------------------------------------------------------------------*/
+/*Popup*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.322);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 25px 50px;
+    z-index: 101;
+    box-shadow: 0 5 15px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 30%;
+}
+.popup i {
+    font-size: 50px;
+}
+.gradient-green {
+    font-size: 70px;
+    background-image: linear-gradient(to bottom, #66cdaa, #489ce9);
+    background-clip: text;
+    -webkit-background-clip: text; /* Para navegadores webkit (Safari, Chrome) */
+    color: transparent;
+}
+.gradient-red {
+    font-size: 70px;
+    background-image: linear-gradient(to bottom, #fb9c7e, #f37f90);
+    background-clip: text;
+    -webkit-background-clip: text; /* Para navegadores webkit (Safari, Chrome) */
+    color: transparent;
+}
+.popup h2 {
+    font-size: 24px;
+    color: #757575;
+    margin: 15px 0 5px 0;
+}
+.popup h3 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #939393;
 }
