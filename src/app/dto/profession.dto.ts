@@ -1,5 +1,5 @@
 export interface ProfessionDto {
-    profesionId: number,
+    profesionId?: number,
     nombreProfesion: string,
     estado: boolean
 }

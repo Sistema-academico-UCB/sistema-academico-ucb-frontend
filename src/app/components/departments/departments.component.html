@@ -1,1 +1,34 @@
-<p>departments works!</p>
+<div class="formulario">
+    <div>
+        <h3>Nombre del departamento</h3>
+        <input type="text" [(ngModel)]="nombre">
+    </div>
+    <div class="buttons">
+        <button class="add" (click)="addDepto()" *ngIf="!modeEdit">AGREGAR DEPARTAMENTO</button>
+        <div class="edit-buttons" *ngIf="modeEdit">
+            <button class="add" (click)="updateDepto()">EDITAR DEPARTAMENTO</button>
+            <button class="cancel" (click)="cancelEdit()">CANCELAR</button>
+        </div>
+    </div>
+</div>
+<div class="lista">
+    <table>
+        <thead>
+            <tr>
+                <th>Nro</th>
+                <th>Departamento</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let depto of departamentos; let i = index">
+                <td class="center">{{i + 1}}</td>
+                <td>{{depto.nombre}}</td>
+                <td class="center options">
+                    <i (click)="editDepto(depto)" class="fa-solid fa-pen edit-button"></i>
+                    <i class="fa-solid fa-trash delete-button"></i>
+                </td>
+            </tr>            
+        </tbody>
+    </table>
+</div>

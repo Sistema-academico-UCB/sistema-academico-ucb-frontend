@@ -1,0 +1,99 @@
+.formulario, .lista {
+    margin: 0 15% 20px 15%;
+    font-family: 'Montserrat', sans-serif !important;
+}
+h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+input {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 15px;
+    border: #D9D9D9 1px solid;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    padding: 3px 6px;
+}
+input:focus {
+    border: 1px solid #80d373;
+}
+.input-empty {
+    border: 1px solid #80d373;
+}
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+.add {
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    padding: 6px 20px;
+    background-color: #3EB7AE;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif !important;
+}
+.add:focus {
+    border: none;
+}
+.add:hover {
+    background-color: #2a9c95;
+}
+.cancel {
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    padding: 6px 20px;
+    background-color: #ff7171;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif !important;
+}
+.cancel:focus {
+    border: none;
+}
+.cancel:hover {
+    background-color: #ff5555;
+}
+.edit-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+/*----------------------------------------------*/
+/*Lista*/
+table {
+    width: 100%;
+}
+th, td {
+    border: 1px solid #dddddd;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+.center {
+    text-align: center;
+}
+.options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.edit-button, .delete-button {
+    font-size: 20px;
+    cursor: pointer;
+    color: #cbcbcb;
+    margin-left: 20px;
+}
+.edit-button:hover {
+    color: #f5c578;
+}
+.delete-button:hover {
+    color: #f57878;
+}

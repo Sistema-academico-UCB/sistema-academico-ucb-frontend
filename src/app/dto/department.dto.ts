@@ -1,5 +1,5 @@
 export interface DepartmentDto {
-    carreraId: number,
+    carreraId?: number,
     sigla: string,
     nombre: string,
     programa: string,
