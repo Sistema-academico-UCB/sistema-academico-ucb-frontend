@@ -15,21 +15,15 @@
             </div>
         </div>
         <div class="datos">
-            <!-- Buscador amigos -->
-            <input placeholder="Buscar amigos">
             <!-- Listado de amigos -->
             <div class="usuario" *ngFor="let friend of friendsList">
-                <div class="imagen">
-                    <img src="../../../assets/icons/usuario.png" alt="Foto de perfil">
-                </div>
+                <img src="../../../assets/icons/usuario.png" alt="Foto de perfil">
                 <div class="informacion">
-                    <div>
-                        <a href="{{friend.userId}}/profile"><h2>{{friend.nombre}} {{friend.apellidoPaterno}}</h2></a>
-                        <a href="{{friend.userId}}/profile"><h4>{{friend.correo}}</h4></a>
-                    </div>
+                    <a href="{{friend.userId}}/profile"><h2>{{friend.nombre}} {{friend.apellidoPaterno}}</h2></a>
+                    <a href="{{friend.userId}}/profile"><h4>{{friend.correo}}</h4></a>
                 </div>
                 <div class="botones">
-                    <button class="button-red" (click)="openConfirmationDialog(friend.userId)"> <img src="../../../assets/icons/trash.svg" alt="eliminar" class="trash"></button>
+                    <i class="fa-solid fa-trash trash" (click)="openConfirmationDialog(friend.userId)"></i>
                 </div>
             </div>
         </div>
@@ -37,15 +31,16 @@
 </div>
 
 <!-- Popup -->
-<div class="overlay" *ngIf="isDialogVisible"></div> <!-- Fondo oscuro -->
-<div class="custom-confirm-dialog" *ngIf="isDialogVisible">
-  <div class="dialog-content">
-    <div class="div-trash"> <img src="../../../assets/icons/trash.svg" alt="eliminar" class="trash-1"></div>
-    <h5>Confirmación de Eliminación de Amigo</h5>
-    <p>¿Estás seguro de que deseas eliminar a este usuario de tu lista de amigos? Esta acción no se puede deshacer. Por favor, confirma tu elección.</p>
-  </div>
-  <div class="dialog-actions">
-    <button (click)="confirmDelete()" class="Aceptar">Confirmar</button>
-    <button (click)="cancelDelete()" class="Cancelar">Cancelar</button>
-  </div>
+<div class="overlay" *ngIf="isDialogVisible">
+    <div class="custom-confirm-dialog">
+        <div class="dialog-content">
+            <div class="div-trash"><i class="fa-solid fa-trash" style="color: #f52424;"></i></div>
+            <h5>Confirmación de Eliminación de Amigo</h5>
+            <p>¿Estás seguro de que deseas eliminar a este usuario de tu lista de amigos? Esta acción no se puede deshacer. Por favor, confirma tu elección.</p>
+        </div>
+        <div class="dialog-actions">
+            <button (click)="confirmDelete()" class="Aceptar">Confirmar</button>
+            <button (click)="cancelDelete()" class="Cancelar">Cancelar</button>
+        </div>
+    </div>
 </div>

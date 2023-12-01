@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserDto } from 'src/app/dto/user.dto';
 import { UserService } from 'src/app/service/user.service';
 
@@ -10,7 +11,17 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class ProfileComponent {
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
+    const rol = localStorage.getItem('rol');
+    if(rol == 'ADMIN') {
+      window.alert('No tienes permisos para acceder a esta página');
+      this.router.navigate(['/admin-menu']);
+    } else if (rol == 'DOCENTE' || rol == 'ESTUDIANTE') {
+      console.log('Acceso concedido');
+    } else {
+      window.alert('No has iniciado sesión');
+      this.router.navigate(['/login']);
+    }
   }
 
   user: UserDto = {} as UserDto;

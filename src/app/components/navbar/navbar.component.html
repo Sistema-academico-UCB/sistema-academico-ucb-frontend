@@ -22,11 +22,11 @@
         </div>
         <div class="student-data" *ngIf="users.length > 0">
             <ul>
-              <li *ngFor="let user of users" (click)="navigateToProfile(user.userId)">{{ user.apellidoPaterno }} {{ user.apellidoMaterno }}{{ user.nombre }} <hr></li>
+              <li *ngFor="let user of users" (click)="navigateToProfile(user.userId)">{{ user.nombre }} {{ user.apellidoPaterno }} {{ user.apellidoMaterno }} <hr></li>
             </ul>
         </div>
     </div>
-    <div>
+    <div class="profile-options">
         <button class="btn-user center" (click)="showOptions = !showOptions">
           <img src="{{uuidFoto}}" width="35px" style="border-radius: 100%; height: 35px;">
           <span>{{name}}</span>

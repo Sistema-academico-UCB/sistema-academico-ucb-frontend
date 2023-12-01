@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 import { AwsService } from 'src/app/service/aws.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-edit',
@@ -11,7 +12,18 @@ import { AwsService } from 'src/app/service/aws.service';
 export class ProfileEditComponent {
   
   // Constructor
-  constructor(private userService: UserService, private awsService: AwsService) {}
+  constructor(private userService: UserService, private awsService: AwsService, private router: Router) {
+    const rol = localStorage.getItem('rol');
+    if(rol == 'ADMIN') {
+      window.alert('No tienes permisos para acceder a esta página');
+      this.router.navigate(['/admin-menu']);
+    } else if (rol == 'DOCENTE' || rol == 'ESTUDIANTE') {
+      console.log('Acceso concedido');
+    } else {
+      window.alert('No has iniciado sesión');
+      this.router.navigate(['/login']);
+    }
+  }
 
   // Controlador para el mensaje de error
   @ViewChild('errorMessage') errorMessage!: ElementRef;

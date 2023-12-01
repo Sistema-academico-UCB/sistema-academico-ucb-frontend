@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserDto } from 'src/app/dto/user.dto';
-
+import * as jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-external-profile',
@@ -12,8 +12,43 @@ import { UserDto } from 'src/app/dto/user.dto';
 
 export class ExternalProfileComponent {
   
-  constructor(private userService: UserService, private route: ActivatedRoute) { }
   id: string | null;
+
+  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
+    const rol = localStorage.getItem('rol');
+    if(rol == 'ADMIN') {
+      window.alert('No tienes permisos para acceder a esta página');
+      this.router.navigate(['/admin-menu']);
+    } else if (rol == 'DOCENTE' || rol == 'ESTUDIANTE') {
+      this.route.params.subscribe(params => {
+        this.id = params['user'];
+      });
+      const token = localStorage.getItem('token');
+      if (token) {
+        const sub = this.getSub(token).toUpperCase();
+        if (sub == this.id) {
+          this.router.navigate(['/profile']);
+        }
+      }
+    } else {
+      window.alert('No has iniciado sesión');
+      this.router.navigate(['/login']);
+    }
+  }
+
+  getSub(token: string) {
+    try {
+      const payload: any = jwt_decode.default(token);
+      if (payload && payload.sub) {
+        return payload.sub;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Error al decodificar el token JWT', error);
+      return null;
+    }
+  }
 
   user: UserDto = {} as UserDto;
   friendsList: UserDto[] = []; 
@@ -32,9 +67,6 @@ export class ExternalProfileComponent {
     if (uuidFotoLocal) {
       this.uuidFoto = uuidFotoLocal;
     }
-    this.route.params.subscribe(params => {
-      this.id = params['user'];
-    });
     if (this.id != null) {
       this.userService.getOtherUserInfo(this.id).subscribe(
         (data: any) => {

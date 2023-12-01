@@ -57,19 +57,22 @@ a:hover {
     color: #fff;
 }
 /* Estilos para el menú desplegable */
+.profile-options {
+    position: relative;
+}
 .dropdown-menu {
     display: flex;
     flex-direction: column;
     position: absolute;
-    right: 4%;
+    top: 100%;
     background-color: white;
     border-radius: 5px;
     padding: 5px 10px;
     z-index: 1000;
-    width: 160px;
-    border-radius: 3px;
+    width: 100%;
     height: auto;
     margin-top: 5px;
+    border: 1px solid #ccc;
 }
 hr {
     margin: 5px 0;
@@ -238,7 +241,7 @@ hr {
     display: grid;
     grid-template-columns: 1fr;
     width: 40%;
-    background-color: white;
+    position: relative;
 }
 .search {
     display: flex;
@@ -247,12 +250,12 @@ hr {
     border: 1px solid #CBCBCB;
     border-radius: 5px;
     padding-left: 10px;
+    background-color: #fff;
 }
 .search i {
     color: #CBCBCB;
     font-weight: 500;
 }
-
 .search input {
     width: 100%;
     border: none;
@@ -262,6 +265,7 @@ hr {
     color: #383838;
     outline: none;
     border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
 }
 .search:hover {
     border: 1px solid #9E3775;
@@ -281,22 +285,22 @@ select {
 }
 .student-data {
     position: absolute; /* Establece una posición absoluta para la lista de coincidencias */
-    left: 35%; /* Alinea la lista a la izquierda del contenedor principal */
-    top: 6%;
-    width: 37%;
+    top: 100%; /* Coloca la lista justo debajo del cuadro de texto */
+    width: 100%;
     z-index: 1; /* Asegura que la lista se superponga sobre otros contenidos */
     border: 1px solid #ccc; /* Agrega un borde a la lista */
     padding: 10px; /* Añade espacio interno para mejorar la presentación */
     border-radius: 5px; /* Añade bordes redondeados */
+    margin-top: 5px;;
     background-color: #fff; /* Agrega un fondo blanco a la lista */
-  }
-  
-  ul {
+}
+
+ul {
     list-style: none;
     padding: 0;
-  }
-  
-  li {
+}
+
+li {
     margin: 5px 0; /* Agrega espacio entre los nombres de los estudiantes */
     cursor: pointer;
-  }
+}

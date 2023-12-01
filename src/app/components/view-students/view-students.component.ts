@@ -39,11 +39,20 @@ export class ViewStudentsComponent {
 
 
   constructor(private router: Router, private studentService: StudentService, private userService: UserService, private sharedService: SharedService) {
-    this.studentService.getCarrers().subscribe(
-      (data: any) => {
-        this.carrers = data.data;
-      }
-    );
+    const rol = localStorage.getItem('rol');
+    if(rol == 'ADMIN') {
+      this.studentService.getCarrers().subscribe(
+        (data: any) => {
+          this.carrers = data.data;
+        }
+      );
+    } else if (rol == 'DOCENTE' || rol == 'ESTUDIANTE') {
+      window.alert('No tienes permisos para acceder a esta página');
+      this.router.navigate(['/profile']);
+    } else {
+      window.alert('No has iniciado sesión');
+      this.router.navigate(['/login']);
+    }
   }
 
   ngOnInit(): void {

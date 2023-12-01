@@ -36,7 +36,16 @@ export class ViewTeachersComponent {
   filteredStudents: any[] = []; // Arreglo filtrado de estudiantes
 
   constructor(private router: Router, private teacherService: TeacherService, private userService: UserService) {
-
+    const rol = localStorage.getItem('rol');
+    if(rol == 'ADMIN') {
+      console.log('Acceso concedido');
+    } else if (rol == 'DOCENTE' || rol == 'ESTUDIANTE') {
+      window.alert('No tienes permisos para acceder a esta página');
+      this.router.navigate(['/profile']);
+    } else {
+      window.alert('No has iniciado sesión');
+      this.router.navigate(['/login']);
+    }
   }
 
   ngOnInit(): void {

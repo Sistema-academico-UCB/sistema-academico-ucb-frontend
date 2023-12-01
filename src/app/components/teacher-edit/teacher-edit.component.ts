@@ -3,7 +3,7 @@ import { DepartmentDto } from 'src/app/dto/department.dto';
 import { ProfessionDto } from 'src/app/dto/profession.dto';
 import { TeacherService } from 'src/app/service/teacher.service';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-teacher-edit',
@@ -16,7 +16,18 @@ export class TeacherEditComponent {
   lugarResidencia = "Bolivia";
   departamento = "La Paz";
 
-  constructor(private TeacherService: TeacherService, private datePipe: DatePipe, private route: ActivatedRoute) { }
+  constructor(private TeacherService: TeacherService, private datePipe: DatePipe, private route: ActivatedRoute, private router: Router) {
+    const rol = localStorage.getItem('rol');
+    if(rol == 'ADMIN') {
+      console.log('Acceso concedido');
+    } else if (rol == 'DOCENTE' || rol == 'ESTUDIANTE') {
+      window.alert('No tienes permisos para acceder a esta página');
+      this.router.navigate(['/profile']);
+    } else {
+      window.alert('No has iniciado sesión');
+      this.router.navigate(['/login']);
+    }
+  }
   id: string | null;
 
   // Lista de colegios

@@ -3,7 +3,7 @@ import { CarrerDto } from 'src/app/dto/carrer.dto';
 import { CollegeDto } from 'src/app/dto/college.dto';
 import { StudentService } from 'src/app/service/student.service';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +18,19 @@ export class StudentEditComponent {
   lugarResidencia = "Bolivia";
   departamento = "La Paz";
 
-  constructor(private StudentService: StudentService, private datePipe: DatePipe, private route: ActivatedRoute) { }
+  constructor(private StudentService: StudentService, private datePipe: DatePipe, private route: ActivatedRoute, private router: Router) {
+    const rol = localStorage.getItem('rol');
+    if(rol == 'ADMIN') {
+      console.log('Acceso concedido');
+    } else if (rol == 'DOCENTE' || rol == 'ESTUDIANTE') {
+      window.alert('No tienes permisos para acceder a esta página');
+      this.router.navigate(['/profile']);
+    } else {
+      window.alert('No has iniciado sesión');
+      this.router.navigate(['/login']);
+    }
+  }
+  
   id: string | null;
   // Lista de colegios
   colegios: CollegeDto[] = [];
