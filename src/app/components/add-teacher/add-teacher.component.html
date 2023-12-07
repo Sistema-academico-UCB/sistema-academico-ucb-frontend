@@ -19,27 +19,27 @@
         <div class="personal-information">
             <div>
                 <h4>Nombres(s)</h4>
-                <input #nombreInput type="text" placeholder="Ingresar el/los nombre(s) del docente" maxlength="150">
+                <input [(ngModel)]="docente.nombre" type="text" placeholder="Ingresar el/los nombre(s) del docente" maxlength="150" (blur)="addData()">
             </div>
             <div>
                 <h4>Apellido paterno</h4>
-                <input #apellidoPaternoInput type="text" placeholder="Ingresar apellido paterno del docente" maxlength="100">
+                <input [(ngModel)]="docente.apellidoPaterno" type="text" placeholder="Ingresar apellido paterno del docente" maxlength="100" (blur)="addData()">
             </div>
             <div>
                 <h4>Apellido materno</h4>
-                <input #apellidoMaternoInput type="text" placeholder="Ingresar apellido materno del docente" maxlength="100">
+                <input [(ngModel)]="docente.apellidoMaterno" type="text" placeholder="Ingresar apellido materno del docente" maxlength="100">
             </div>
             <div>
                 <h4>Carnet de identidad</h4>
-                <input #ciInput type="text" placeholder="Ingresa el CI del docente" maxlength="50" (input)="updatePassword()">
+                <input [(ngModel)]="docente.carnetIdentidad" type="text" placeholder="Ingresa el CI del docente" maxlength="50" (input)="updatePassword()">
             </div>
             <div>
                 <h4>Fecha de nacimiento</h4>
-                <input #fechaNacimientoInput type="date" placeholder="dd/mm/aaaa">
+                <input [(ngModel)]="docente.fechaNacimiento" type="date" placeholder="dd/mm/aaaa">
             </div>
             <div>
                 <h4>Género</h4>
-                <select #generoSelect name="gender">
+                <select [(ngModel)]="docente.genero" name="gender">
                     <option value="Hombre" selected>Hombre</option>
                     <option value="Mujer">Mujer</option>
                     <option value="No binario">No binario</option>
@@ -52,17 +52,17 @@
         <div class="contact-information">
             <div>
                 <h4>Correo electrónico</h4>
-                <input #correoInput type="email" placeholder="Ingresar el correo electrónico" maxlength="150">
+                <input [(ngModel)]="docente.correo" type="email" placeholder="Ingresar el correo electrónico" maxlength="150">
             </div>
             <div>
                 <h4>Celular</h4>
-                <input #celularInput type="text" placeholder="Ingresar el número de celular" maxlength="50" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                <input [(ngModel)]="docente.celular" type="text" placeholder="Ingresar el número de celular" maxlength="50" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
             </div>
         </div>
         <!-- Docente - direccion -->
         <div class="direction">
             <h4>Dirección</h4>
-            <input #direccionInput type="text" placeholder="Ingresar dirección completa" maxlength="150">
+            <input [(ngModel)]="docente.direccion" type="text" placeholder="Ingresar dirección completa" maxlength="150">
         </div>
         <!-- Detalle-registro -->
         <h2>Detalles del Registro</h2>
@@ -73,15 +73,15 @@
             </div>
             <div>
                 <h4>Lugar de residencia</h4>
-                <p>{{lugarResidencia}}</p>
+                <p>Bolivia</p>
             </div>
             <div>
                 <h4>Departamento</h4>
-                <p>{{departamento}}</p>
+                <p>La Paz</p>
             </div>
             <div>
                 <h4>Estado civil</h4>
-                <select #estadoCivilSelect name="gender">
+                <select [(ngModel)]="docente.estadoCivil" name="gender">
                     <option value="Soltero/a" selected>Soltero/a</option>
                     <option value="Casado/a">Casado/a</option>
                     <option value="Divorciado/a">Divorciado/a</option>
@@ -93,11 +93,11 @@
             <div></div>
             <div>
                 <h4>Username</h4>
-                <input #usuarioInput type="text" placeholder="Ingresa el nombre de usuario del docente" maxlength="50">
+                <input [(ngModel)]="docente.username" type="text" placeholder="Ingresa el nombre de usuario del docente" maxlength="50">
             </div>
             <div>
                 <h4>Contraseña</h4>
-                <input #contrasenaInput type="text" disabled>
+                <input [(ngModel)]="docente.secret" type="text" disabled>
             </div>
         </div>
         <!-- Informacion de Personal -->
@@ -105,13 +105,13 @@
         <div class="personal-information">
             <div>
                 <h4>Tipo de docente</h4>
-                <select #tipoDocenteSelect name="typeTeacher">
+                <select [(ngModel)]="docente.tipo" name="typeTeacher">
                     <option *ngFor="let tipo of tipoDocentes" [value]="tipo">{{tipo}}</option>
                 </select>
             </div>
             <div>
                 <h4>Profesión</h4>
-                <select #profesionSelect name="profession">
+                <select [(ngModel)]="docente.profesionId" name="profession">
                     <option value="0" selected hidden>Seleccionar su profesión</option>
                     <option *ngFor="let profesion of profesiones" [value]="profesion.profesionId">{{profesion.nombreProfesion}}</option>
                 </select>
@@ -119,13 +119,13 @@
             <div></div>
             <div>
                 <h4>Departamento</h4>
-                <select #deptoSelect name="depto">
+                <select [(ngModel)]="docente.departamentoCarreraId" name="depto">
                     <option value="0" selected hidden>Seleccionar su departamento</option>
                     <option *ngFor="let depto of departamentos" [value]="depto.carreraId">{{depto.nombre}}</option>
                 </select>
             </div>
             <div class="checkbox-content">
-                <input #checkDirector type="checkbox" id="directorCarrera" name="directorCarrera" value="false">
+                <input [(ngModel)]="docente.directorCarrera" type="checkbox" id="directorCarrera" name="directorCarrera" value="false">
                 <label for="directorCarrera">Director de Carrera</label>
             </div>
         </div>
@@ -141,6 +141,17 @@
                 <a class="cancel" href="/view-teachers">Cancelar</a>
             </div>
             <div><hr class="line"/></div>
+        </div>
+    </div>
+    <!--Cargando-->
+    <div class="popup center" *ngIf="loadingPopup">
+        <div class="success center">
+            <div>
+                <div class="confirmation-content" style="margin-bottom: 20px;">
+                    <i class="fas fa-spinner fa-spin" style="color: #3EB7AE;"></i>
+                </div>
+                <div class="confirmation-content"><p>El docente está siendo registrado</p></div>
+            </div>
         </div>
     </div>
     <!--Mensaje de que todo salio bien y el docente fue registrado correctamente-->

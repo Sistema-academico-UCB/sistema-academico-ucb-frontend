@@ -4,6 +4,7 @@ import { CollegeDto } from 'src/app/dto/college.dto';
 import { StudentService } from 'src/app/service/student.service';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StudentDto } from 'src/app/dto/student.dto';
 
 
 @Component({
@@ -12,11 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./student-edit.component.css']
 })
 export class StudentEditComponent {
-  
-  // Variables
-  fechaActual: Date = new Date();
-  lugarResidencia = "Bolivia";
-  departamento = "La Paz";
 
   constructor(private StudentService: StudentService, private datePipe: DatePipe, private route: ActivatedRoute, private router: Router) {
     const rol = localStorage.getItem('rol');
@@ -38,7 +34,30 @@ export class StudentEditComponent {
   carreras: CarrerDto[] = [];
 
   // Estudiante
-  estudiante: any = {};
+  estudiante: StudentDto = {
+    estudianteId: 0,
+    nombre: '',
+    apellidoPaterno: '',
+    apellidoMaterno: '',
+    carnetIdentidad: '',
+    fechaNacimiento: '',
+    correo: '',
+    genero: '',
+    celular: '',
+    descripcion: '',
+    uuidFoto: '',
+    uuidPortada: '',
+    direccion: '',
+    fechaRegistro: '',
+    estadoCivil: '',
+    username: '',
+    secret: '',
+    rol: '',
+    semestre: 0,
+    colegioId: 0,
+    carreraId: 0,
+    estado: true
+  };
 
   ngOnInit(){
     this.route.params.subscribe(params => {
@@ -68,7 +87,7 @@ export class StudentEditComponent {
         (data: any) => {
           console.log(data);
           this.estudiante = data.data;
-          this.estudiante.fechaNacimiento = this.datePipe.transform(this.estudiante.fechaNacimiento, 'yyyy-MM-dd');
+          this.estudiante.fechaNacimiento = this.estudiante.fechaNacimiento.split('T')[0];
         },
         (error) => {
           console.log(error);
@@ -81,116 +100,58 @@ export class StudentEditComponent {
 
   /*Declaramos los atributos del estudiante*/
   @ViewChild('errorMessage') errorMessage!: ElementRef;
-  /*Primera sección*/
-  @ViewChild('nombreInput') nombreInput!: ElementRef;
-  @ViewChild('apellidoPaternoInput') apellidoPaternoInput!: ElementRef;
-  @ViewChild('apellidoMaternoInput') apellidoMaternoInput!: ElementRef;
-  @ViewChild('ciInput') ciInput!: ElementRef;
-  @ViewChild('fechaNacimientoInput') fechaNacimientoInput!: ElementRef;
-  @ViewChild('generoSelect') generoSelect!: ElementRef;
-  /*Segunda sección*/
-  @ViewChild('correoInput') correoInput!: ElementRef;
-  @ViewChild('celularInput') celularInput!: ElementRef;
-  @ViewChild('direccionInput') direccionInput!: ElementRef;
-  /*Tercera sección*/
-  @ViewChild('estadoCivilSelect') estadoCivilSelect!: ElementRef;
-  @ViewChild('colegioSelect') colegioSelect!: ElementRef;
-  @ViewChild('semestreInput') semestreInput!: ElementRef;
-  /*Cuarta sección*/
-  @ViewChild('usuarioInput') usuarioInput!: ElementRef;
-  @ViewChild('contrasenaInput') contrasenaInput!: ElementRef;
-  /*Quinta sección*/
-  @ViewChild('carreraSelect') carreraSelect!: ElementRef;
 
   // Popup de confirmación
   confirmationPopup = false;
   // Popup de error
   errorPopup = false;
+  // Loading popup
+  loadingPopup = false;
 
   // Funcion para guardar los datos
   guardarDatos() {
     if(this.validacion1()){
       if(this.validacion2()){
         if(this.validacion3()){
-          if(this.validacion4()){
-            if(this.validacion5()){
+          this.loadingPopup = true;
+          console.log(this.estudiante);
+          this.StudentService.updateStudent(this.estudiante).subscribe(
+            (data: any) => {
+              this.loadingPopup = false;
               this.confirmationPopup = true;
-              this.StudentService.updateStudent(
-                this.estudiante.estudianteId,
-                this.nombreInput.nativeElement.value,
-                this.apellidoPaternoInput.nativeElement.value,
-                this.apellidoMaternoInput.nativeElement.value,
-                this.ciInput.nativeElement.value,
-                this.fechaNacimientoInput.nativeElement.value,
-                this.correoInput.nativeElement.value,
-                this.generoSelect.nativeElement.value,
-                this.celularInput.nativeElement.value,
-                this.estudiante.descripcion,
-                this.estudiante.uuidFoto,
-                this.estudiante.uuidPortada,
-                this.direccionInput.nativeElement.value,
-                this.estudiante.fechaRegistro,
-                this.estadoCivilSelect.nativeElement.value,
-                this.usuarioInput.nativeElement.value,
-                this.contrasenaInput.nativeElement.value,
-                this.semestreInput.nativeElement.value,
-                this.colegioSelect.nativeElement.value,
-                this.carreraSelect.nativeElement.value
-              ).subscribe(
-                (data: any) => {
-                  console.log(data);
-                },
-                (error) => {
-                  console.log(error);
-                  this.errorPopup = true;
-                }
-              );
+              console.log(data);
+            },
+            (error) => {
+              this.loadingPopup = false;
+              console.log(error);
+              this.errorPopup = true;
             }
-          }
+          );
         }
       }
-    } else {
-      console.log("Datos no guardados");
     }
   }
 
   /*Mensaje error*/
-  mensajeError(atributo: number) {
-    let atributos = [
-      this.nombreInput,
-      this.apellidoPaternoInput,
-      this.apellidoMaternoInput,
-      this.ciInput,
-      this.fechaNacimientoInput,
-      this.correoInput,
-      this.celularInput,
-      this.direccionInput,
-      this.colegioSelect,
-      this.semestreInput,
-      this.usuarioInput,
-      this.contrasenaInput,
-      this.carreraSelect
-    ];
+  mensajeError() {
     this.errorMessage.nativeElement.classList.add('warning-active');
-    atributos[atributo].nativeElement.classList.add('input-empty');
     setTimeout(() => {
       this.errorMessage.nativeElement.classList.remove('warning-active');
-      atributos[atributo].nativeElement.classList.remove('input-empty');
     }, 3000);
   }
   /*Validar primer sección*/
   validacion1() {
     let flag = false;
-    if (!this.nombreInput.nativeElement.value) {
-      this.mensajeError(0);
-    } else if (!this.apellidoPaternoInput.nativeElement.value) {
-      this.mensajeError(1);
-    } else if (!this.apellidoMaternoInput.nativeElement.value) {
-      this.mensajeError(2);
-    } else if (!this.ciInput.nativeElement.value) {
-      this.mensajeError(3);
-    } else if (!this.fechaNacimientoInput.nativeElement.value) {
-      this.mensajeError(4);
+    if (!this.estudiante.nombre) {
+      this.mensajeError();
+    } else if (!this.estudiante.apellidoPaterno) {
+      this.mensajeError();
+    } else if (!this.estudiante.apellidoMaterno) {
+      this.mensajeError();
+    } else if (!this.estudiante.carnetIdentidad) {
+      this.mensajeError();
+    } else if (!this.estudiante.fechaNacimiento) {
+      this.mensajeError();
     } else {
       flag = true;
     }
@@ -199,50 +160,41 @@ export class StudentEditComponent {
   /*Validar segunda sección*/
   validacion2() {
     let flag = false;
-    if (!this.correoInput.nativeElement.value) {
-      this.mensajeError(5);
-    } else if (!this.celularInput.nativeElement.value) {
-      this.mensajeError(6);
-    } else if (!this.direccionInput.nativeElement.value) {
-      this.mensajeError(7);
+    if (!this.estudiante.correo) {
+      this.mensajeError();
+    } else if (!this.estudiante.celular) {
+      this.mensajeError();
+    } else if (!this.estudiante.direccion) {
+      this.mensajeError();
     } else {
       flag = true;
     }
     return flag;
   }
-  /*Validar tercera sección*/
+  /*Validar otras secciones*/
   validacion3(){
     let flag = false;
-    if(this.colegioSelect.nativeElement.value == "0"){
-      this.mensajeError(8);
-    } else if(this.semestreInput.nativeElement.value < 1){
-      this.mensajeError(9);
+    this.estudiante.colegioId = Number(this.estudiante.colegioId);
+    this.estudiante.carreraId = Number(this.estudiante.carreraId);
+    if(this.estudiante.colegioId == 0){
+      this.mensajeError();
+    } else if(this.estudiante.semestre < 1){
+      this.mensajeError();
+    } else if(!this.estudiante.username){
+      this.mensajeError();
+    } else if(this.estudiante.carreraId == 0){
+      this.mensajeError();
     } else {
       flag = true;
     }
     return flag;
   }
-  /*Validar cuarta sección*/
-  validacion4(){
-    let flag = false;
-    if(!this.usuarioInput.nativeElement.value){
-      this.mensajeError(10);
-    } else if(!this.contrasenaInput.nativeElement.value){
-      this.mensajeError(11);
-    } else {
-      flag = true;
-    }
-    return flag;
-  }
-  /*Validar quinta sección*/
-  validacion5(){
-    let flag = false;
-    if(this.carreraSelect.nativeElement.value == "0"){
-      this.mensajeError(12);
-    } else {
-      flag = true;
-    }
-    return flag;
+
+  addData(){
+    const firstName = this.estudiante.nombre.split(' ')[0].toLowerCase();
+    const lastName = this.estudiante.apellidoPaterno.split(' ')[0].toLowerCase();
+    this.estudiante.username = firstName+"."+lastName;
+    this.estudiante.correo = firstName+"."+lastName+"@ucb.edu.bo";
   }
 
 }

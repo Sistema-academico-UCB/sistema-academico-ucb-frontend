@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { TeacherDto } from '../dto/teacher.dto';
 
 
 @Injectable({
@@ -10,6 +11,7 @@ import { Observable } from 'rxjs';
 export class TeacherService {
 
   teacherUrl = `${environment.BACKEND_URL}/api/v1/teacher`;
+  token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) { }
 
@@ -32,83 +34,26 @@ export class TeacherService {
   }
   //Funcion para obtener informacion de un profesor
   public getTeacherInfo(userId: string): Observable<any>{
-    //return this.http.get<any>(`${environment.USER_URL}/api/v1/user/`);
-    return this.http.get<any>(`http://localhost:8080/api/v1/teacher/${userId}`);
+    return this.http.get<any>(`${environment.BACKEND_URL}/api/v1/teacher/${userId}`);
   }
   //Función para crear un profesor
-  createTeacher(
-    nombre: string, apellidoPaterno: string, apellidoMaterno: string, carnetIdentidad: string,
-    fechaNacimiento: Date, correo: string, genero: string, celular: string, direccion: string,
-    fechaRegistro: Date, estadoCivil: string, username: string, secret: string, tipo: string,
-    profesionId: number, departamentoCarreraId: number, directorCarrera: boolean
-  ) {
+  createTeacher(teacher: TeacherDto) {
     const header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Authorization': `Bearer ${this.token}`,
     };
-    const body = {
-      'nombre': nombre,
-      'apellidoPaterno': apellidoPaterno,
-      'apellidoMaterno': apellidoMaterno,
-      'carnetIdentidad': carnetIdentidad,
-      'fechaNacimiento': fechaNacimiento,
-      'correo': correo,
-      'genero': genero,
-      'celular': celular,
-      'descripcion': 'Hola, soy docente de la universidad',
-      'uuidFoto': '',
-      'uuidPortada': '',
-      'direccion': direccion,
-      'fechaRegistro': fechaRegistro,
-      'estadoCivil': estadoCivil,
-      'username': username,
-      'secret': secret,
-      'rol': 'Docente',
-      'tipo': tipo,
-      'profesionId': profesionId,
-      'departamentoCarreraId': departamentoCarreraId,
-      'directorCarrera': directorCarrera,
-      'estado': true
-    };
-    return this.http.post(this.teacherUrl, body, { headers: header });
+    return this.http.post(this.teacherUrl, teacher, { headers: header });
   }
-  updateTeacher(Id: string, nombre: string, apellidoPaterno: string, apellidoMaterno: string, carnetIdentidad: string,
-    fechaNacimiento: Date, correo: string, genero: string, celular: string, descripcion: string, uuidFoto: String, uuidPortada: String, direccion: string,
-    fechaRegistro: Date, estadoCivil: string, username: string, secret: string, tipo: string,
-    profesionId: number, departamentoCarreraId: number, directorCarrera: boolean
-  ){
+
+  //Función para actualizar el registro de un profesor por medio de Id
+  updateTeacher(teacher: TeacherDto) {
     const header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Authorization': `Bearer ${this.token}`,
     };
-    const body = {
-      'nombre': nombre,
-      'apellidoPaterno': apellidoPaterno,
-      'apellidoMaterno': apellidoMaterno,
-      'carnetIdentidad': carnetIdentidad,
-      'fechaNacimiento': fechaNacimiento,
-      'correo': correo,
-      'genero': genero,
-      'celular': celular,
-      'descripcion': descripcion,
-      'uuidFoto': uuidFoto,
-      'uuidPortada': uuidPortada,
-      'direccion': direccion,
-      'fechaRegistro': fechaRegistro,
-      'estadoCivil': estadoCivil,
-      'username': username,
-      'secret': secret,
-      'rol': 'Docente',
-      'tipo': tipo,
-      'profesionId': profesionId,
-      'departamentoCarreraId': departamentoCarreraId,
-      'directorCarrera': directorCarrera,
-      'estado': true
-    }
-    return this.http.put(`${environment.BACKEND_URL}/api/v1/teacher/${Id}`, body, { headers: header });
-
+    return this.http.put(`${environment.BACKEND_URL}/api/v1/teacher/${teacher.docenteId}`, teacher, { headers: header });
   }
 
   // Obtener los docentes por medio de page y pageSize

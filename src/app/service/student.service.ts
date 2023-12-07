@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { StudentDto } from '../dto/student.dto';
 
 
 @Injectable({
@@ -10,91 +11,41 @@ import { environment } from 'src/environments/environment';
 export class StudentService {
 
   studentUrl = `${environment.BACKEND_URL}/api/v1/student`;
+  token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) { }
 
-  //Funcion para obtener la lista de colegios
+  // Funcion para obtener la lista de colegios
   getColleges() {
     return this.http.get(`${environment.BACKEND_URL}/api/v1/colleges`);
   }
-
-  //Funcion para obtener la lista de carreras
+  // Funcion para obtener la lista de carreras
   getCarrers() {
     return this.http.get(`${environment.BACKEND_URL}/api/v1/careers`);
   }
-  //Funcion para obtener carrera por medio de Id
+  // Funcion para obtener carrera por medio de Id
   getCarrerById(id: number):  Observable<any>{
     return this.http.get<any>(`${environment.BACKEND_URL}/api/v1/careers/${id}`);
   }
 
-  //Función para crear un estudiante
-  createStudent(nombre: string, apellidoPaterno: string, apellidoMaterno: string, carnetIdentidad: string, 
-    fechaNacimiento: Date, correo: string, genero: string, celular: string, direccion: string, 
-    fechaRegistro: Date, estadoCivil: string, username: string, secret: string, semestre: number, 
-    colegioId: number, carreraId: number) {
+  // Función para crear un estudiante
+  createStudent(student: StudentDto) {
     const header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Authorization': `Bearer ${this.token}`,
     };
-    const body = {
-      'nombre': nombre,
-      'apellidoPaterno': apellidoPaterno,
-      'apellidoMaterno': apellidoMaterno,
-      'carnetIdentidad': carnetIdentidad,
-      'fechaNacimiento': fechaNacimiento,
-      'correo': correo,
-      'genero': genero,
-      'celular': celular,
-      'descripcion': 'Hola, soy estudiante de la universidad',
-      'uuidFoto': '',
-      'uuidPortada': '',
-      'direccion': direccion,
-      'fechaRegistro': fechaRegistro,
-      'estadoCivil': estadoCivil,
-      'username': username,
-      'secret': secret,
-      'rol': 'Estudiante',
-      'semestre': semestre,
-      'colegioId': colegioId,
-      'carreraId': carreraId,
-      'estado': true
-    }
-    return this.http.post(this.studentUrl, body, { headers: header });
+    return this.http.post(this.studentUrl, student, { headers: header });
   }
-  updateStudent(Id: number, nombre: string, apellidoPaterno: string, apellidoMaterno: string, carnetIdentidad: string, 
-    fechaNacimiento: Date, correo: string, genero: string, celular: string, descripcion: string, uuidFoto: String, uuidPortada: String ,direccion: string, 
-    fechaRegistro: Date, estadoCivil: string, username: string, secret: string, semestre: number, 
-    colegioId: number, carreraId: number){
+
+  // Función para actualizar un estudiante
+  updateStudent(student: StudentDto){
     const header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Authorization': `Bearer ${this.token}`,
     };
-    const body = {
-      'nombre': nombre,
-      'apellidoPaterno': apellidoPaterno,
-      'apellidoMaterno': apellidoMaterno,
-      'carnetIdentidad': carnetIdentidad,
-      'fechaNacimiento': fechaNacimiento,
-      'correo': correo,
-      'genero': genero,
-      'celular': celular,
-      'descripcion': descripcion,
-      'uuidFoto': uuidFoto,
-      'uuidPortada': uuidPortada,
-      'direccion': direccion,
-      'fechaRegistro': fechaRegistro,
-      'estadoCivil': estadoCivil,
-      'username': username,
-      'secret': secret,
-      'rol': 'Estudiante',
-      'semestre': semestre,
-      'colegioId': colegioId,
-      'carreraId': carreraId,
-      'estado': true
-    }
-    return this.http.put(`${environment.BACKEND_URL}/api/v1/student/${Id}`, body, { headers: header });
+    return this.http.put(`${environment.BACKEND_URL}/api/v1/student/${student.estudianteId}`, student, { headers: header });
 
   }
   
@@ -103,7 +54,6 @@ export class StudentService {
     console.log(`${environment.BACKEND_URL}/api/v1/student?page=${page}&size=${pageSize}&nombre=${name}&carnet_identidad=${ci}&carrera_id=${carrera}&semestre=${semestre}&sortType=asc`)
     return this.http.get(`${environment.BACKEND_URL}/api/v1/student?page=${page}&size=${pageSize}&nombre=${name}&carnet_identidad=${ci}&carrera_id=${carrera}&semestre=${semestre}&sortType=asc`);
   }
-
 
   // Obtener estudiante por medio de Id
   getStudent(Id: string){

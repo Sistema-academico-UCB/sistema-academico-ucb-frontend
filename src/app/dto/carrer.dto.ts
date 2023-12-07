@@ -1,5 +1,5 @@
 export interface CarrerDto {
-    carreraId: Number,
+    carreraId: number,
     sigla: string,
     nombre: string,
     programa: string,

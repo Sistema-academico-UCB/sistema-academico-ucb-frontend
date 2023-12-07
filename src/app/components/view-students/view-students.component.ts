@@ -12,6 +12,7 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import { format } from 'date-fns';
+import { StudentDto } from 'src/app/dto/student.dto';
 
 @Component({
   selector: 'app-view-students',
@@ -269,41 +270,31 @@ export class ViewStudentsComponent {
       } else {
         data.forEach(studentData => {
           console.log(studentData);
-          const nombre = studentData[0];
-          const apellidoPaterno = studentData[1];
-          const apellidoMaterno = studentData[2];
-          const carnetIdentidad = studentData[3];
-          const fechaNacimiento = studentData[4];
-          const correo = studentData[5];
-          const genero = studentData[6];
-          const celular = studentData[7];
-          const direccion = studentData[8];
-          const fechaRegistro = studentData[9];
-          const estadoCivil = studentData[10];
-          const username = studentData[11];
-          const secret = studentData[12];
-          const semestre = studentData[13];
-          const colegioId = studentData[14];
-          const carreraId = studentData[15];
+          const newStudent: StudentDto = {
+            nombre: studentData[0],
+            apellidoPaterno: studentData[1],
+            apellidoMaterno: studentData[2],
+            carnetIdentidad: studentData[3],
+            fechaNacimiento: studentData[4],
+            correo: studentData[5],
+            genero: studentData[6],
+            celular: studentData[7],
+            descripcion: "",
+            direccion: studentData[8],
+            fechaRegistro: studentData[9],
+            estadoCivil: studentData[10],
+            username: studentData[11],
+            secret: studentData[12],
+            rol: "Estudiante",
+            semestre: studentData[13],
+            colegioId: studentData[14],
+            carreraId: studentData[15],
+            uuidFoto: "../../../assets/icons/usuario.png",
+            uuidPortada: "../../../assets/icons/portada-arboles.jpg",
+            estado: true
+          };
           // Llama a tu función createStudent del servicio con los datos del estudiante.
-          this.studentService.createStudent(
-            nombre,
-            apellidoPaterno,
-            apellidoMaterno,
-            carnetIdentidad,
-            fechaNacimiento,
-            correo,
-            genero,
-            celular,
-            direccion,
-            fechaRegistro,
-            estadoCivil,
-            username,
-            secret,
-            semestre,
-            colegioId,
-            carreraId
-          ).subscribe(
+          this.studentService.createStudent(newStudent).subscribe(
             response => {
               console.log('Estudiante registrado con éxito', response);
             },

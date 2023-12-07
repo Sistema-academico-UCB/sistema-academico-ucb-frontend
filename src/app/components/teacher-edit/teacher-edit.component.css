@@ -178,7 +178,7 @@ select {
 /*Boton guardar*/
 .save-button {
     display: grid;
-    grid-template-columns: 1fr 120px 1fr;
+    grid-template-columns: 1fr 260px 1fr;
     gap: 1%;
 } 
 button{
@@ -186,18 +186,34 @@ button{
     border: none;
     border-radius: 5px;
     outline: none;
-    width: 100%;
+    width: 120px;
+    margin-right: 20px;
     padding: 6px 0px;
-    background-color: #6edad2;
+    background-color: #3EB7AE;
     color: #ffffff;
     cursor: pointer;
+    font-family: 'Montserrat', sans-serif !important;
 }
 button:focus {
     border: none;
 }
 button:hover {
-    background-color: #3EB7AE;
+    background-color: #2a9c95;
     color: #ffffff;
+}
+.cancel {
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #ff7171;
+    width: 120px;
+    padding: 6px 0px;
+}
+.cancel:hover {
+    background-color: #ff4f4f;
 }
 .save-button div .line {
     margin-top: 20px;

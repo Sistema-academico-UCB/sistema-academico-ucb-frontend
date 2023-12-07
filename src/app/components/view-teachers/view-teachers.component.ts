@@ -10,6 +10,7 @@ import * as XLSX from 'xlsx';
 import { format } from 'date-fns';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { TeacherDto } from 'src/app/dto/teacher.dto';
 
 
 @Component({
@@ -263,43 +264,32 @@ export class ViewTeachersComponent {
       } else {
         data.forEach(teacherData => {
           console.log(teacherData);
-          const nombre = teacherData[0];
-          const apellidoPaterno = teacherData[1];
-          const apellidoMaterno = teacherData[2];
-          const carnetIdentidad = teacherData[3];
-          const fechaNacimiento = teacherData[4];
-          const correo = teacherData[5];
-          const genero = teacherData[6];
-          const celular = teacherData[7];
-          const direccion = teacherData[8];
-          const fechaRegistro = teacherData[9];
-          const estadoCivil = teacherData[10];
-          const username = teacherData[11];
-          const secret = teacherData[12];
-          const tipo = teacherData[13];
-          const profesion = teacherData[14];
-          const departamento = teacherData[15];
-          const directorCarrera = teacherData[16];
+          const teacher: TeacherDto = {
+            nombre: teacherData[0],
+            apellidoPaterno: teacherData[1],
+            apellidoMaterno: teacherData[2],
+            carnetIdentidad: teacherData[3],
+            fechaNacimiento: teacherData[4],
+            correo: teacherData[5],
+            genero: teacherData[6],
+            celular: teacherData[7],
+            direccion: teacherData[8],
+            fechaRegistro: teacherData[9],
+            estadoCivil: teacherData[10],
+            username: teacherData[11],
+            secret: teacherData[12],
+            tipo: teacherData[13],
+            profesionId: teacherData[14],
+            departamentoCarreraId: teacherData[15],
+            directorCarrera: teacherData[16],
+            descripcion: "",
+            rol: "Docente",
+            uuidFoto: "../../../assets/icons/usuario.png",
+            uuidPortada: "../../../assets/icons/portada-arboles.jpg",
+            estado: true
+          };
           // Llama a tu función createTeacher del servicio con los datos del profesor.
-          this.teacherService.createTeacher(
-            nombre,
-            apellidoPaterno,
-            apellidoMaterno,
-            carnetIdentidad,
-            fechaNacimiento,
-            correo,
-            genero,
-            celular,
-            direccion,
-            fechaRegistro,
-            estadoCivil,
-            username,
-            secret,
-            tipo,
-            profesion,
-            departamento,
-            directorCarrera
-          ).subscribe(
+          this.teacherService.createTeacher(teacher).subscribe(
             response => {
               console.log('Docente registrado con éxito', response);
             },
