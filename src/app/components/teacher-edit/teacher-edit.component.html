@@ -139,6 +139,17 @@
             <div><hr class="line"/></div>
         </div>
     </div>
+    <!--Cargando-->
+    <div class="popup center" *ngIf="loadingPopup">
+        <div class="success center">
+            <div>
+                <div class="confirmation-content" style="margin-bottom: 20px;">
+                    <i class="fas fa-spinner fa-spin" style="color: #3EB7AE;"></i>
+                </div>
+                <div class="confirmation-content"><p>El resgitro del docente está siendo actualizado</p></div>
+            </div>
+        </div>
+    </div>
     <!--Mensaje de que todo salio bien y el docente fue registrado correctamente-->
     <div class="popup center" *ngIf="confirmationPopup">
         <div class="success center">
