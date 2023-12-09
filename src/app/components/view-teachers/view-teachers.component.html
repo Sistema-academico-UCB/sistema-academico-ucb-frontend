@@ -51,11 +51,11 @@
         <div class="options">
             <div class="search">
                 <i class="fa-solid fa-search"></i>
-                <input [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el nombre del estudiante">
+                <input [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el nombre del docente">
             </div>
             <div class="search">
                 <i class="fa-solid fa-search"></i>
-                <input [(ngModel)]="searchCI" (input)="onInputChange()" type="text" placeholder="Ingresa carnet del estudiante">
+                <input [(ngModel)]="searchCI" (input)="onInputChange()" type="text" placeholder="Ingresa carnet del docente">
             </div>
             <!-- <input class="search" type="number" min="1" [(ngModel)]="inputValue3" (input)="onInputChange()"> -->
             <select [(ngModel)]="inputValue3" name="departamento" (ngModelChange)="onInputChange()">
