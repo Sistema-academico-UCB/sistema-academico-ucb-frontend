@@ -11,21 +11,20 @@
     </div>
     <div class="button">
         <!-- Boton para exportar a excel -->
-        <button class="export" (click)="exportToExcel()">EXPORTAR</button>
+        <button class="export" (click)="exportToExcel()">
+            EXPORTAR
+            <i *ngIf="exportFlag" class="fas fa-spinner fa-spin" style="color: white; font-size: 12px; font-weight: 500;"></i>
+        </button>
         <button class="import" (click)="importExcel.click()">
             <span>IMPORTAR DESDE EXCEL</span>
         </button>
         <!-- upload.component.html -->
-        <input #importExcel type="file" accept=".xlsx, .xls" style="display: none;" (change)="onFileChange($event)"/>
+        <input #importExcel id="file-upload" type="file" accept=".xlsx, .xls" style="display: none;" (change)="onFileChange($event)"/>
         <button class="add" (click)="addStudent()">
             <span>AGREGAR NUEVO</span>
         </button>
     </div>
     <div class="options-list">
-        <!-- <div class="paginacion">
-            <p>Registros por página</p><input type="number" id="miInput" name="miInput" min="1" [(ngModel)]="inputValue2" (input)="onInputChange()">
-            <input type="number" min="1" [(ngModel)]="inputValue1" (input)="onInputChange()">
-        </div> -->
         <div class="paginacion">
             <div class="paginator-container">
                 <div class="page-info">
@@ -51,11 +50,11 @@
         <div class="options">
             <div class="search">
                 <i class="fa-solid fa-search"></i>
-                <input [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el nombre del estudiante">
+                <input [(ngModel)]="searchText" (input)="onInputChange()" type="text" placeholder="Ingresa el nombre del docente">
             </div>
             <div class="search">
                 <i class="fa-solid fa-search"></i>
-                <input [(ngModel)]="searchCI" (input)="onInputChange()" type="text" placeholder="Ingresa carnet del estudiante">
+                <input [(ngModel)]="searchCI" (input)="onInputChange()" type="text" placeholder="Ingresa carnet del docente">
             </div>
             <!-- <input class="search" type="number" min="1" [(ngModel)]="inputValue3" (input)="onInputChange()"> -->
             <select [(ngModel)]="inputValue3" name="departamento" (ngModelChange)="onInputChange()">
@@ -76,22 +75,13 @@
             </div>
         </div>
     </div>
-    <!--Mensaje de que algo salio mal al momento de registrar-datos duplicados-->
-    <div class="popup center" *ngIf="hasDuplicates">
-        <div class="success center">
-            <div>
-                <div class="confirmation-content"><i class="fa-solid fa-circle-xmark" style="color: #ff4d4d;"></i></div>
-                <div class="confirmation-content"><p>Ocurrió un error, al momento de registrar<br>Se encotraron datos duplicados, por favor revisarlos</p></div>
-                <div class="confirmation-content"><button class="button-popup" (click)="hasDuplicates = false">Aceptar</button></div>
-            </div>
-        </div>
-    </div>
+    
     <!--Mensaje de que algo salio mal al momento de registrar formato de datos incorrecto-->
     <div class="popup center" *ngIf="hasInvalidData">
         <div class="success center">
             <div>
                 <div class="confirmation-content"><i class="fa-solid fa-circle-xmark" style="color: #ff4d4d;"></i></div>
-                <div class="confirmation-content"><p>Ocurrió un error, al momento de registrar<br>Formato de datos incorrecto, por favor revisarlos</p></div>
+                <div class="confirmation-content" style="display: flex; flex-direction: column; text-align: center;"><p>Ocurrió un error, al momento de registrar. {{errorMessage}}</p></div>
                 <div class="confirmation-content"><button class="button-popup" (click)="hasInvalidData = false">Aceptar</button></div>
             </div>
         </div>
@@ -101,8 +91,19 @@
         <div class="success center">
             <div>
                 <div class="confirmation-content"><i class="fa-solid fa-circle-check" style="color: #30ff24;"></i></div>
-                <div class="confirmation-content"><p>El registro de los docentes se realizo con exito</p></div>
+                <div class="confirmation-content"><p>El proceso de importar registros ha terminado.</p></div>
                 <div class="confirmation-content"><button class="button-popup" (click)="confirmationPopup = false">Aceptar</button></div>
+            </div>
+        </div>
+    </div>
+    <!--Cargando-->
+    <div class="popup center" *ngIf="loadingPopup">
+        <div class="success center">
+            <div>
+                <div class="confirmation-content" style="margin-bottom: 20px;">
+                    <i class="fas fa-spinner fa-spin" style="color: #3EB7AE;"></i>
+                </div>
+                <div class="confirmation-content"><p>El/los docente(s) está(n) siendo registrado(s)</p></div>
             </div>
         </div>
     </div>

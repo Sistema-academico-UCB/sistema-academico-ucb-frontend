@@ -29,13 +29,13 @@ export class StudentService {
   }
 
   // Función para crear un estudiante
-  createStudent(student: StudentDto) {
+  createStudent(student: StudentDto): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': `Bearer ${this.token}`,
     };
-    return this.http.post(this.studentUrl, student, { headers: header });
+    return this.http.post<any>(this.studentUrl, student, { headers: header });
   }
 
   // Función para actualizar un estudiante

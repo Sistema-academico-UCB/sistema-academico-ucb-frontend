@@ -37,13 +37,13 @@ export class TeacherService {
     return this.http.get<any>(`${environment.BACKEND_URL}/api/v1/teacher/${userId}`);
   }
   //Función para crear un profesor
-  createTeacher(teacher: TeacherDto) {
+  createTeacher(teacher: TeacherDto): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': `Bearer ${this.token}`,
     };
-    return this.http.post(this.teacherUrl, teacher, { headers: header });
+    return this.http.post<any>(this.teacherUrl, teacher, { headers: header });
   }
 
   //Función para actualizar el registro de un profesor por medio de Id
