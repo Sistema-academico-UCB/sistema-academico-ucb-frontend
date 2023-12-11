@@ -301,6 +301,10 @@ ul {
 }
 
 li {
-    margin: 5px 0; /* Agrega espacio entre los nombres de los estudiantes */
+    padding: 5px 0 0 0;
     cursor: pointer;
+}
+
+li:hover {
+    background-color: #d0e9e7;
 }

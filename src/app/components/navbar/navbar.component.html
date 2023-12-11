@@ -22,7 +22,10 @@
         </div>
         <div class="student-data" *ngIf="users.length > 0">
             <ul>
-              <li *ngFor="let user of users" (click)="navigateToProfile(user.userId)">{{ user.nombre }} {{ user.apellidoPaterno }} {{ user.apellidoMaterno }} <hr></li>
+                <li *ngFor="let user of users" (click)="navigateToProfile(user.userId)">
+                    &nbsp;&nbsp;{{ user.nombre }} {{ user.apellidoPaterno }} {{ user.apellidoMaterno }} 
+                    <hr style="margin-bottom: 0;">
+                </li>
             </ul>
         </div>
     </div>
