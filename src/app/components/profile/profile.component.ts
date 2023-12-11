@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AnswerDto } from 'src/app/dto/answer.dto';
@@ -6,7 +5,6 @@ import { PublicationDto } from 'src/app/dto/publication.dto';
 import { UserDto } from 'src/app/dto/user.dto';
 import { PublicationService } from 'src/app/service/publication.service';
 import { UserService } from 'src/app/service/user.service';
-
 
 @Component({
   selector: 'app-profile',
@@ -18,8 +16,7 @@ export class ProfileComponent {
   constructor(
     private userService: UserService, 
     private router: Router, 
-    private publicationService: PublicationService,
-    private datePipe: DatePipe
+    private publicationService: PublicationService
     ) {
     const rol = localStorage.getItem('rol');
     if(rol == 'ADMIN') {
@@ -181,7 +178,7 @@ export class ProfileComponent {
 
   postear() {
     if(this.publicacion == '') {
-      this.errorMessage = "No puedes publicar un mensaje vacío";
+      this.errorMessage = "No puedes publicar un mensaje vacío.";
       this.errorPost = true;
       setTimeout(() => {
         this.errorPost = false;
@@ -196,10 +193,10 @@ export class ProfileComponent {
       /*this.publicationService.createPublication(newPost).subscribe(
         (data: any) => {
           if(data.success) {
-            this.publicationList.unshift(data.data);
+            this.publicationList.unshift(newPost);
             this.publicacion = '';
           } else {
-            errorMessage = "Ocurrion un error al crear la publicación";
+            this.errorMessage = "Ocurrion un error al crear la publicación.";
           }
         }
       );*/
@@ -249,7 +246,7 @@ export class ProfileComponent {
             this.deleteFlag = false;
           } else {
             this.isDialogVisible = false;
-            this.errorMessage = "Ocurrion un error al eliminar la publicación";
+            this.errorMessage = "Ocurrion un error al eliminar la publicación.";
             this.errorPost = true;
             this.deleteFlag = false;
             setTimeout(() => {

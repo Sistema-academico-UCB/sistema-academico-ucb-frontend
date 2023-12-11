@@ -3,6 +3,9 @@ import { UserService } from 'src/app/service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserDto } from 'src/app/dto/user.dto';
 import * as jwt_decode from 'jwt-decode';
+import { PublicationDto } from 'src/app/dto/publication.dto';
+import { PublicationService } from 'src/app/service/publication.service';
+import { AnswerDto } from 'src/app/dto/answer.dto';
 
 @Component({
   selector: 'app-external-profile',
@@ -13,8 +16,14 @@ import * as jwt_decode from 'jwt-decode';
 export class ExternalProfileComponent {
   
   id: string | null;
+  myId: string = '';
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private userService: UserService, 
+    private route: ActivatedRoute, 
+    private router: Router,
+    private publicationService: PublicationService
+    ) {
     const rol = localStorage.getItem('rol');
     if(rol == 'ADMIN') {
       window.alert('No tienes permisos para acceder a esta página');
@@ -29,6 +38,7 @@ export class ExternalProfileComponent {
         if (sub == this.id) {
           this.router.navigate(['/profile']);
         }
+        this.myId = sub;
       }
     } else {
       window.alert('No has iniciado sesión');
@@ -57,6 +67,60 @@ export class ExternalProfileComponent {
   name: string = '';
   uuidFoto: string = '';
   firstOption: boolean = true;
+  secondOption: boolean = false;
+  thirdOption: boolean = false;
+  publicationList: PublicationDto[] = [
+    {
+      publicacionId: 1,
+      userId: 2,
+      descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
+      fecha: '2021-10-10T00:00:00.000Z',
+      estado: true,
+      respuestas: [
+        {
+          respuestaId: 1,
+          userId: 3,
+          publicacionId: 1,
+          descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
+          fecha: '2021-10-10T00:00:00.000Z',
+          estado: true
+        },
+        {
+          respuestaId: 2,
+          userId: 6,
+          publicacionId: 1,
+          descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
+          fecha: '2021-10-10T00:00:00.000Z',
+          estado: true
+        }
+      ]
+    },
+    {
+      publicacionId: 2,
+      userId: 2,
+      descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
+      fecha: '2021-10-10T00:00:00.000Z',
+      estado: true,
+      respuestas: [
+        {
+          respuestaId: 3,
+          userId: 3,
+          publicacionId: 2,
+          descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
+          fecha: '2021-10-10T00:00:00.000Z',
+          estado: true
+        },
+        {
+          respuestaId: 4,
+          userId: 6,
+          publicacionId: 2,
+          descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
+          fecha: '2021-10-10T00:00:00.000Z',
+          estado: true
+        }
+      ]
+    }
+  ];
 
   ngOnInit(){
     const nameLocal = localStorage.getItem('name');
@@ -98,6 +162,7 @@ export class ExternalProfileComponent {
               console.log(data);
             }
           );
+          this.getPublicationList();
         }
       );
       this.userService.getFriendStatus(this.id).subscribe(
@@ -106,6 +171,38 @@ export class ExternalProfileComponent {
           this.typeFriend = data.data;
         });
     }
+  }
+
+  getPublicationList() {
+    /*this.publicationService.getAllPublications(this.user.userId).subscribe(
+      (data: any) => {
+        this.publicationList = data.data;
+        this.publicationList.forEach(publication => {
+          this.respuesta.push('');
+          this.errorPost.push(false);
+          this.errorMessage.push('');
+          publication.fecha = this.formatoFecha(publication.fecha);
+          if (publication.respuestas) {
+            publication.respuestas.forEach(answer => {
+              answer.fecha = this.formatoFecha(answer.fecha);
+              this.obtenerInfoOtroPerfil(answer);
+            });
+          }
+        });
+      }
+    );*/
+    this.publicationList.forEach(publication => {
+      this.respuesta.push('');
+      this.errorPost.push(false);
+      this.errorMessage.push('');
+      publication.fecha = this.formatoFecha(publication.fecha);
+      if (publication.respuestas) {
+        publication.respuestas.forEach(answer => {
+          answer.fecha = this.formatoFecha(answer.fecha);
+          this.obtenerInfoOtroPerfil(answer);
+        });
+      }
+    });
   }
 
   public formattedDate(originalDate: string): string {
@@ -130,6 +227,129 @@ export class ExternalProfileComponent {
   }
 
   firstOptionChange() {
-    this.firstOption = !this.firstOption;
+    this.firstOption = true;
+    this.secondOption = false;
+    this.thirdOption = false;
+  }
+
+  secondOptionChange() {
+    this.firstOption = false;
+    this.secondOption = true;
+    this.thirdOption = false;
+  }
+
+  thirdOptionChange() {
+    this.firstOption = false;
+    this.secondOption = false;
+    this.thirdOption = true;
+  }
+
+  //----------------------------------------Respuestas----------------------------------------
+  respuesta: string[] = [];
+  errorPost: boolean[] = [];
+  errorMessage: string[] = [];
+
+  postear(publicacion: PublicationDto, index: number) {
+    if(this.respuesta[index] == '') {
+      this.errorMessage[index] = "No puedes publicar una respuesta vacía.";
+      this.errorPost[index] = true;
+      setTimeout(() => {
+        this.errorPost[index] = false;
+      }, 3000);
+    } else {
+      if (publicacion.publicacionId) {
+        const newAnswer: AnswerDto = {
+          userId: Number(this.myId),
+          publicacionId: publicacion.publicacionId,
+          descripcion: this.respuesta[index],
+          fecha: new Date().toISOString(),
+          estado: true
+        };
+        /*this.publicationService.createAnswer(newAnswer).subscribe(
+          (data: any) => {
+            if(data.success) {
+              this.getPublicationList();
+            } else {
+              this.errorMessage[index] = "Ocurrion un error al publicar la respuesta.";
+              this.errorPost[index] = true;
+              setTimeout(() => {
+                this.errorPost[index] = false;
+              }, 3000);
+            }
+          }
+        );*/
+        this.obtenerInfoOtroPerfil(newAnswer);
+        publicacion.respuestas?.unshift(newAnswer);
+        this.respuesta[index] = '';
+      }
+    }
+  }
+
+  public formatoFecha(originalDate: string): string {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    };
+    const date = new Date(originalDate);
+    return date.toLocaleDateString('es-ES', options);
+  }
+
+  obtenerInfoOtroPerfil(answer: AnswerDto) {
+    this.userService.getOtherUserInfo(answer.userId.toString()).subscribe(
+      (data: any) => {
+        console.log(data);
+        answer.nombre = data.data.nombre + ' ' + data.data.apellidoPaterno + ' ' + data.data.apellidoMaterno;
+        answer.uuidFoto = data.data.uuidFoto;
+      }
+    );
+  }
+
+  isDialogVisible: boolean = false;
+  publicationToDelete: PublicationDto = {} as PublicationDto;
+  answerToDelete: AnswerDto = {} as AnswerDto;
+  deleteFlag: boolean = false;
+  indexToDelete: number = 0;
+
+  deleteAnswer(publication: PublicationDto, answer: AnswerDto, index: number) {
+    this.isDialogVisible = true;
+    this.publicationToDelete = publication;
+    this.answerToDelete = answer;
+    this.indexToDelete = index;
+  }
+
+  confirmDelete() {
+    this.deleteFlag = true;
+    if(this.answerToDelete.respuestaId) {
+      /*this.publicationService.deleteAnswer(this.answerToDelete.respuestaId).subscribe(
+        (data: any) => {
+          if(data.success) {
+            this.publicationToDelete.respuestas = this.publicationToDelete.respuestas?.filter(answer => answer.respuestaId != this.answerToDelete.respuestaId);
+            this.isDialogVisible = false;
+            this.deleteFlag = false;
+            this.indexToDelete = 0;
+          } else {
+            this.isDialogVisible = false;
+            this.errorMessage[this.indexToDelete] = "Ocurrion un error al eliminar la publicación";
+            this.errorPost[this.indexToDelete] = true;
+            this.deleteFlag = false;
+            setTimeout(() => {
+              this.errorPost[this.indexToDelete] = false;
+              this.indexToDelete = 0;
+            }, 3000);
+          }
+        }
+      );*/
+      this.publicationToDelete.respuestas = this.publicationToDelete.respuestas?.filter(answer => answer.respuestaId != this.answerToDelete.respuestaId);
+      this.isDialogVisible = false;
+      this.deleteFlag = false;
+    }
+  }
+
+  cancelDelete() {
+    this.isDialogVisible = false;
+    this.answerToDelete = {} as AnswerDto;
   }
 }
