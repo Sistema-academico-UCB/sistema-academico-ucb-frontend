@@ -6,6 +6,7 @@ import * as jwt_decode from 'jwt-decode';
 import { PublicationDto } from 'src/app/dto/publication.dto';
 import { PublicationService } from 'src/app/service/publication.service';
 import { AnswerDto } from 'src/app/dto/answer.dto';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-external-profile',
@@ -69,58 +70,7 @@ export class ExternalProfileComponent {
   firstOption: boolean = true;
   secondOption: boolean = false;
   thirdOption: boolean = false;
-  publicationList: PublicationDto[] = [
-    {
-      publicacionId: 1,
-      userId: 2,
-      descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
-      fecha: '2021-10-10T00:00:00.000Z',
-      estado: true,
-      respuestas: [
-        {
-          respuestaId: 1,
-          userId: 3,
-          publicacionId: 1,
-          descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
-          fecha: '2021-10-10T00:00:00.000Z',
-          estado: true
-        },
-        {
-          respuestaId: 2,
-          userId: 6,
-          publicacionId: 1,
-          descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
-          fecha: '2021-10-10T00:00:00.000Z',
-          estado: true
-        }
-      ]
-    },
-    {
-      publicacionId: 2,
-      userId: 2,
-      descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
-      fecha: '2021-10-10T00:00:00.000Z',
-      estado: true,
-      respuestas: [
-        {
-          respuestaId: 3,
-          userId: 3,
-          publicacionId: 2,
-          descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
-          fecha: '2021-10-10T00:00:00.000Z',
-          estado: true
-        },
-        {
-          respuestaId: 4,
-          userId: 6,
-          publicacionId: 2,
-          descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
-          fecha: '2021-10-10T00:00:00.000Z',
-          estado: true
-        }
-      ]
-    }
-  ];
+  publicationList: PublicationDto[] = [];
 
   ngOnInit(){
     const nameLocal = localStorage.getItem('name');
@@ -174,31 +124,27 @@ export class ExternalProfileComponent {
   }
 
   getPublicationList() {
-    /*this.publicationService.getAllPublications(this.user.userId).subscribe(
+    this.publicationService.getAllPublications(this.user.userId).subscribe(
       (data: any) => {
         this.publicationList = data.data;
         this.publicationList.forEach(publication => {
           this.respuesta.push('');
           this.errorPost.push(false);
           this.errorMessage.push('');
-          publication.fecha = this.formatoFecha(publication.fecha);
-          if (publication.respuestas) {
-            publication.respuestas.forEach(answer => {
-              answer.fecha = this.formatoFecha(answer.fecha);
+          if (publication.respuesta) {
+            publication.respuesta.forEach(answer => {
               this.obtenerInfoOtroPerfil(answer);
             });
           }
         });
       }
-    );*/
+    );
     this.publicationList.forEach(publication => {
       this.respuesta.push('');
       this.errorPost.push(false);
       this.errorMessage.push('');
-      publication.fecha = this.formatoFecha(publication.fecha);
-      if (publication.respuestas) {
-        publication.respuestas.forEach(answer => {
-          answer.fecha = this.formatoFecha(answer.fecha);
+      if (publication.respuesta) {
+        publication.respuesta.forEach(answer => {
           this.obtenerInfoOtroPerfil(answer);
         });
       }
@@ -262,10 +208,10 @@ export class ExternalProfileComponent {
           userId: Number(this.myId),
           publicacionId: publicacion.publicacionId,
           descripcion: this.respuesta[index],
-          fecha: new Date().toISOString(),
+          fecha: new Date(),
           estado: true
         };
-        /*this.publicationService.createAnswer(newAnswer).subscribe(
+        this.publicationService.createAnswer(newAnswer).subscribe(
           (data: any) => {
             if(data.success) {
               this.getPublicationList();
@@ -277,25 +223,14 @@ export class ExternalProfileComponent {
               }, 3000);
             }
           }
-        );*/
+        );
         this.obtenerInfoOtroPerfil(newAnswer);
-        publicacion.respuestas?.unshift(newAnswer);
+        publicacion.respuesta?.unshift(newAnswer);
         this.respuesta[index] = '';
       }
     }
   }
 
-  public formatoFecha(originalDate: string): string {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric'
-    };
-    const date = new Date(originalDate);
-    return date.toLocaleDateString('es-ES', options);
-  }
 
   obtenerInfoOtroPerfil(answer: AnswerDto) {
     this.userService.getOtherUserInfo(answer.userId.toString()).subscribe(
@@ -323,16 +258,16 @@ export class ExternalProfileComponent {
   confirmDelete() {
     this.deleteFlag = true;
     if(this.answerToDelete.respuestaId) {
-      /*this.publicationService.deleteAnswer(this.answerToDelete.respuestaId).subscribe(
+      this.publicationService.deleteAnswer(this.answerToDelete.respuestaId).subscribe(
         (data: any) => {
           if(data.success) {
-            this.publicationToDelete.respuestas = this.publicationToDelete.respuestas?.filter(answer => answer.respuestaId != this.answerToDelete.respuestaId);
+            this.publicationToDelete.respuesta = this.publicationToDelete.respuesta?.filter(answer => answer.respuestaId != this.answerToDelete.respuestaId);
             this.isDialogVisible = false;
             this.deleteFlag = false;
             this.indexToDelete = 0;
           } else {
             this.isDialogVisible = false;
-            this.errorMessage[this.indexToDelete] = "Ocurrion un error al eliminar la publicación";
+            this.errorMessage[this.indexToDelete] = "Ocurrió un error al eliminar la publicación";
             this.errorPost[this.indexToDelete] = true;
             this.deleteFlag = false;
             setTimeout(() => {
@@ -341,8 +276,8 @@ export class ExternalProfileComponent {
             }, 3000);
           }
         }
-      );*/
-      this.publicationToDelete.respuestas = this.publicationToDelete.respuestas?.filter(answer => answer.respuestaId != this.answerToDelete.respuestaId);
+      );
+      this.publicationToDelete.respuesta = this.publicationToDelete.respuesta?.filter(answer => answer.respuestaId != this.answerToDelete.respuestaId);
       this.isDialogVisible = false;
       this.deleteFlag = false;
     }

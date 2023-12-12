@@ -92,15 +92,15 @@
                 <div class="my-publication">
                     <img class="img-post" src={{user.uuidFoto}}>
                     <div class="my-publication-info">
-                        <h4>{{formatoFecha(publication.fecha)}}</h4>
+                        <h4>{{publication.fecha | date: 'dd/MM/yyyy - HH:mm'}}</h4>
                         <p>{{publication.descripcion}}</p>
                     </div>
                 </div>
-                <div class="answers" *ngFor="let answer of publication.respuestas">
+                <div class="answers" *ngFor="let answer of publication.respuesta">
                     <i *ngIf="answer.userId.toString() == myId" class="fa-solid fa-xmark delete-post" (click)="deleteAnswer(publication, answer, i)"></i>
                     <img class="img-post" src="{{answer.uuidFoto}}">
                     <div class="my-publication-info">
-                        <h4>{{formatoFecha(answer.fecha)}}</h4>
+                        <h4>{{answer.fecha | date: 'dd/MM/yyyy - HH:mm'}}</h4>
                         <p style="font-weight: 600;">{{answer.nombre}}</p>
                         <p>{{answer.descripcion}}</p>
                     </div>

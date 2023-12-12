@@ -5,6 +5,7 @@ import { PublicationDto } from 'src/app/dto/publication.dto';
 import { UserDto } from 'src/app/dto/user.dto';
 import { PublicationService } from 'src/app/service/publication.service';
 import { UserService } from 'src/app/service/user.service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-profile',
@@ -32,33 +33,7 @@ export class ProfileComponent {
 
   user: UserDto = {} as UserDto;
   friendsList: UserDto[] = []; 
-  publicationList: PublicationDto[] = [
-    {
-      publicacionId: 1,
-      userId: 1,
-      descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
-      fecha: '2021-10-10T00:00:00.000Z',
-      estado: true,
-      respuestas: [
-        {
-          respuestaId: 1,
-          userId: 2,
-          publicacionId: 1,
-          descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
-          fecha: '2021-10-10T00:00:00.000Z',
-          estado: true
-        },
-        {
-          respuestaId: 2,
-          userId: 3,
-          publicacionId: 1,
-          descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl. Sed vitae nisl euismod, aliquam nunc vitae, aliquam nisl.',
-          fecha: '2021-10-10T00:00:00.000Z',
-          estado: true
-        }
-      ]
-    }
-  ];
+  publicationList: PublicationDto[] = [];
   countFriends: number = 0;
   firstOption: boolean = true;
   secondOption: boolean = false;
@@ -115,25 +90,21 @@ export class ProfileComponent {
             console.log(data);
           }
         );
-        /*this.publicationService.getAllPublications(this.user.userId).subscribe(
+        this.publicationService.getAllPublications(this.user.userId).subscribe(
           (data: any) => {
             this.publicationList = data.data;
             this.publicationList.forEach(publication => {
-              publication.fecha = this.formatoFecha(publication.fecha);
-              if (publication.respuestas) {
-                publication.respuestas.forEach(answer => {
-                  answer.fecha = this.formatoFecha(answer.fecha);
+              if (publication.respuesta) {
+                publication.respuesta.forEach(answer => {
                   this.obtenerInfoOtroPerfil(answer);
                 });
               }
             });
           }
-        );*/
+        );
         this.publicationList.forEach(publication => {
-          publication.fecha = this.formatoFecha(publication.fecha);
-          if (publication.respuestas) {
-            publication.respuestas.forEach(answer => {
-              answer.fecha = this.formatoFecha(answer.fecha);
+          if (publication.respuesta) {
+            publication.respuesta.forEach(answer => {
               this.obtenerInfoOtroPerfil(answer);
             });
           }
@@ -187,33 +158,21 @@ export class ProfileComponent {
       const newPost: PublicationDto = {
         userId: this.user.userId,
         descripcion: this.publicacion,
-        fecha: new Date().toISOString(),
+        fecha: new Date(),
         estado: true
       } 
-      /*this.publicationService.createPublication(newPost).subscribe(
+      this.publicationService.createPublication(newPost).subscribe(
         (data: any) => {
           if(data.success) {
-            this.publicationList.unshift(newPost);
+            // this.publicationList.unshift(newPost);
             this.publicacion = '';
           } else {
-            this.errorMessage = "Ocurrion un error al crear la publicación.";
+            this.errorMessage = "Ocurrió un error al crear la publicación.";
           }
         }
-      );*/
+      );
       this.publicationList.unshift(newPost);
     }
-  }
-
-  public formatoFecha(originalDate: string): string {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric'
-    };
-    const date = new Date(originalDate);
-    return date.toLocaleDateString('es-ES', options);
   }
 
   obtenerInfoOtroPerfil(answer: AnswerDto) {
@@ -238,7 +197,7 @@ export class ProfileComponent {
   confirmDelete() {
     this.deleteFlag = true;
     if(this.publicationToDelete.publicacionId) {
-      /*this.publicationService.deletePublication(this.publicationToDelete.publicacionId).subscribe(
+      this.publicationService.deletePublication(this.publicationToDelete.publicacionId).subscribe(
         (data: any) => {
           if(data.success) {
             this.publicationList = this.publicationList.filter(publication => publication.publicacionId != this.publicationToDelete.publicacionId);
@@ -246,7 +205,7 @@ export class ProfileComponent {
             this.deleteFlag = false;
           } else {
             this.isDialogVisible = false;
-            this.errorMessage = "Ocurrion un error al eliminar la publicación.";
+            this.errorMessage = "Ocurrió un error al eliminar la publicación.";
             this.errorPost = true;
             this.deleteFlag = false;
             setTimeout(() => {
@@ -254,7 +213,7 @@ export class ProfileComponent {
             }, 3000);
           }
         }
-      );*/
+      );
       this.publicationList = this.publicationList.filter(publication => publication.publicacionId != this.publicationToDelete.publicacionId);
       this.isDialogVisible = false;
       this.deleteFlag = false;

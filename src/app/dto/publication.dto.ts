@@ -4,7 +4,7 @@ export interface PublicationDto {
     publicacionId?: number,
     userId: number,
     descripcion: string,
-    fecha: string,
+    fecha: Date,
     estado: boolean,
-    respuestas?: AnswerDto[]
+    respuesta?: AnswerDto[]
 }

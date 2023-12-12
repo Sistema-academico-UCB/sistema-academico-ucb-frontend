@@ -14,28 +14,28 @@ export class PublicationService {
   constructor(private http: HttpClient) { }
 
   // Función para obtener todas las publicaciones de un usuario
-  getAllPublications(userId: number) {
-    return this.http.get<any>(`${this.publicationUrl}/publication/${userId}`);
+  getAllPublications(userId: number){
+    return this.http.get<PublicationDto[]>(`${this.publicationUrl}/user/${userId}/posts`);
   }
 
   // Función para crear una publicación
   createPublication(publication: PublicationDto) {
-    return this.http.post<any>(`${this.publicationUrl}/publication`, publication);
+    return this.http.post<any>(`${this.publicationUrl}/post`, publication);
   }
 
   // Función para eliminar una publicación
   deletePublication(id: number) {
-    return this.http.delete<any>(`${this.publicationUrl}/publication/${id}`);
+    return this.http.delete<any>(`${this.publicationUrl}/post/${id}`);
   }
 
   // Función para crear una respuesta
   createAnswer(answer: AnswerDto) {
-    return this.http.post<any>(`${this.publicationUrl}/answer`, answer);
+    return this.http.post<any>(`${this.publicationUrl}/comment`, answer);
   }
 
   // Función para eliminar una respuesta
   deleteAnswer(id: number) {
-    return this.http.delete<any>(`${this.publicationUrl}/answer/${id}`);
+    return this.http.delete<any>(`${this.publicationUrl}/comment/${id}`);
   }
 
 }
