@@ -107,12 +107,12 @@ export class NavbarComponent {
         
   )}
 
-  postType(mensaje: String): boolean {
-    let flag: boolean = false;
-    if (mensaje.includes('ha comentado tu publicación.')) {
-      flag = true;
-    }
-    return flag;
+  myPublication(){
+    window.location.href = '/profile/3';
+  }
+
+  otherPublication(emisorId: number){
+    window.location.href = `${emisorId}/profile/3`;
   }
 
 }

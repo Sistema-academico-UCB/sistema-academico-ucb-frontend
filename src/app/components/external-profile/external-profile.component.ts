@@ -140,18 +140,9 @@ export class ExternalProfileComponent {
             });
           }
         });
+        this.publicationList.reverse();
       }
     );
-    this.publicationList.forEach(publication => {
-      this.respuesta.push('');
-      this.errorPost.push(false);
-      this.errorMessage.push('');
-      if (publication.respuesta) {
-        publication.respuesta.forEach(answer => {
-          this.obtenerInfoOtroPerfil(answer);
-        });
-      }
-    });
   }
 
   public formattedDate(originalDate: string): string {
@@ -200,6 +191,7 @@ export class ExternalProfileComponent {
           (data: any) => {
             if(data.success) {
               this.getPublicationList();
+              this.respuesta[index] = '';
             } else {
               this.errorMessage[index] = "Ocurrion un error al publicar la respuesta.";
               this.errorPost[index] = true;
@@ -209,9 +201,6 @@ export class ExternalProfileComponent {
             }
           }
         );
-        this.obtenerInfoOtroPerfil(newAnswer);
-        publicacion.respuesta?.unshift(newAnswer);
-        this.respuesta[index] = '';
       }
     }
   }
@@ -262,9 +251,6 @@ export class ExternalProfileComponent {
           }
         }
       );
-      this.publicationToDelete.respuesta = this.publicationToDelete.respuesta?.filter(answer => answer.respuestaId != this.answerToDelete.respuestaId);
-      this.isDialogVisible = false;
-      this.deleteFlag = false;
     }
   }
 

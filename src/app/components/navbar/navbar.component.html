@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
 <nav *ngIf="admin" class="navbar">
     <div class="center">
         <img class="logo" src="../../../favicon.ico" width="60px"/>
@@ -71,21 +72,41 @@
                 <div class="x-button" (click)="showNotifications()"><i class="fa-solid fa-xmark"></i></div>
             </div>
             <hr>
-            <div *ngFor="let notification of notifications" class="notification-info">
-                <a class="link-noti" routerLink="/{{notification.emisorId}}/profile/3">
-                    <i class="fa-regular fa-comment" style="color: #3EB7AE;" *ngIf="postType(notification.mensaje)"></i>
-                    <i class="fa-solid fa-comment" style="color: #3EB7AE;" *ngIf="!postType(notification.mensaje)"></i>
-                    <h3>{{notification.mensaje}}</h3>
-                </a>
-                <div class="friend-buttons" *ngIf="notification.tipo == 1">
-                    <button class="green" (click)="responseFriend(notification.emisorId, true)">ACEPTAR</button>
-                    <button class="red" (click)="responseFriend(notification.emisorId, false)">RECHAZAR</button>
+            <div class="height-control">
+                <div *ngFor="let notification of notifications" class="notification-info">
+                    <div *ngIf="notification.tipo != 1">
+                        <div class="post-info" *ngIf="notification.mensaje.endsWith('ha comentado tu publicación.')" (click)="myPublication()">
+                            <i class="fa-regular fa-comments" style="color: #3EB7AE; font-size: 18px;"></i>
+                            <div>
+                                <h2 class="h2-noti">{{notification.fechaEnvio | date: 'dd/MM/yyyy - HH:mm'}}</h2>
+                                <h3>{{notification.mensaje}}</h3>
+                            </div>
+                        </div>
+                        <div class="post-info" *ngIf="notification.mensaje.endsWith('ha realizado una publicación.')" (click)="otherPublication(notification.emisorId)">
+                            <i class="fa-solid fa-comment" style="color: #3EB7AE; font-size: 18px;"></i>
+                            <div>
+                                <h2 class="h2-noti">{{notification.fechaEnvio | date: 'dd/MM/yyyy - HH:mm'}}</h2>
+                                <h3>{{notification.mensaje}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-info" *ngIf="notification.tipo == 1">
+                        <i class="fa-solid fa-user-group" style="color: #3EB7AE; font-size: 18px;"></i>
+                        <div>
+                            <h2 class="h2-noti">{{notification.fechaEnvio | date: 'dd/MM/yyyy - HH:mm'}}</h2>
+                            <h3>{{notification.mensaje}}</h3>
+                            <div class="friend-buttons">
+                                <button class="green" (click)="responseFriend(notification.emisorId, true)">ACEPTAR</button>
+                                <button class="red" (click)="responseFriend(notification.emisorId, false)">RECHAZAR</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
                 </div>
-                <hr>
-            </div>
-            <div *ngIf="notifications.length == 0">
-                <h3>Sin notificaciones nuevas</h3>
-                <hr>
+                <div *ngIf="notifications.length == 0">
+                    <h3>Sin notificaciones nuevas</h3>
+                    <hr>
+                </div>
             </div>
         </div>
     </div>

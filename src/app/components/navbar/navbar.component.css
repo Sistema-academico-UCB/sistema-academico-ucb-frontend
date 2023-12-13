@@ -177,7 +177,7 @@ hr {
     height: auto;
     border-radius: 10px;
     padding: 20px 0;
-    margin: 0 25%;
+    margin: 0 30%;
 }
 .notification {
     display: flex;
@@ -210,7 +210,7 @@ hr {
     color: #383838;
 }
 .notification h3 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     color: #757575;
 }
@@ -218,7 +218,7 @@ hr {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    margin: 10px 0;
+    margin: 5px 0 0 0;
 }
 .friend-buttons button {
     padding: 5px 20px;
@@ -309,12 +309,22 @@ li:hover {
     background-color: #d0e9e7;
 }
 
-.link-noti {
-    padding: 0;
-    margin: 0;
-    text-decoration: none;
-    cursor: pointer !important;
+.post-info {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    column-gap: 16px;
+    padding: 6px 20px;
+    cursor: pointer;
 }
-.link-noti:hover {
-    background-color: #fff;
+
+.h2-noti {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #757575 !important;
+    margin: 0;
+    padding: 0;
+}
+.height-control {
+    overflow-y: auto;
+    max-height: 400px;
 }

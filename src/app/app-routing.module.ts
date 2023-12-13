@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'view-teachers', component: ViewTeachersComponent },
   { path: 'add-teacher', component: AddTeacherComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:option', component: ProfileComponent },
   { path: 'profile-edit', component: ProfileEditComponent },
   { path: 'student-report', component: StudentReportComponent},
   { path: 'list-of-friends', component: ListOfFriendsComponent },

@@ -6,7 +6,7 @@
         <div class="perfil">
             <img src={{user.uuidFoto}}>
         </div>
-        <a *ngIf="firstOption" routerLink="/profile-edit"><button class="boton">Editar perfil</button></a>
+        <a *ngIf="option==1" routerLink="/profile-edit"><button class="boton">Editar perfil</button></a>
     </div>
     <div class="container">
         <div class="datos">
@@ -16,46 +16,46 @@
             </div>
         </div>
         <div><h5>{{user.nombre}} {{user.apellidoPaterno}} {{user.apellidoMaterno}}</h5></div>
-        <div class="header" *ngIf="firstOption">
+        <div class="header" *ngIf="option==1">
             <div class="margen">
                 <a><h1>Mi perfil</h1></a>
             </div>
             <div>
-                <a (click)="secondOptionChange()"><h2>Información</h2></a>
+                <a (click)="option=2"><h2>Información</h2></a>
             </div>
             <div>
-                <a (click)="thirdOptionChange()"><h2>Publicaciones</h2></a>
+                <a (click)="option=3"><h2>Publicaciones</h2></a>
             </div>
         </div>
-        <div class="header" *ngIf="secondOption">
+        <div class="header" *ngIf="option==2">
             <div>
-                <a (click)="firstOptionChange()"><h2>Mi perfil</h2></a>
+                <a (click)="option=1"><h2>Mi perfil</h2></a>
             </div>
             <div class="margen">
                 <a><h1>Información</h1></a>
             </div>
             <div>
-                <a (click)="thirdOptionChange()"><h2>Publicaciones</h2></a>
+                <a (click)="option=3"><h2>Publicaciones</h2></a>
             </div>
         </div>
-        <div class="header" *ngIf="thirdOption">
+        <div class="header" *ngIf="option==3">
             <div>
-                <a (click)="firstOptionChange()"><h2>Mi perfil</h2></a>
+                <a (click)="option=1"><h2>Mi perfil</h2></a>
             </div>
             <div>
-                <a (click)="secondOptionChange()"><h2>Información</h2></a>
+                <a (click)="option=2"><h2>Información</h2></a>
             </div>
             <div class="margen">
                 <a><h1>Publicaciones</h1></a>
             </div>
             <div></div>
         </div>
-        <div class="informacion" *ngIf="!thirdOption">
-            <div class="data" *ngIf="firstOption">
+        <div class="informacion" *ngIf="option!=3">
+            <div class="data" *ngIf="option==1">
                 <h3>Acerca de</h3>
                 <h4>{{user.descripcion}}</h4>
             </div>
-            <div class="data" *ngIf="secondOption">
+            <div class="data" *ngIf="option==2">
                 <h4> Información</h4>
                 <h4>Información básica</h4>
                 <h4>* Organización : Regional La Paz</h4>
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <div class="publicaciones" *ngIf="thirdOption">
+        <div class="publicaciones" *ngIf="option==3">
             <textarea [(ngModel)]="publicacion" class="publicacion" placeholder="¿Qué estás pensando?" maxlength="254" rows="4" style="resize:none;"></textarea>
             <h6 *ngIf="errorPost">{{errorMessage}}</h6>
             <div class="buttons">

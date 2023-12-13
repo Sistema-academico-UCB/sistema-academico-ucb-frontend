@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AnswerDto } from 'src/app/dto/answer.dto';
 import { PublicationDto } from 'src/app/dto/publication.dto';
 import { UserDto } from 'src/app/dto/user.dto';
@@ -14,10 +14,13 @@ import { format } from 'date-fns';
 })
 export class ProfileComponent {
 
+  option: number = 1;
+
   constructor(
     private userService: UserService, 
     private router: Router, 
-    private publicationService: PublicationService
+    private publicationService: PublicationService,
+    private route: ActivatedRoute
     ) {
     const rol = localStorage.getItem('rol');
     if(rol == 'ADMIN') {
@@ -25,6 +28,11 @@ export class ProfileComponent {
       this.router.navigate(['/admin-menu']);
     } else if (rol == 'DOCENTE' || rol == 'ESTUDIANTE') {
       console.log('Acceso concedido');
+      this.route.params.subscribe(params => {
+        if (params['option']) {
+          this.option = params['option'];
+        }
+      });
     } else {
       window.alert('No has iniciado sesión');
       this.router.navigate(['/login']);
@@ -35,9 +43,6 @@ export class ProfileComponent {
   friendsList: UserDto[] = []; 
   publicationList: PublicationDto[] = [];
   countFriends: number = 0;
-  firstOption: boolean = true;
-  secondOption: boolean = false;
-  thirdOption: boolean = false;
   name: string = '';
 
   ngOnInit(){
@@ -90,18 +95,16 @@ export class ProfileComponent {
             console.log(data);
           }
         );
-        this.publicationService.getAllPublications(this.user.userId).subscribe(
-          (data: any) => {
-            this.publicationList = data.data;
-            this.publicationList.forEach(publication => {
-              if (publication.respuesta) {
-                publication.respuesta.forEach(answer => {
-                  this.obtenerInfoOtroPerfil(answer);
-                });
-              }
-            });
-          }
-        );
+        this.getPublicationList();
+      },
+      error: (error) => console.log(error),
+    });
+  }
+
+  getPublicationList() {
+    this.publicationService.getAllPublications(this.user.userId).subscribe(
+      (data: any) => {
+        this.publicationList = data.data;
         this.publicationList.forEach(publication => {
           if (publication.respuesta) {
             publication.respuesta.forEach(answer => {
@@ -109,9 +112,9 @@ export class ProfileComponent {
             });
           }
         });
-      },
-      error: (error) => console.log(error),
-    });
+        this.publicationList.reverse();
+      }
+    );
   }
 
   public formattedDate(originalDate: string): string {
@@ -122,24 +125,6 @@ export class ProfileComponent {
     };
     const date = new Date(originalDate);
     return date.toLocaleDateString('es-ES', options);
-  }
-
-  firstOptionChange() {
-    this.firstOption = true;
-    this.secondOption = false;
-    this.thirdOption = false;
-  }
-
-  secondOptionChange() {
-    this.firstOption = false;
-    this.secondOption = true;
-    this.thirdOption = false;
-  }
-
-  thirdOptionChange() {
-    this.firstOption = false;
-    this.secondOption = false;
-    this.thirdOption = true;
   }
  
   //----------------------------------------Publicaciones----------------------------------------
@@ -164,14 +149,13 @@ export class ProfileComponent {
       this.publicationService.createPublication(newPost).subscribe(
         (data: any) => {
           if(data.success) {
-            // this.publicationList.unshift(newPost);
+            this.getPublicationList();
             this.publicacion = '';
           } else {
             this.errorMessage = "Ocurrió un error al crear la publicación.";
           }
         }
       );
-      this.publicationList.unshift(newPost);
     }
   }
 
@@ -214,9 +198,6 @@ export class ProfileComponent {
           }
         }
       );
-      this.publicationList = this.publicationList.filter(publication => publication.publicacionId != this.publicationToDelete.publicacionId);
-      this.isDialogVisible = false;
-      this.deleteFlag = false;
     }
   }
 
