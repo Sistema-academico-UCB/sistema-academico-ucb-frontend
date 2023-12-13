@@ -107,4 +107,12 @@ export class NavbarComponent {
         
   )}
 
+  postType(mensaje: String): boolean {
+    let flag: boolean = false;
+    if (mensaje.includes('ha comentado tu publicación.')) {
+      flag = true;
+    }
+    return flag;
+  }
+
 }

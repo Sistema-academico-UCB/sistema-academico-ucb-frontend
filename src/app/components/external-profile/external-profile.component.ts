@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserDto } from 'src/app/dto/user.dto';
@@ -18,6 +18,7 @@ export class ExternalProfileComponent {
   
   id: string | null;
   myId: string = '';
+  option: number = 0;
 
   constructor(
     private userService: UserService, 
@@ -32,6 +33,11 @@ export class ExternalProfileComponent {
     } else if (rol == 'DOCENTE' || rol == 'ESTUDIANTE') {
       this.route.params.subscribe(params => {
         this.id = params['user'];
+        if (params['option']) {
+          this.option = params['option'];
+        } else {
+          this.option = 1;
+        }
       });
       const token = localStorage.getItem('token');
       if (token) {
@@ -67,9 +73,6 @@ export class ExternalProfileComponent {
   typeFriend: number = 0;
   name: string = '';
   uuidFoto: string = '';
-  firstOption: boolean = true;
-  secondOption: boolean = false;
-  thirdOption: boolean = false;
   publicationList: PublicationDto[] = [];
 
   ngOnInit(){
@@ -170,24 +173,6 @@ export class ExternalProfileComponent {
         }
       );
     }
-  }
-
-  firstOptionChange() {
-    this.firstOption = true;
-    this.secondOption = false;
-    this.thirdOption = false;
-  }
-
-  secondOptionChange() {
-    this.firstOption = false;
-    this.secondOption = true;
-    this.thirdOption = false;
-  }
-
-  thirdOptionChange() {
-    this.firstOption = false;
-    this.secondOption = false;
-    this.thirdOption = true;
   }
 
   //----------------------------------------Respuestas----------------------------------------

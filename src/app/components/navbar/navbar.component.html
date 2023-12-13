@@ -72,8 +72,12 @@
             </div>
             <hr>
             <div *ngFor="let notification of notifications" class="notification-info">
-                <h3>{{notification.mensaje}}</h3>
-                <div class="friend-buttons">
+                <a class="link-noti" routerLink="/{{notification.emisorId}}/profile/3">
+                    <i class="fa-regular fa-comment" style="color: #3EB7AE;" *ngIf="postType(notification.mensaje)"></i>
+                    <i class="fa-solid fa-comment" style="color: #3EB7AE;" *ngIf="!postType(notification.mensaje)"></i>
+                    <h3>{{notification.mensaje}}</h3>
+                </a>
+                <div class="friend-buttons" *ngIf="notification.tipo == 1">
                     <button class="green" (click)="responseFriend(notification.emisorId, true)">ACEPTAR</button>
                     <button class="red" (click)="responseFriend(notification.emisorId, false)">RECHAZAR</button>
                 </div>

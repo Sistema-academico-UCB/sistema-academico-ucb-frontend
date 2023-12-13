@@ -4,5 +4,6 @@ export interface NotificationDto {
     receptorId: number,
     mensaje: String,
     fechaEnvio: Date,
+    tipo: number,
     estatus: Boolean
 }

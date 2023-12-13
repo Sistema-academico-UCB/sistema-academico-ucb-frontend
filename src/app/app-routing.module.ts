@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'student-report', component: StudentReportComponent},
   { path: 'list-of-friends', component: ListOfFriendsComponent },
   { path: ':user/profile', component: ExternalProfileComponent },
+  { path: ':user/profile/:option', component: ExternalProfileComponent },
   { path: 'student-edit/:student', component: StudentEditComponent},
   { path: 'teacher-edit/:teacher', component:TeacherEditComponent},
   { path: 'admin-menu', component: AdminMenuComponent},

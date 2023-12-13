@@ -188,7 +188,7 @@ hr {
 .title {
     display: flex;
     flex-direction: row;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 .x-button {
     display: flex;
@@ -307,4 +307,14 @@ li {
 
 li:hover {
     background-color: #d0e9e7;
+}
+
+.link-noti {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    cursor: pointer !important;
+}
+.link-noti:hover {
+    background-color: #fff;
 }
