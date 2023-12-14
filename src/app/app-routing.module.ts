@@ -14,9 +14,7 @@ import { TeacherEditComponent } from './components/teacher-edit/teacher-edit.com
 import { StudentReportComponent } from './components/student-report/student-report.component';
 import { AdminMenuComponent } from './components/admin-menu/admin-menu.component';
 import { AcademicSettingsComponent } from './components/academic-settings/academic-settings.component';
-
-
-
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -35,7 +33,8 @@ const routes: Routes = [
   { path: 'student-edit/:student', component: StudentEditComponent},
   { path: 'teacher-edit/:teacher', component:TeacherEditComponent},
   { path: 'admin-menu', component: AdminMenuComponent},
-  { path: 'academic-settings', component: AcademicSettingsComponent}
+  { path: 'academic-settings', component: AcademicSettingsComponent},
+  { path: 'change-password', component: ChangePasswordComponent}
 ];
 
 @NgModule({

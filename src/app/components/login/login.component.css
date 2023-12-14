@@ -118,9 +118,26 @@ input:focus {
     color: #ff0000;
     font-size: 16px;
     font-weight: 600;
-    margin: 10px 0 0 0;
+    margin: 6px 0 0 0;
     display: none;
 }
 .error-message.show {
     display: block;
+}
+
+/*------------------- Olvide mi contraseña -------------------*/
+.forgot-password {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 8px;
+}
+.forgot-password a {
+    font-size: 14px;
+    color: #383838;
+    font-weight: 500;
+    text-decoration: none;
+}
+.forgot-password a:hover {
+    color: #0092CC;
 }

@@ -18,7 +18,10 @@
                 <h3>Contraseña</h3>
                 <input [type]="showPassword ? 'text' : 'password'" placeholder="Ingrese su contraseña" [(ngModel)]="password" />
                 <i style="color: #757575;" [ngClass]="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'" (click)="toggleShowPassword()"></i>
-            </div>   
+            </div>
+            <div class="forgot-password">
+                <a href="/change-password">¿Olvidaste tu contraseña?</a>  
+            </div> 
             <div #errorMessage class="error-message">Lo siento, credenciales no válidas.</div>                    
             <div class="center" style="width: 100%;">
                 <button class="btn-login" (click)="login()">INGRESAR</button>

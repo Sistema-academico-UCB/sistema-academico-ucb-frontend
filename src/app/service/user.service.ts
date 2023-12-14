@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { EmailDto } from '../dto/email.dto';
 
 
 @Injectable({
@@ -140,4 +141,18 @@ export class UserService {
     return this.http.put(`${this.userUrl}/user/password`, body, { headers: header });
   }
  
+  // Verificar si el correo existe
+  verifyEmail(email: string) {
+    return this.http.post(`${environment.BACKEND_URL}/api/v1/user/email`, {email});
+  }
+
+  // Enviar correo de verificación
+  sendEmail(email: EmailDto) {
+    return this.http.post(`https://qw9jtvbj92.execute-api.us-east-1.amazonaws.com/send-email`, email);
+  }
+
+  // Cambiar contraseña
+  changePassword(body: any) {
+    return this.http.put(`${environment.BACKEND_URL}/api/v1/user/password/without`, body);
+  }
 }

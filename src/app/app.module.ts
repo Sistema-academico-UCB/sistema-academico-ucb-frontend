@@ -25,6 +25,7 @@ import { AcademicSettingsComponent } from './components/academic-settings/academ
 import { CareersComponent } from './components/careers/careers.component';
 import { ProfessionsComponent } from './components/professions/professions.component';
 import { DepartmentsComponent } from './components/departments/departments.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { DepartmentsComponent } from './components/departments/departments.compo
     AcademicSettingsComponent,
     CareersComponent,
     ProfessionsComponent,
-    DepartmentsComponent
+    DepartmentsComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
