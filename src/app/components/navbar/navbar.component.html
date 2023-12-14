@@ -1,7 +1,8 @@
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api"
+    crossorigin="anonymous">
 <nav *ngIf="admin" class="navbar">
     <div class="center">
-        <img class="logo" src="../../../favicon.ico" width="60px"/>
+        <img class="logo" src="../../../favicon.ico" width="60px" />
         <h2>&nbsp;&nbsp;Sistema académico</h2>
     </div>
     <div class="nav-links">
@@ -13,7 +14,7 @@
 </nav>
 <nav *ngIf="user" class="navbar navbar-user">
     <div class="center">
-        <img class="logo" src="../../../favicon.ico" width="60px"/>
+        <img class="logo" src="../../../favicon.ico" width="60px" />
         <h2>&nbsp;&nbsp;Sistema academico</h2>
     </div>
     <div class="options">
@@ -24,7 +25,7 @@
         <div class="student-data" *ngIf="users.length > 0">
             <ul>
                 <li *ngFor="let user of users" (click)="navigateToProfile(user.userId)">
-                    &nbsp;&nbsp;{{ user.nombre }} {{ user.apellidoPaterno }} {{ user.apellidoMaterno }} 
+                    &nbsp;&nbsp;{{ user.nombre }} {{ user.apellidoPaterno }} {{ user.apellidoMaterno }}
                     <hr style="margin-bottom: 0;">
                 </li>
             </ul>
@@ -32,19 +33,21 @@
     </div>
     <div class="profile-options">
         <button class="btn-user center" (click)="showOptions = !showOptions">
-          <img src="{{uuidFoto}}" width="35px" style="border-radius: 100%; height: 35px;">
-          <span>{{name}}</span>
-          <i class="fa-solid" [ngClass]="{'fa-caret-up': showOptions, 'fa-caret-down': !showOptions}"></i>
+            <img src="{{uuidFoto}}" width="35px" style="border-radius: 100%; height: 35px;">
+            <span>{{name}}</span>
+            <i class="fa-solid" [ngClass]="{'fa-caret-up': showOptions, 'fa-caret-down': !showOptions}"></i>
         </button>
         <div class="dropdown-menu" *ngIf="showOptions">
-          <a class="dropdown-item" routerLink="/profile">Mi perfil</a>
-          <hr>
-          <a class="dropdown-item" (click)="showNotifications()">Notificaciones</a>
-          <a class="dropdown-item" routerLink="/list-of-friends">Amigos</a>
-          <hr>
-          <a class="dropdown-item" (click)="logout()">Cerrar sesión</a>
+            <a class="dropdown-item" routerLink="/profile">Mi perfil</a>
+            <hr>
+            <a class="dropdown-item" (click)="showNotifications()">Notificaciones</a>
+            <a class="dropdown-item" routerLink="/list-of-friends">Amigos</a>
+            <hr>
+            <a class="dropdown-item" (click)="showUpdatePasswordModal()">Cambiar contraseña</a>
+            <hr>
+            <a class="dropdown-item" (click)="logout()">Cerrar sesión</a>
         </div>
-    </div>    
+    </div>
 </nav>
 
 <!--Modal de cerrar sesión-->
@@ -54,7 +57,9 @@
             <div class="confirmation-content">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </div>
-            <div class="confirmation-content"><p>¿Está seguro que desea cerrar sesión?</p></div>
+            <div class="confirmation-content">
+                <p>¿Está seguro que desea cerrar sesión?</p>
+            </div>
             <div class="confirmation-content buttons">
                 <button class="green" (click)="confirm()">ACEPTAR</button>
                 <button class="red" (click)="cancel()">CANCELAR</button>
@@ -75,14 +80,16 @@
             <div class="height-control">
                 <div *ngFor="let notification of notifications" class="notification-info">
                     <div *ngIf="notification.tipo != 1">
-                        <div class="post-info" *ngIf="notification.mensaje.endsWith('ha comentado tu publicación.')" (click)="myPublication()">
+                        <div class="post-info" *ngIf="notification.mensaje.endsWith('ha comentado tu publicación.')"
+                            (click)="myPublication()">
                             <i class="fa-regular fa-comments" style="color: #3EB7AE; font-size: 18px;"></i>
                             <div>
                                 <h2 class="h2-noti">{{notification.fechaEnvio | date: 'dd/MM/yyyy - HH:mm'}}</h2>
                                 <h3>{{notification.mensaje}}</h3>
                             </div>
                         </div>
-                        <div class="post-info" *ngIf="notification.mensaje.endsWith('ha realizado una publicación.')" (click)="otherPublication(notification.emisorId)">
+                        <div class="post-info" *ngIf="notification.mensaje.endsWith('ha realizado una publicación.')"
+                            (click)="otherPublication(notification.emisorId)">
                             <i class="fa-solid fa-comment" style="color: #3EB7AE; font-size: 18px;"></i>
                             <div>
                                 <h2 class="h2-noti">{{notification.fechaEnvio | date: 'dd/MM/yyyy - HH:mm'}}</h2>
@@ -96,8 +103,10 @@
                             <h2 class="h2-noti">{{notification.fechaEnvio | date: 'dd/MM/yyyy - HH:mm'}}</h2>
                             <h3>{{notification.mensaje}}</h3>
                             <div class="friend-buttons">
-                                <button class="green" (click)="responseFriend(notification.emisorId, true)">ACEPTAR</button>
-                                <button class="red" (click)="responseFriend(notification.emisorId, false)">RECHAZAR</button>
+                                <button class="green"
+                                    (click)="responseFriend(notification.emisorId, true)">ACEPTAR</button>
+                                <button class="red"
+                                    (click)="responseFriend(notification.emisorId, false)">RECHAZAR</button>
                             </div>
                         </div>
                     </div>
@@ -108,6 +117,63 @@
                     <hr>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal de "Cambiar contraseña"-->
+<div class="popup center" *ngIf="showUpdatePassword">
+    <div class="modal-notification center">
+        <div class="notification">
+            <div class="title">
+                <h2>Cambio de contraseña</h2>
+                <div class="x-button" (click)="showUpdatePasswordModal()"><i class="fa-solid fa-xmark"></i></div>
+            </div>
+            <hr>
+            <div class="height-control update-password-form">
+                <label for="oldPassword">Contraseña actual</label>
+                <div class="password">
+                    <input [type]="showOldPassword ? 'text' : 'password'" placeholder="Ingrese su contraseña"
+                        [(ngModel)]="oldPassword" />
+                    <i style="color: #757575;" [ngClass]="showOldPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
+                        (click)="toggleShowOldPassword()"></i>
+                </div><br>
+                <label for="newPassword">Nueva contraseña</label>
+                <div class="password">
+                    <input [type]="showNewPassword ? 'text' : 'password'" placeholder="Ingrese su contraseña"
+                        [(ngModel)]="newPassword" />
+                    <i style="color: #757575;" [ngClass]="showNewPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
+                        (click)="toggleShowNewPassword()"></i>
+                </div><br>
+                <label for="confirmPassword">Confirmar contraseña</label>
+                <div class="password">
+                    <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Ingrese su contraseña"
+                        [(ngModel)]="confirmPassword" />
+                    <i style="color: #757575;" [ngClass]="showConfirmPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
+                        (click)="toggleShowConfirmPassword()"></i>
+                </div>
+            </div>
+            <br>
+            <!-- Mensaje de advertencia -->
+            <div #errorMessage class="warning">
+                <p>{{errorPasswordMessage}}</p>
+            </div>
+            <br>
+            <div class="friend-buttons">
+                <button class="red" (click)="showUpdatePasswordModal()">Cancelar</button>
+                <button class="green" (click)="updatePassword()">Cambiar contraseña</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Mensaje de que todo salio bien y se actualizó la contraseña correctamente -->
+<div class="popup center" *ngIf="confirmationPopup">
+    <div class="success-pass center">
+        <div>
+            <div class="confirmation-content"><i class="fa-solid fa-circle-check" style="color: #30ff24;"></i></div>
+            <div class="confirmation-content"><p>La contraseña ha sido actualizada correctamente</p></div>
+            <div class="confirmation-content"><button class="button-pass" (click)="showUpdatePasswordModal(); confirmationPopup=false">Aceptar</button></div>
         </div>
     </div>
 </div>

@@ -6,9 +6,11 @@
     padding: 10px 4%;
     justify-content: space-between;
 }
+
 .nav-links {
     display: flex;
 }
+
 .logout {
     margin-left: auto;
     display: flex;
@@ -20,6 +22,7 @@
     justify-content: center;
     align-items: center;
 }
+
 h2 {
     font-size: 20px;
     font-weight: 600;
@@ -27,17 +30,19 @@ h2 {
     margin: 0;
     padding: 0;
 }
+
 /*Opciones izquierda*/
 a {
     padding: 10px 65px 10px 20px;
     margin: 0;
     margin-left: 20px;
-    color:#fff;
+    color: #fff;
     font-size: 15px;
     font-weight: 600;
     text-decoration: none;
     cursor: pointer !important;
 }
+
 a:hover {
     background-color: #27A399;
     border-radius: 3px;
@@ -48,6 +53,7 @@ a:hover {
     display: flex;
     justify-content: space-between;
 }
+
 /*Boton de opciones del perfil*/
 .btn-user {
     background-color: transparent;
@@ -56,10 +62,12 @@ a:hover {
     gap: 8px;
     color: #fff;
 }
+
 /* Estilos para el menú desplegable */
 .profile-options {
     position: relative;
 }
+
 .dropdown-menu {
     display: flex;
     flex-direction: column;
@@ -74,12 +82,14 @@ a:hover {
     margin-top: 5px;
     border: 1px solid #ccc;
 }
+
 hr {
     margin: 5px 0;
     border: none;
     border-top: 1px solid #ccc;
     width: 100%;
 }
+
 /* Estilos para los elementos dentro del menú desplegable */
 .dropdown-item {
     color: #757575 !important;
@@ -90,10 +100,12 @@ hr {
     margin: 0;
     width: 100%;
 }
+
 .dropdown-item:hover {
     background-color: #d0e9e7 !important;
     color: #3EB7AE !important;
 }
+
 .dropdown-item:active {
     background-color: #d0e9e7 !important;
     color: #3EB7AE !important;
@@ -113,6 +125,7 @@ hr {
     z-index: 100;
     font-family: 'Montserrat', sans-serif;
 }
+
 .success {
     background-color: white;
     width: 500px;
@@ -120,11 +133,13 @@ hr {
     border-radius: 10px;
     padding: 20px 0;
 }
+
 .confirmation-content {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
 }
+
 .confirmation-content i {
     font-size: 40px;
     margin-top: 10px;
@@ -133,18 +148,21 @@ hr {
     color: #27A399;
     border-radius: 100%;
 }
+
 .confirmation-content p {
     font-size: 18px;
     font-weight: 500;
     color: #003531;
     margin-top: 5px;
 }
+
 .buttons {
     display: flex;
     justify-content: center;
     margin-top: 20px;
     gap: 20px;
 }
+
 .confirmation-content button {
     width: 150px;
     padding: 8px 20px;
@@ -156,15 +174,19 @@ hr {
     color: #fff;
     font-weight: 600;
 }
+
 .green {
     background-color: #77ff70;
 }
+
 .green:hover {
     background-color: #30FF24;
 }
+
 .red {
     background-color: rgb(255, 109, 109);
 }
+
 .red:hover {
     background-color: #ff0000;
 }
@@ -179,47 +201,56 @@ hr {
     padding: 20px 0;
     margin: 0 30%;
 }
+
 .notification {
     display: flex;
     flex-direction: column;
     width: 100%;
     padding: 0 25px;
 }
+
 .title {
     display: flex;
     flex-direction: row;
     margin-bottom: 5px;
 }
+
 .x-button {
     display: flex;
     justify-content: flex-end;
     flex-grow: 1;
 }
+
 .notification i {
     color: #757575;
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
+
 .notification i:hover {
-    color:#003531;
+    color: #003531;
 }
+
 .notification h2 {
     font-size: 20px;
     font-weight: 600;
     color: #383838;
 }
+
 .notification h3 {
     font-size: 16px;
     font-weight: 500;
     color: #757575;
 }
+
 .friend-buttons {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
     margin: 5px 0 0 0;
 }
+
 .friend-buttons button {
     padding: 5px 20px;
     border: none;
@@ -237,12 +268,14 @@ hr {
     display: flex;
     flex-direction: column;
 }
+
 .options {
     display: grid;
     grid-template-columns: 1fr;
     width: 40%;
     position: relative;
 }
+
 .search {
     display: flex;
     align-items: center;
@@ -252,10 +285,12 @@ hr {
     padding-left: 10px;
     background-color: #fff;
 }
+
 .search i {
     color: #CBCBCB;
     font-weight: 500;
 }
+
 .search input {
     width: 100%;
     border: none;
@@ -267,12 +302,15 @@ hr {
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
 }
+
 .search:hover {
     border: 1px solid #9E3775;
 }
+
 .search:hover i {
     color: #9E3775;
 }
+
 select {
     border: 1px solid #CBCBCB;
     border-radius: 5px;
@@ -283,16 +321,25 @@ select {
     outline: none;
     cursor: pointer;
 }
+
 .student-data {
-    position: absolute; /* Establece una posición absoluta para la lista de coincidencias */
-    top: 100%; /* Coloca la lista justo debajo del cuadro de texto */
+    position: absolute;
+    /* Establece una posición absoluta para la lista de coincidencias */
+    top: 100%;
+    /* Coloca la lista justo debajo del cuadro de texto */
     width: 100%;
-    z-index: 1; /* Asegura que la lista se superponga sobre otros contenidos */
-    border: 1px solid #ccc; /* Agrega un borde a la lista */
-    padding: 10px; /* Añade espacio interno para mejorar la presentación */
-    border-radius: 5px; /* Añade bordes redondeados */
-    margin-top: 5px;;
-    background-color: #fff; /* Agrega un fondo blanco a la lista */
+    z-index: 1;
+    /* Asegura que la lista se superponga sobre otros contenidos */
+    border: 1px solid #ccc;
+    /* Agrega un borde a la lista */
+    padding: 10px;
+    /* Añade espacio interno para mejorar la presentación */
+    border-radius: 5px;
+    /* Añade bordes redondeados */
+    margin-top: 5px;
+    ;
+    background-color: #fff;
+    /* Agrega un fondo blanco a la lista */
 }
 
 ul {
@@ -324,7 +371,126 @@ li:hover {
     margin: 0;
     padding: 0;
 }
+
 .height-control {
     overflow-y: auto;
     max-height: 400px;
 }
+
+/* --------------------Update password Modal--------------------- */
+.update-password-form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    /* gap: 7px; */
+    width: 100%;
+}
+
+.update-password-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #757575;
+    margin-top: 3px;
+    margin-bottom: 4px;
+}
+
+.password input {
+    width: 100%;
+    border: 1px solid #CBCBCB;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #383838;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.password {
+    position: relative;
+    width: 50%;
+}
+
+.password i {
+    position: absolute;
+    transform: translateY(-50%);
+    color: #757575;
+    cursor: pointer;
+    margin-top: 16px;
+    right: 12px;
+    /* width: 3px; */
+}
+
+/*Advertencia*/
+.warning {
+    display: none;
+    width: 100%;
+    padding: 10px 20px;
+    margin: 10px 0 0 0;
+    background-color: #ff7171;
+}
+
+.warning p {
+    color: white !important;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+}
+
+.warning-active {
+    display: flex;
+    align-items: center;
+}
+
+/*-----------------------------------------------------------------------------------------------------*/
+/*Mensaje de confirmacion*/
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.199);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+  }
+  .success-pass {
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+  }
+  .confirmation-content {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .confirmation-content i {
+    font-size: 60px;
+    margin-top: 10px;
+  }
+  .confirmation-content p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #003531;
+  }
+  .confirmation-content button {
+    width: 100px;
+    margin-top: 10px;
+  }
+  .button-pass{
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    padding: 6px 0px;
+    background-color: #6edad2;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif !important;
+  }
+  .button-pass:focus {
+    border: none;
+  }

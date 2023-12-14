@@ -122,4 +122,22 @@ export class UserService {
   getTeachers(name: string) {
     return this.http.get(`${environment.BACKEND_URL}/api/v1/teacher?page=0&size=20&nombre=${name}&sortType=asc`);
   }
+
+  // Función para actualizar la contraseña
+  updatePassword(password: string, newPassword: string, confirmPassword: string) {
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    };
+
+    const body = {
+      "currentPassword": password,
+      "newPassword": newPassword,
+      "confirmNewPassword": confirmPassword
+    };
+
+    return this.http.put(`${this.userUrl}/user/password`, body, { headers: header });
+  }
+ 
 }
